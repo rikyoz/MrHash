@@ -32,7 +32,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
     this->setFixedSize( this->size() );
     this->setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
                                             qApp->desktop()->availableGeometry() ) );
-    this->setWindowTitle("MrHash v" + QString::number(MAJOR_VER) + "." + QString::number(MINOR_VER));
+    this->setWindowTitle( "MrHash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
 
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
@@ -84,7 +84,7 @@ void MainWindow::on_textEdit_textChanged() {
     QString haval224 = QString::fromStdString( hav.calcHaval( text, 224, 5 ) ).toLower();
     QString haval256 = QString::fromStdString( hav.calcHaval( text, 256, 5 ) ).toLower();
     QString base64 = textEdit->toPlainText().toUtf8().toBase64();
-    crc16edit->setText( QString::number(qChecksum(text.c_str(), qstrlen(text.c_str()))) );
+    crc16edit->setText( QString::number( qChecksum( text.c_str(), qstrlen( text.c_str() ) ) ) );
     crc32edit->setText( crc32( text ) );
     md4edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md4 ).toHex() );
     md5edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md5 ).toHex() );
