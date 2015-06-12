@@ -28,11 +28,11 @@ int CRC32::reflect( int data, int bits ) {
     return x;
 }
 
-int CRC32::crc32( int crc, const char* data, int length ) {
+int CRC32::crc32( int crc, const char* data, unsigned int length ) {
     crc = ~reflect( crc, 32 );
     if ( !crc_table )
         crc_table = generate_table();
-    for ( int i = 0; i < length;  i++ )
+    for ( unsigned int i = 0; i < length;  ++i )
         crc = ( crc << 8 ) ^ crc_table[( ( crc >> 24 ) ^ reflect( data[i], 8 ) ) & 0xff];
     return ~reflect( crc, 32 );
 }

@@ -33,7 +33,8 @@ FORMS    += mainwindow.ui about.ui
 
 RESOURCES += res/icon.qrc
 
-TRANSLATIONS = t1_it.ts qt_it.ts
+# Coming soon...
+#TRANSLATIONS = t1_it.ts qt_it.ts
 
 ########################### CONFIGURATION ############################
 CONFIG += c++14

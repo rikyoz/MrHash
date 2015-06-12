@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>894</width>
-    <height>493</height>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -389,6 +389,9 @@
   <action name="actionEsci">
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
   <action name="actionInformazioni_su_Hasher">
