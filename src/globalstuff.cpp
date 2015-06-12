@@ -17,37 +17,35 @@
 
 using std::string;
 
-string charToHex(const char *buf, unsigned int len)
-{
-	// Hm, can be optimized... :)
-	unsigned int i;
-	string ret;
-	char tmp[3], cur;
+string charToHex( const char* buf, unsigned int len ) {
+    // Hm, can be optimized... :)
+    unsigned int i;
+    string ret;
+    char tmp[3], cur;
 
-	for (i = 0; i < len; ++i) {
-		cur = *(buf + i);
-		if (cur == 0) {
-			ret += "00";
-		} else {
-			sprintf(tmp, "%X", 0xFF & *(buf + i));
-			if (strlen(tmp) == 1)
-				ret += '0';
-			ret += tmp;
-		}
-	}
+    for ( i = 0; i < len; ++i ) {
+        cur = *( buf + i );
+        if ( cur == 0 )
+            ret += "00";
+        else {
+            sprintf( tmp, "%X", 0xFF & *( buf + i ) );
+            if ( strlen( tmp ) == 1 )
+                ret += '0';
+            ret += tmp;
+        }
+    }
 
-	return ret;
+    return ret;
 }
 
-unsigned int calcBufSize(struct stat file_stat)
-{
-	unsigned int ret;
+unsigned int calcBufSize( struct stat file_stat ) {
+    unsigned int ret;
 
-	ret = file_stat.st_size;
-	if (ret < 100000)
-		ret = 100000;
-	else if (ret > 200000)
-		ret = 200000;
+    ret = file_stat.st_size;
+    if ( ret < 100000 )
+        ret = 100000;
+    else if ( ret > 200000 )
+        ret = 200000;
 
-	return ret;
+    return ret;
 }

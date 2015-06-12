@@ -32,7 +32,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
     this->setFixedSize( this->size() );
     this->setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
                                             qApp->desktop()->availableGeometry() ) );
-    this->setWindowTitle("MrHash v" + QString::number(MAJOR_VER) + "." + QString::number(MINOR_VER));
+    this->setWindowTitle( "MrHash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
 
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
@@ -40,29 +40,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
 
 MainWindow::~MainWindow() {}
 
-namespace Hex {
-    static string digits = "0123456789abcdef";
-    std::string hex( char* bin, int length ) {
-        std::string s( length * 2, ' ' );
-        for ( int i = 0; i < length; i++ ) {
-            s[i * 2] = digits[( bin[i] >> 4 ) & 0xf];
-            s[i * 2 + 1] = digits[bin[i] & 0xf];
-        }
-        return s;
-    }
-    std::string hex( int bin ) {
-        std::string s( sizeof( int ) * 2, ' ' );
-        for ( unsigned int i = 0; i < sizeof( int ) * 2; i++ ) {
-            s[sizeof( int ) * 2 - 1 - i] = digits[bin & 0xf];
-            bin = bin >> 4;
-        }
-        return s;
-    }
-}
-
 QString crc32( string msg ) {
     int crc32_ctx = CRC32::crc32( 0, msg.c_str(), msg.length() );
-    return QString::fromStdString( Hex::hex( crc32_ctx ) ).toUpper();
+    //note: right(8) removes the unneeded Fs that appear sometimes at the start of the crc32
+    return QString::number(crc32_ctx, 16).right(8).toUpper();
 }
 
 QString tiger( string msg ) {
@@ -84,7 +65,7 @@ void MainWindow::on_textEdit_textChanged() {
     QString haval224 = QString::fromStdString( hav.calcHaval( text, 224, 5 ) ).toLower();
     QString haval256 = QString::fromStdString( hav.calcHaval( text, 256, 5 ) ).toLower();
     QString base64 = textEdit->toPlainText().toUtf8().toBase64();
-    crc16edit->setText( QString::number(qChecksum(text.c_str(), qstrlen(text.c_str()))) );
+    crc16edit->setText( QString::number( qChecksum( text.c_str(), qstrlen( text.c_str() ) ) ) );
     crc32edit->setText( crc32( text ) );
     md4edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md4 ).toHex() );
     md5edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md5 ).toHex() );
