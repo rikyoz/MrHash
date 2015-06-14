@@ -40,10 +40,14 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
 
 MainWindow::~MainWindow() {}
 
+QString crc16( string msg ) {
+    return QString::number( qChecksum( msg.c_str(), qstrlen( msg.c_str() ) ) );
+}
+
 QString crc32( string msg ) {
     int crc32_ctx = CRC32::crc32( 0, msg.c_str(), msg.length() );
     //note: right(8) removes the unneeded Fs that appear sometimes at the start of the crc32
-    return QString::number(crc32_ctx, 16).right(8).toUpper();
+    return QString::number( crc32_ctx, 16 ).right( 8 ).toUpper();
 }
 
 QString tiger( string msg ) {
@@ -58,15 +62,9 @@ QString ripemd( string msg ) {
 
 void MainWindow::on_textEdit_textChanged() {
     string text = textEdit->toPlainText().toStdString();
-    Haval hav;
-    QString haval128 = QString::fromStdString( hav.calcHaval( text, 128, 5 ) ).toLower();
-    QString haval160 = QString::fromStdString( hav.calcHaval( text, 160, 5 ) ).toLower();
-    QString haval192 = QString::fromStdString( hav.calcHaval( text, 192, 5 ) ).toLower();
-    QString haval224 = QString::fromStdString( hav.calcHaval( text, 224, 5 ) ).toLower();
-    QString haval256 = QString::fromStdString( hav.calcHaval( text, 256, 5 ) ).toLower();
-    QString base64 = textEdit->toPlainText().toUtf8().toBase64();
-    crc16edit->setText( QString::number( qChecksum( text.c_str(), qstrlen( text.c_str() ) ) ) );
+    crc16edit->setText( crc16( text ) );
     crc32edit->setText( crc32( text ) );
+    base64edit->setText( textEdit->toPlainText().toUtf8().toBase64() );
     md4edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md4 ).toHex() );
     md5edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md5 ).toHex() );
     sha1edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha1 ).toHex() );
@@ -80,12 +78,12 @@ void MainWindow::on_textEdit_textChanged() {
     sha3512edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_512 ).toHex() );
     tigeredit->setText( tiger( text ) );
     ripemdedit->setText( ripemd( text ) );
-    haval128edit->setText( haval128 );
-    haval160edit->setText( haval160 );
-    haval192edit->setText( haval192 );
-    haval224edit->setText( haval224 );
-    haval256edit->setText( haval256 );
-    base64edit->setText( base64 );
+    Haval hav;
+    haval128edit->setText( QString::fromStdString( hav.calcHaval( text, 128, 5 ) ).toLower() );
+    haval160edit->setText( QString::fromStdString( hav.calcHaval( text, 160, 5 ) ).toLower() );
+    haval192edit->setText( QString::fromStdString( hav.calcHaval( text, 192, 5 ) ).toLower() );
+    haval224edit->setText( QString::fromStdString( hav.calcHaval( text, 224, 5 ) ).toLower() );
+    haval256edit->setText( QString::fromStdString( hav.calcHaval( text, 256, 5 ) ).toLower() );
 }
 
 void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
