@@ -1,2 +1,4 @@
 build/
 pkg/
+bin/
+*.pro.user
