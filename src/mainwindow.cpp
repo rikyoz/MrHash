@@ -67,6 +67,11 @@ void MainWindow::on_textEdit_textChanged() {
     haval224edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL224 ) );
     haval256edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL256 ) );
     base64edit->setText( utf_text.toBase64() );
+
+    sha384edit->setCursorPosition(0);
+    sha512edit->setCursorPosition(0);
+    sha3384edit->setCursorPosition(0);
+    sha3512edit->setCursorPosition(0);
 }
 
 void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
