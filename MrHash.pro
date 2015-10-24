@@ -63,10 +63,12 @@ win32 {
     QMAKE_TARGET_COPYRIGHT = Copyright (c) 2015 $${QMAKE_TARGET_COMPANY}
     RC_ICONS = res/icon.ico
     RC_LANG  = 0x0410 #Italian Language
-    contains(QT_ARCH, i386) {
-        QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
-    } else {
-        QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
+    !win32-g++ {
+        contains(QT_ARCH, i386) {
+            QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+        } else {
+            QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
+        }
     }
 }
 
