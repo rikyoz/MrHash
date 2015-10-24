@@ -29,10 +29,10 @@ using namespace std;
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
     setupUi( this );
-    this->setFixedSize( this->size() );
-    this->setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
+    setFixedSize( this->size() );
+    setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
                                             qApp->desktop()->availableGeometry() ) );
-    this->setWindowTitle( "MrHash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
+    setWindowTitle( "MrHash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
 
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
@@ -92,5 +92,5 @@ void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
 }
 
 void MainWindow::on_actionEsci_triggered() {
-    this->close();
+    close();
 }
