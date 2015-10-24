@@ -1,4 +1,4 @@
 build/
 pkg/
 bin/
-*.pro.user
+*.pro.user*
