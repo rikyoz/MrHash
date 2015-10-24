@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_actionEsci_triggered();
         void on_actionInformazioni_su_Hasher_triggered();
         void on_textEdit_textChanged();
+        void on_actionShowUppercase_toggled( bool );
 };
 
 #endif // MAINWINDOW_H

@@ -20,14 +20,16 @@ VPATH += ./src/          \
          ./include/      \
          ./res/          \
          ./ui/
-         
+
 INCLUDEPATH += ./include/
 
 SOURCES += main.cpp mainwindow.cpp about.cpp \
-           crc32.cpp globalstuff.cpp tiger.cpp rmd160.cpp haval.cpp
+           crc32.cpp globalstuff.cpp tiger.cpp rmd160.cpp haval.cpp \
+           qhasher.cpp
 
 HEADERS  += mainwindow.hpp about.hpp \
-            crc32.h bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h
+            crc32.h bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h \
+            qhasher.hpp
 
 FORMS    += mainwindow.ui about.ui
 

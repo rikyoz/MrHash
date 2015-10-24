@@ -17,13 +17,13 @@ A copy of the GNU General Public License is available at
 #include <QCryptographicHash>
 #include <QDesktopWidget>
 
-#include "crc32.h"
-#include "tiger.h"
-#include "rmd160.h"
-#include "haval.h"
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif
 
 #include "mainwindow.hpp"
 #include "about.hpp"
+#include "qhasher.hpp"
 
 using namespace std;
 
@@ -34,56 +34,39 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
                                             qApp->desktop()->availableGeometry() ) );
     setWindowTitle( "MrHash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
 
-
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
+
+    on_textEdit_textChanged();
 }
 
 MainWindow::~MainWindow() {}
 
-QString crc16( string msg ) {
-    return QString::number( qChecksum( msg.c_str(), qstrlen( msg.c_str() ) ) );
-}
-
-QString crc32( string msg ) {
-    int crc32_ctx = CRC32::crc32( 0, msg.c_str(), msg.length() );
-    //note: right(8) removes the unneeded Fs that appear sometimes at the start of the crc32
-    return QString::number( crc32_ctx, 16 ).right( 8 ).toUpper();
-}
-
-QString tiger( string msg ) {
-    Tiger tigre;
-    return QString::fromStdString( tigre.calcTiger( msg ) ).toLower();
-}
-
-QString ripemd( string msg ) {
-    Rmd160 rmd;
-    return QString::fromStdString( rmd.calcRmd160( msg ) ).toLower();
-}
-
 void MainWindow::on_textEdit_textChanged() {
-    string text = textEdit->toPlainText().toStdString();
-    crc16edit->setText( crc16( text ) );
-    crc32edit->setText( crc32( text ) );
-    base64edit->setText( textEdit->toPlainText().toUtf8().toBase64() );
-    md4edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md4 ).toHex() );
-    md5edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md5 ).toHex() );
-    sha1edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha1 ).toHex() );
-    sha224edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha224 ).toHex() );
-    sha256edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha256 ).toHex() );
-    sha384edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha384 ).toHex() );
-    sha512edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha512 ).toHex() );
-    sha3224edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_224 ).toHex() );
-    sha3256edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_256 ).toHex() );
-    sha3384edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_384 ).toHex() );
-    sha3512edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_512 ).toHex() );
-    tigeredit->setText( tiger( text ) );
-    ripemdedit->setText( ripemd( text ) );
-    Haval hav;
-    haval128edit->setText( QString::fromStdString( hav.calcHaval( text, 128, 5 ) ).toLower() );
-    haval160edit->setText( QString::fromStdString( hav.calcHaval( text, 160, 5 ) ).toLower() );
-    haval192edit->setText( QString::fromStdString( hav.calcHaval( text, 192, 5 ) ).toLower() );
-    haval224edit->setText( QString::fromStdString( hav.calcHaval( text, 224, 5 ) ).toLower() );
-    haval256edit->setText( QString::fromStdString( hav.calcHaval( text, 256, 5 ) ).toLower() );
+    bool show_uppercase = actionShowUppercase->isChecked();
+    QString text = textEdit->toPlainText();
+    QByteArray utf_text = text.toUtf8();
+    string std_text = text.toStdString();
+    crc16edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC16 ) );
+    crc32edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC32 ) );
+    md4edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Md4 ) );
+    md5edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Md5 ) );
+    sha1edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha1 ) );
+    sha224edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha224 ) );
+    sha256edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha256 ) );
+    sha384edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha384 ) );
+    sha512edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha512 ) );
+    sha3224edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha3_224 ) );
+    sha3256edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha3_256 ) );
+    sha3384edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha3_384 ) );
+    sha3512edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha3_512 ) );
+    tigeredit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::TIGER ) );
+    ripemdedit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::RIPEMD160 ) );
+    haval128edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL128 ) );
+    haval160edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL160 ) );
+    haval192edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL192 ) );
+    haval224edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL224 ) );
+    haval256edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL256 ) );
+    base64edit->setText( utf_text.toBase64() );
 }
 
 void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
@@ -93,4 +76,8 @@ void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
 
 void MainWindow::on_actionEsci_triggered() {
     close();
+}
+
+void MainWindow::on_actionShowUppercase_toggled( bool ){
+    on_textEdit_textChanged();
 }
