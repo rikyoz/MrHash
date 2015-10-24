@@ -27,7 +27,10 @@ A copy of the GNU General Public License is available at
 
 using namespace std;
 
-MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
+#define UPPERCASE_SETTING QStringLiteral("show_uppercase")
+
+MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
+                                            settings( "settings.ini", QSettings::IniFormat ) {
     setupUi( this );
     setFixedSize( this->size() );
     setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
@@ -36,10 +39,16 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 
+    actionShowUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
+
     on_textEdit_textChanged();
 }
 
 MainWindow::~MainWindow() {}
+
+void MainWindow::closeEvent( QCloseEvent * ) {
+    settings.setValue( UPPERCASE_SETTING, actionShowUppercase->isChecked() );
+}
 
 void MainWindow::on_textEdit_textChanged() {
     bool show_uppercase = actionShowUppercase->isChecked();
