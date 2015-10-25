@@ -41,7 +41,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
 
     actionShowUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
 
-    on_textEdit_textChanged();
+    on_plainTextEdit_textChanged();
 }
 
 MainWindow::~MainWindow() {}
@@ -50,9 +50,22 @@ void MainWindow::closeEvent( QCloseEvent * ) {
     settings.setValue( UPPERCASE_SETTING, actionShowUppercase->isChecked() );
 }
 
-void MainWindow::on_textEdit_textChanged() {
+void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
+    About abt_dlg;
+    abt_dlg.exec();
+}
+
+void MainWindow::on_actionEsci_triggered() {
+    close();
+}
+
+void MainWindow::on_actionShowUppercase_toggled( bool ){
+    on_plainTextEdit_textChanged();
+}
+
+void MainWindow::on_plainTextEdit_textChanged() {
     bool show_uppercase = actionShowUppercase->isChecked();
-    QString text = textEdit->toPlainText();
+    QString text = plainTextEdit->toPlainText();
     QByteArray utf_text = text.toUtf8();
     string std_text = text.toStdString();
     crc16edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC16 ) );
@@ -81,17 +94,4 @@ void MainWindow::on_textEdit_textChanged() {
     sha512edit->setCursorPosition(0);
     sha3384edit->setCursorPosition(0);
     sha3512edit->setCursorPosition(0);
-}
-
-void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
-    About abt_dlg;
-    abt_dlg.exec();
-}
-
-void MainWindow::on_actionEsci_triggered() {
-    close();
-}
-
-void MainWindow::on_actionShowUppercase_toggled( bool ){
-    on_textEdit_textChanged();
 }

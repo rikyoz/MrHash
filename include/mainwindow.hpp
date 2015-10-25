@@ -17,8 +17,8 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
     private slots:
         void on_actionEsci_triggered();
         void on_actionInformazioni_su_Hasher_triggered();
-        void on_textEdit_textChanged();
         void on_actionShowUppercase_toggled( bool );
+        void on_plainTextEdit_textChanged();
 
     private:
         QSettings settings;

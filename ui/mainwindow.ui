@@ -34,6 +34,9 @@
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_18">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CRC16 CCITT X.25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string>CRC16</string>
       </property>
@@ -56,19 +59,6 @@
       </property>
       <property name="readOnly">
        <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="4">
-     <widget class="QTextEdit" name="textEdit">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="placeholderText">
-       <string>Plain text...</string>
       </property>
      </widget>
     </item>
@@ -374,6 +364,19 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="0" column="0" colspan="4">
+     <widget class="QPlainTextEdit" name="plainTextEdit">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="placeholderText">
+       <string>Plain text...</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
