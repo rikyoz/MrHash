@@ -33,10 +33,9 @@ HEADERS  += mainwindow.hpp about.hpp \
 
 FORMS    += mainwindow.ui about.ui
 
-RESOURCES += res/icon.qrc
+RESOURCES += res/icon.qrc res/translations.qrc
 
-# Coming soon...
-#TRANSLATIONS = t1_it.ts qt_it.ts
+TRANSLATIONS = res/lang/it.ts
 
 ########################### CONFIGURATION ############################
 CONFIG += c++14
