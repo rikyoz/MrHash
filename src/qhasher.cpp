@@ -5,8 +5,9 @@
 #include "rmd160.h"
 #include "haval.h"
 
-QString crc16( string msg ) {
-    return QString::number( qChecksum( msg.c_str(), qstrlen( msg.c_str() ) ) );
+QString crc16( string msg, bool uppercase ) {
+    QString result = QString::number( qChecksum( msg.c_str(), qstrlen( msg.c_str() ) ), 16 );
+    return uppercase ? result.toUpper() : result;
 }
 
 QString crc32( string msg, bool uppercase ) {
@@ -37,7 +38,7 @@ QString haval( string msg, int bits, bool uppercase ) {
 QString QHasher::hash( string text, bool uppercase, QHashAlgorithm algorithm ) {
     switch( algorithm ) {
         case QHashAlgorithm::CRC16:
-            return crc16( text );
+            return crc16( text, uppercase );
         case QHashAlgorithm::CRC32:
             return crc32( text, uppercase );
         case QHashAlgorithm::TIGER:
