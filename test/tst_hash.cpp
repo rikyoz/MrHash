@@ -24,6 +24,14 @@ void Hash::initTestCase() {}
 void Hash::cleanupTestCase() {}
 
 void Hash::testCRC16() {
+    QString calc_hash1 = QHasher::hash( "394", false, QHashAlgorithm::CRC16 );
+    QString calc_hash2 = QHasher::hash( "Hello World!", false, QHashAlgorithm::CRC16 );
+    QString calc_hash3 = QHasher::hash( "°@§éìò*", false, QHashAlgorithm::CRC16 );
+    QString calc_hash4 = QHasher::hash( "¾ͣᵦ ᴻᶯ", false, QHashAlgorithm::CRC16 );
+    QVERIFY2( calc_hash1 == "b91b", "Failed Test 1" );
+    QVERIFY2( calc_hash2 == "bbb", "Failed Test 2" );
+    QVERIFY2( calc_hash3 == "de36", "Failed Test 3" );
+    QVERIFY2( calc_hash4 == "8f50", "Failed Test 4" );
 
 }
 

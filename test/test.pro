@@ -32,4 +32,3 @@ QMAKE_CXXFLAGS += -I\"$$PWD/../include/\" -I\"$$PWD/../lib/\"
 
 SOURCES += tst_hash.cpp qhasher.cpp tiger.cpp rmd160.cpp haval.cpp globalstuff.cpp
 HEADERS += qhasher.hpp tiger.h rmd160.h haval.h globalstuff.h boost/crc.hpp
-#DEFINES += SRCDIR=\\\"$$PWD/\\\"
