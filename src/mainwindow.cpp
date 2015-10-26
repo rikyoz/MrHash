@@ -70,6 +70,7 @@ void MainWindow::on_plainTextEdit_textChanged() {
     string std_text = text.toStdString();
     crc16edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC16 ) );
     crc32edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC32 ) );
+    crc64edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC64 ) );
     md4edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Md4 ) );
     md5edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Md5 ) );
     sha1edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha1 ) );

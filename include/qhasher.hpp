@@ -6,7 +6,7 @@
 #include <QString>
 #include <QCryptographicHash>
 
-enum class QHashAlgorithm { CRC16, CRC32, TIGER, RIPEMD160, HAVAL128, HAVAL160,
+enum class QHashAlgorithm { CRC16, CRC32, CRC64, TIGER, RIPEMD160, HAVAL128, HAVAL160,
                             HAVAL192, HAVAL224, HAVAL256 };
 
 class QHasher {

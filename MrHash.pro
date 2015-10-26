@@ -18,18 +18,20 @@ contains(QT_ARCH, i386) {
 
 VPATH += ./src/          \
          ./include/      \
+         ./lib/          \
          ./res/          \
          ./ui/
 
-INCLUDEPATH += ./include/
+INCLUDEPATH += ./include/ \
+               ./lib/
 
 SOURCES += main.cpp mainwindow.cpp about.cpp \
-           crc32.cpp globalstuff.cpp tiger.cpp rmd160.cpp haval.cpp \
+           globalstuff.cpp tiger.cpp rmd160.cpp haval.cpp \
            qhasher.cpp
 
 HEADERS  += mainwindow.hpp about.hpp \
-            crc32.h bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h \
-            qhasher.hpp
+            bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h \
+            qhasher.hpp boost/crc.hpp
 
 FORMS    += mainwindow.ui about.ui
 

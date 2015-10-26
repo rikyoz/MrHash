@@ -1,4 +1,5 @@
 build/
 pkg/
 bin/
+lib/boost/
 *.pro.user*
