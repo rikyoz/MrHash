@@ -39,7 +39,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 
-    actionShowUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
+    actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
 
     on_plainTextEdit_textChanged();
 }
@@ -47,7 +47,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
 MainWindow::~MainWindow() {}
 
 void MainWindow::closeEvent( QCloseEvent * ) {
-    settings.setValue( UPPERCASE_SETTING, actionShowUppercase->isChecked() );
+    settings.setValue( UPPERCASE_SETTING, actionUseUppercase->isChecked() );
 }
 
 void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
@@ -59,12 +59,12 @@ void MainWindow::on_actionEsci_triggered() {
     close();
 }
 
-void MainWindow::on_actionShowUppercase_toggled( bool ){
+void MainWindow::on_actionUseUppercase_toggled( bool ){
     on_plainTextEdit_textChanged();
 }
 
 void MainWindow::on_plainTextEdit_textChanged() {
-    bool show_uppercase = actionShowUppercase->isChecked();
+    bool show_uppercase = actionUseUppercase->isChecked();
     QString text = plainTextEdit->toPlainText();
     QByteArray utf_text = text.toUtf8();
     string std_text = text.toStdString();

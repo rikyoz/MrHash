@@ -34,23 +34,22 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="maximumSize">
+       <size>
+        <width>50</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_18">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CRC16 CCITT X.25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="text">
-       <string>CRC16</string>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="2">
      <widget class="QLabel" name="label_6">
+      <property name="toolTip">
+       <string>CRC32B</string>
+      </property>
       <property name="text">
        <string>CRC32:</string>
       </property>
@@ -64,12 +63,28 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="maximumSize">
+       <size>
+        <width>70</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="0" column="4" rowspan="2">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_18">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CRC16 CCITT X.25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>CRC16:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6" rowspan="2">
      <layout class="QFormLayout" name="formLayout">
       <property name="sizeConstraint">
        <enum>QLayout::SetFixedSize</enum>
@@ -426,7 +441,7 @@
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionShowUppercase"/>
+    <addaction name="actionUseUppercase"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -458,12 +473,12 @@
     <string>About Qt</string>
    </property>
   </action>
-  <action name="actionShowUppercase">
+  <action name="actionUseUppercase">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show in UPPERCASE</string>
+    <string>Use upper-case letters</string>
    </property>
   </action>
  </widget>

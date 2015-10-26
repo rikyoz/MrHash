@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="it_IT">
+<TS version="2.1" language="it">
 <context>
     <name>About</name>
     <message>
@@ -69,154 +69,164 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="38"/>
-        <source>CRC16</source>
+        <location filename="../../ui/mainwindow.ui" line="25"/>
+        <source>CRC64:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="45"/>
+        <location filename="../../ui/mainwindow.ui" line="51"/>
         <source>CRC32:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="71"/>
-        <source>Plain text...</source>
-        <translation>Testo in chiaro...</translation>
+        <location filename="../../ui/mainwindow.ui" line="77"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CRC16 CCITT X.25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="89"/>
+        <location filename="../../ui/mainwindow.ui" line="80"/>
+        <source>CRC16:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwindow.ui" line="98"/>
         <source>MD4:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="103"/>
+        <location filename="../../ui/mainwindow.ui" line="112"/>
         <source>MD5:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="117"/>
+        <location filename="../../ui/mainwindow.ui" line="126"/>
         <source>SHA-1:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="131"/>
+        <location filename="../../ui/mainwindow.ui" line="140"/>
         <source>SHA-224:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="145"/>
+        <location filename="../../ui/mainwindow.ui" line="154"/>
         <source>SHA-256:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="159"/>
+        <location filename="../../ui/mainwindow.ui" line="168"/>
         <source>SHA-384:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="173"/>
+        <location filename="../../ui/mainwindow.ui" line="182"/>
         <source>SHA-512:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="187"/>
+        <location filename="../../ui/mainwindow.ui" line="196"/>
         <source>Tiger:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="204"/>
+        <location filename="../../ui/mainwindow.ui" line="213"/>
         <source>RIPEMD-160:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="221"/>
+        <location filename="../../ui/mainwindow.ui" line="230"/>
         <source>HAVAL-128:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="238"/>
+        <location filename="../../ui/mainwindow.ui" line="247"/>
         <source>HAVAL-160:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="255"/>
+        <location filename="../../ui/mainwindow.ui" line="264"/>
         <source>HAVAL-192:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="272"/>
+        <location filename="../../ui/mainwindow.ui" line="281"/>
         <source>HAVAL-224:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="289"/>
+        <location filename="../../ui/mainwindow.ui" line="298"/>
         <source>HAVAL-256:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="306"/>
+        <location filename="../../ui/mainwindow.ui" line="315"/>
         <source>Base64:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="323"/>
+        <location filename="../../ui/mainwindow.ui" line="332"/>
         <source>SHA3-224:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="330"/>
+        <location filename="../../ui/mainwindow.ui" line="339"/>
         <source>SHA3-256:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="337"/>
+        <location filename="../../ui/mainwindow.ui" line="346"/>
         <source>SHA3-384:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="344"/>
+        <location filename="../../ui/mainwindow.ui" line="353"/>
         <source>SHA3-512:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="391"/>
+        <location filename="../../ui/mainwindow.ui" line="409"/>
+        <source>Plain text...</source>
+        <translation>Testo in chiaro...</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwindow.ui" line="426"/>
         <source>File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="397"/>
+        <location filename="../../ui/mainwindow.ui" line="432"/>
         <source>?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="404"/>
+        <location filename="../../ui/mainwindow.ui" line="439"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="414"/>
+        <location filename="../../ui/mainwindow.ui" line="449"/>
         <source>Exit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="417"/>
+        <location filename="../../ui/mainwindow.ui" line="452"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="426"/>
+        <location filename="../../ui/mainwindow.ui" line="461"/>
         <source>About Mr. Hash</source>
         <translation>Informazioni su Mr. Hash</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="435"/>
+        <location filename="../../ui/mainwindow.ui" line="470"/>
         <source>About Qt</source>
         <translation>Informazioni su Qt</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="443"/>
-        <source>Show in UPPERCASE</source>
-        <translation>Mostra in MAIUSCOLO</translation>
+        <location filename="../../ui/mainwindow.ui" line="478"/>
+        <source>Use upper-case letters</source>
+        <translation>Utilizza lettere maiuscole</translation>
     </message>
 </context>
 </TS>
