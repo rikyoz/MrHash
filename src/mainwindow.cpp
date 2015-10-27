@@ -16,6 +16,10 @@ A copy of the GNU General Public License is available at
 */
 #include <QCryptographicHash>
 #include <QDesktopWidget>
+#include <QFileDialog>
+#include <QMimeDatabase>
+#include <QDateTime>
+#include <QFileIconProvider>
 
 #ifdef QT_DEBUG
 #include <QDebug>
@@ -29,6 +33,28 @@ using namespace std;
 
 #define UPPERCASE_SETTING QStringLiteral("show_uppercase")
 
+#ifdef Q_OS_WIN
+/* Needed to read correct file properties on NTFS file systems,
+ * see http://doc.qt.io/qt-5/qfiledevice.html#Permission-enum */
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#endif
+
+QString humanReadableSize( qint64 size ) {
+    QString byteSize =  QString::number( size ) + " bytes";
+
+    if ( size < 1024 ) return byteSize;
+
+    QStringList list = { "KB", "MB", "GB", "TB" };
+
+    QStringListIterator iter( list );
+    float fsize = size;
+    while ( fsize >= 1024.0 && iter.hasNext() ) {
+        iter.next();
+        fsize /= 1024.0;
+    }
+    return QString("%1 %2 (%3)").arg( fsize, 0, 'f', 2 ).arg( iter.peekPrevious() ).arg( byteSize );
+}
+
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
                                             settings( "settings.ini", QSettings::IniFormat ) {
     setupUi( this );
@@ -40,8 +66,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 
     actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
-
-    on_plainTextEdit_textChanged();
 }
 
 MainWindow::~MainWindow() {}
@@ -90,7 +114,50 @@ void MainWindow::on_plainTextEdit_textChanged() {
     haval224edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL224 ) );
     haval256edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL256 ) );
     base64edit->setText( utf_text.toBase64() );
+void MainWindow::on_pushButton_clicked() {
+    QFileDialog fileDialog(this);
+    if ( fileDialog.exec() == QFileDialog::Accepted ) {
+        if ( fileDialog.selectedFiles().size() == 0 ) return;
 
+        filePathEdit->setText( fileDialog.selectedFiles()[0] );
+        readFileInfo( fileDialog.selectedFiles()[0] );
+
+    }
+}
+inline QString MainWindow::boolToStr( bool value ) { return value ? tr("yes") : tr("no"); }
+
+void MainWindow::readFileInfo( QString filePath ) {
+#ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup++;
+#endif
+
+    QFileInfo fileInfo( filePath );
+    pathLabel->setText( fileInfo.absolutePath() );
+    nameLabel->setText( fileInfo.fileName() );
+    extLabel->setText( fileInfo.suffix() );
+
+    QMimeDatabase mimeDatabase;
+    mimeLabel->setText( mimeDatabase.mimeTypeForFile( fileInfo, QMimeDatabase::MatchExtension ).name() );
+    ctypeLabel->setText( mimeDatabase.mimeTypeForFile( fileInfo, QMimeDatabase::MatchContent ).name() );
+
+    sizeLabel->setText( humanReadableSize( fileInfo.size() ) );
+    lastReadLabel->setText( fileInfo.lastRead().toString( Qt::DefaultLocaleLongDate ) );
+    lastChangeLabel->setText( fileInfo.lastModified().toString( Qt::DefaultLocaleLongDate ) );
+    creationLabel->setText( fileInfo.created().toString( Qt::DefaultLocaleLongDate ) );
+    hiddenLabel->setText( boolToStr( fileInfo.isHidden() ) );
+    readableLabel->setText( boolToStr( fileInfo.isReadable() ) );
+    writableLabel->setText( boolToStr( fileInfo.isWritable() ) );
+    executableLabel->setText( boolToStr( fileInfo.isExecutable() ) );
+    ownerLabel->setText( fileInfo.owner() );
+
+    QFileIconProvider iconProvider;
+    QIcon icon = iconProvider.icon( fileInfo );
+    fileIconLabel->setPixmap( icon.pixmap( icon.availableSizes().last() ) );
+
+#ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup--;
+#endif
+}
     sha384edit->setCursorPosition(0);
     sha512edit->setCursorPosition(0);
     sha3384edit->setCursorPosition(0);

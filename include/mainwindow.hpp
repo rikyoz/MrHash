@@ -19,9 +19,12 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_actionInformazioni_su_Hasher_triggered();
         void on_actionUseUppercase_toggled( bool );
         void on_plainTextEdit_textChanged();
+        void on_pushButton_clicked();
 
     private:
         QSettings settings;
+        QString boolToStr( bool value );
+        void readFileInfo( QString filePath );
 };
 
 #endif // MAINWINDOW_H
