@@ -83,37 +83,20 @@ void MainWindow::on_actionEsci_triggered() {
     close();
 }
 
-void MainWindow::on_actionUseUppercase_toggled( bool ){
-    on_plainTextEdit_textChanged();
+void MainWindow::on_actionUseUppercase_toggled( bool useUppercase ){
+    foreach( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+        if ( lineEdit != filePathEdit ) {
+            QString text = lineEdit->text();
+            lineEdit->setText( useUppercase ? text.toUpper() : text.toLower() );
+        }
+    }
 }
 
 void MainWindow::on_plainTextEdit_textChanged() {
-    bool show_uppercase = actionUseUppercase->isChecked();
     QString text = plainTextEdit->toPlainText();
-    QByteArray utf_text = text.toUtf8();
-    string std_text = text.toStdString();
-    crc16edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC16 ) );
-    crc32edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC32 ) );
-    crc64edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::CRC64 ) );
-    md4edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Md4 ) );
-    md5edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Md5 ) );
-    sha1edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha1 ) );
-    sha224edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha224 ) );
-    sha256edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha256 ) );
-    sha384edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha384 ) );
-    sha512edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha512 ) );
-    sha3224edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha3_224 ) );
-    sha3256edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha3_256 ) );
-    sha3384edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha3_384 ) );
-    sha3512edit->setText( QHasher::hash( utf_text, show_uppercase, QCryptographicHash::Sha3_512 ) );
-    tigeredit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::TIGER ) );
-    ripemdedit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::RIPEMD160 ) );
-    haval128edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL128 ) );
-    haval160edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL160 ) );
-    haval192edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL192 ) );
-    haval224edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL224 ) );
-    haval256edit->setText( QHasher::hash( std_text, show_uppercase, QHashAlgorithm::HAVAL256 ) );
-    base64edit->setText( utf_text.toBase64() );
+    calculateHashes( text.toUtf8(), actionUseUppercase->isChecked() );
+}
+
 void MainWindow::on_pushButton_clicked() {
     QFileDialog fileDialog(this);
     if ( fileDialog.exec() == QFileDialog::Accepted ) {
@@ -122,8 +105,23 @@ void MainWindow::on_pushButton_clicked() {
         filePathEdit->setText( fileDialog.selectedFiles()[0] );
         readFileInfo( fileDialog.selectedFiles()[0] );
 
+        calculateFileHashes( fileDialog.selectedFiles()[0] );
     }
 }
+
+void MainWindow::on_tabWidget_currentChanged( int index ) {
+    if ( index != 0 )
+        on_plainTextEdit_textChanged();
+    else if ( filePathEdit->text().isEmpty() ) {
+        //no file selected, no hash to show
+        foreach( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+            if ( lineEdit != filePathEdit )
+                lineEdit->clear();
+        }
+    } else
+        calculateFileHashes( filePathEdit->text() );
+}
+
 inline QString MainWindow::boolToStr( bool value ) { return value ? tr("yes") : tr("no"); }
 
 void MainWindow::readFileInfo( QString filePath ) {
@@ -158,6 +156,37 @@ void MainWindow::readFileInfo( QString filePath ) {
     qt_ntfs_permission_lookup--;
 #endif
 }
+
+void MainWindow::calculateFileHashes( QString fileName ) {
+    QFile file( fileName );
+    if ( file.open( QFile::ReadOnly ) )
+        calculateHashes( file.readAll(), actionUseUppercase->isChecked() );
+}
+
+void MainWindow::calculateHashes( QByteArray content, bool show_uppercase ) {
+    crc16edit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::CRC16 ) );
+    crc32edit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::CRC32 ) );
+    crc64edit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::CRC64 ) );
+    md4edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Md4 ) );
+    md5edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Md5 ) );
+    sha1edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha1 ) );
+    sha224edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha224 ) );
+    sha256edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha256 ) );
+    sha384edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha384 ) );
+    sha512edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha512 ) );
+    sha3224edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha3_224 ) );
+    sha3256edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha3_256 ) );
+    sha3384edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha3_384 ) );
+    sha3512edit->setText( QHasher::hash( content, show_uppercase, QCryptographicHash::Sha3_512 ) );
+    tigeredit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::TIGER ) );
+    ripemdedit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::RIPEMD160 ) );
+    haval128edit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::HAVAL128 ) );
+    haval160edit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::HAVAL160 ) );
+    haval192edit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::HAVAL192 ) );
+    haval224edit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::HAVAL224 ) );
+    haval256edit->setText( QHasher::hash( content, show_uppercase, QHashAlgorithm::HAVAL256 ) );
+    base64edit->setText( content.toBase64() );
+
     sha384edit->setCursorPosition(0);
     sha512edit->setCursorPosition(0);
     sha3384edit->setCursorPosition(0);

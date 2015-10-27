@@ -14,7 +14,7 @@ class QHasher {
         QHasher();
 
     public:
-        static QString hash( std::string text, bool uppercase, QHashAlgorithm algorithm );
+        static QString hash( QByteArray text, bool uppercase, QHashAlgorithm algorithm );
         static QString hash( QByteArray text, bool uppercase, QCryptographicHash::Algorithm algorithm );
 };
 

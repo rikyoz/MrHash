@@ -15,6 +15,9 @@ class Hash : public QObject {
         void testCRC16();
         void testCRC32();
         void testCRC64();
+        void testTiger();
+        void testRipeMD();
+        void testHaval();
 };
 
 Hash::Hash() {}
@@ -55,6 +58,21 @@ void Hash::testCRC64() {
     QVERIFY2( calc_hash2 == "b7b143e2d7955099", "Failed Test 2" );
     QVERIFY2( calc_hash3 == "4e2fed92d5a1b781", "Failed Test 3" );
     QVERIFY2( calc_hash4 == "9ea1bf21510ba84d", "Failed Test 4" );
+}
+
+void Hash::testTiger() {
+    QString calc_hash1 = QHasher::hash( "abc", false, QHashAlgorithm::TIGER );
+    QVERIFY2( calc_hash1 == "f258c1e88414ab2a527ab541ffc5b8bf935f7b951c132951", "Failed Test 1" );
+}
+
+void Hash::testRipeMD() {
+    QString calc_hash1 = QHasher::hash( "message digest", false, QHashAlgorithm::RIPEMD160 );
+    QVERIFY2( calc_hash1 == "5d0689ef49d2fae572b881b123a85ffa21595f36", "Failed Test 1" );
+}
+
+void Hash::testHaval() {
+    QString calc_hash1 = QHasher::hash( "haval test vector", false, QHashAlgorithm::HAVAL192 );
+    QVERIFY2( calc_hash1 == "459a0399abac23ceb4d6a89e7eb312a69eca335fa180a504", "Failed Test 1" );
 }
 
 QTEST_APPLESS_MAIN(Hash)

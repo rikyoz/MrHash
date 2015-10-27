@@ -15,16 +15,19 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void closeEvent( QCloseEvent* );
 
     private slots:
-        void on_actionEsci_triggered();
         void on_actionInformazioni_su_Hasher_triggered();
-        void on_actionUseUppercase_toggled( bool );
+        void on_actionEsci_triggered();
+        void on_actionUseUppercase_toggled( bool useUppercase );
         void on_plainTextEdit_textChanged();
         void on_pushButton_clicked();
+        void on_tabWidget_currentChanged( int index );
 
     private:
         QSettings settings;
         QString boolToStr( bool value );
         void readFileInfo( QString filePath );
+        void calculateHashes( QByteArray content, bool show_uppercase );
+        void calculateFileHashes( QString fileName );
 };
 
 #endif // MAINWINDOW_H
