@@ -1,8 +1,6 @@
 #ifndef HASHER_H
 #define HASHER_H
 
-#include <iostream>
-
 #include <QString>
 #include <QCryptographicHash>
 
@@ -39,11 +37,11 @@ struct QRipeMD : private Rmd160, public QHashCalculator {
 };
 
 struct QHaval : private Haval, public QHashCalculator {
-    QHaval( int bit ) : m_bit( bit ) { }
+    QHaval( int bit ) : _bit( bit ) { }
     QString hash( QByteArray msg, bool uppercase ) override;
 
     private:
-        const int m_bit;
+        const int _bit;
 };
 
 namespace QHashAlgorithm {

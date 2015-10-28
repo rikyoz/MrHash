@@ -60,7 +60,7 @@ QString QHaval::hash( QByteArray msg, bool uppercase ) {
     string msg_str( msg.constData(), msg.length() );
     Haval hav;
     //Note: Mr Hash calculates only Haval hashes with 5 passes
-    string std_result = hav.calcHaval( msg_str, m_bit, 5 );
+    string std_result = hav.calcHaval( msg_str, _bit, 5 );
     QString result = QString::fromStdString( std_result );
     return uppercase ? result : result.toLower();
 }
