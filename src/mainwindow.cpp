@@ -45,7 +45,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     setFixedSize( this->size() );
     setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
                                             qApp->desktop()->availableGeometry() ) );
-    setWindowTitle( "MrHash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
+    setWindowTitle( "Mr. Hash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 

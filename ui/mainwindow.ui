@@ -55,9 +55,6 @@
     </item>
     <item row="1" column="2">
      <widget class="QLabel" name="label_6">
-      <property name="toolTip">
-       <string>CRC32B</string>
-      </property>
       <property name="text">
        <string>CRC32:</string>
       </property>
