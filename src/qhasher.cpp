@@ -64,3 +64,17 @@ QString QHaval::hash( QByteArray msg, bool uppercase ) {
     QString result = QString::fromStdString( std_result );
     return uppercase ? result : result.toLower();
 }
+
+namespace QHashAlgorithm {
+    QCRC16  CRC16;
+    QCRC32  CRC32;
+    QCRC64  CRC64;
+    QTiger  TIGER;
+    QRipeMD RIPEMD160;
+    QHaval  HAVAL128(128);
+    QHaval  HAVAL160(160);
+    QHaval  HAVAL192(192);
+    QHaval  HAVAL224(224);
+    QHaval  HAVAL256(256);
+
+}

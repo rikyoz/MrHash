@@ -45,16 +45,16 @@ struct QHaval : private Haval, public QHashCalculator {
 };
 
 namespace QHashAlgorithm {
-    static QCRC16  CRC16;
-    static QCRC32  CRC32;
-    static QCRC64  CRC64;
-    static QTiger  TIGER;
-    static QRipeMD RIPEMD160;
-    static QHaval  HAVAL128(128);
-    static QHaval  HAVAL160(160);
-    static QHaval  HAVAL192(192);
-    static QHaval  HAVAL224(224);
-    static QHaval  HAVAL256(256);
+    extern QCRC16  CRC16;
+    extern QCRC32  CRC32;
+    extern QCRC64  CRC64;
+    extern QTiger  TIGER;
+    extern QRipeMD RIPEMD160;
+    extern QHaval  HAVAL128;
+    extern QHaval  HAVAL160;
+    extern QHaval  HAVAL192;
+    extern QHaval  HAVAL224;
+    extern QHaval  HAVAL256;
 }
 
 #endif // HASHER_H
