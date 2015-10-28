@@ -39,22 +39,6 @@ using namespace std;
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
-QString humanReadableSize( qint64 size ) {
-    QString byteSize =  QString::number( size ) + " bytes";
-
-    if ( size < 1024 ) return byteSize;
-
-    QStringList list = { "KB", "MB", "GB", "TB" };
-
-    QStringListIterator iter( list );
-    float fsize = size;
-    while ( fsize >= 1024.0 && iter.hasNext() ) {
-        iter.next();
-        fsize /= 1024.0;
-    }
-    return QString("%1 %2 (%3)").arg( fsize, 0, 'f', 2 ).arg( iter.peekPrevious() ).arg( byteSize );
-}
-
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
                                             settings( "settings.ini", QSettings::IniFormat ) {
     setupUi( this );
@@ -66,6 +50,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 
     actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
+    fileInfoWidget->setVisible(false);
 }
 
 MainWindow::~MainWindow() {}
@@ -122,35 +107,14 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
         calculateFileHashes( filePathEdit->text() );
 }
 
-inline QString MainWindow::boolToStr( bool value ) { return value ? tr("yes") : tr("no"); }
-
 void MainWindow::readFileInfo( QString filePath ) {
 #ifdef Q_OS_WIN
     qt_ntfs_permission_lookup++;
 #endif
 
     QFileInfo fileInfo( filePath );
-    pathLabel->setText( fileInfo.absolutePath() );
-    nameLabel->setText( fileInfo.fileName() );
-    extLabel->setText( fileInfo.suffix() );
-
-    QMimeDatabase mimeDatabase;
-    mimeLabel->setText( mimeDatabase.mimeTypeForFile( fileInfo, QMimeDatabase::MatchExtension ).name() );
-    ctypeLabel->setText( mimeDatabase.mimeTypeForFile( fileInfo, QMimeDatabase::MatchContent ).name() );
-
-    sizeLabel->setText( humanReadableSize( fileInfo.size() ) );
-    lastReadLabel->setText( fileInfo.lastRead().toString( Qt::DefaultLocaleLongDate ) );
-    lastChangeLabel->setText( fileInfo.lastModified().toString( Qt::DefaultLocaleLongDate ) );
-    creationLabel->setText( fileInfo.created().toString( Qt::DefaultLocaleLongDate ) );
-    hiddenLabel->setText( boolToStr( fileInfo.isHidden() ) );
-    readableLabel->setText( boolToStr( fileInfo.isReadable() ) );
-    writableLabel->setText( boolToStr( fileInfo.isWritable() ) );
-    executableLabel->setText( boolToStr( fileInfo.isExecutable() ) );
-    ownerLabel->setText( fileInfo.owner() );
-
-    QFileIconProvider iconProvider;
-    QIcon icon = iconProvider.icon( fileInfo );
-    fileIconLabel->setPixmap( icon.pixmap( icon.availableSizes().last() ) );
+    fileInfoWidget->setVisible( true );
+    fileInfoWidget->loadFileInfo( fileInfo );
 
 #ifdef Q_OS_WIN
     qt_ntfs_permission_lookup--;
