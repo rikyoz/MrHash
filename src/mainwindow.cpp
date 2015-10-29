@@ -70,7 +70,7 @@ void MainWindow::on_actionEsci_triggered() {
 
 void MainWindow::on_actionUseUppercase_toggled( bool useUppercase ){
     foreach( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
-        if ( lineEdit != filePathEdit ) {
+        if ( lineEdit != filePathEdit && lineEdit != base64edit ) {
             QString text = lineEdit->text();
             lineEdit->setText( useUppercase ? text.toUpper() : text.toLower() );
         }
