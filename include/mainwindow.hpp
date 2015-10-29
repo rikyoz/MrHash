@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_plainTextEdit_textChanged();
         void on_pushButton_clicked();
         void on_tabWidget_currentChanged( int index );
+        void on_closeButton_clicked();
 
     private:
         QSettings settings;
@@ -28,6 +29,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void readFileInfo( QString filePath );
         void calculateHashes( QByteArray content, bool show_uppercase );
         void calculateFileHashes( QString fileName );
+        void cleanHashEdits();
 };
 
 #endif // MAINWINDOW_H

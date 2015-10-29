@@ -50,7 +50,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 
     actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
-    fileInfoWidget->setVisible(false);
+    fileInfoWidget->setVisible( false );
+    closeButton->setVisible( false );
 }
 
 MainWindow::~MainWindow() {}
@@ -99,12 +100,23 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
         on_plainTextEdit_textChanged();
     else if ( filePathEdit->text().isEmpty() ) {
         //no file selected, no hash to show
-        foreach( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
-            if ( lineEdit != filePathEdit )
-                lineEdit->clear();
-        }
+        cleanHashEdits();
     } else
         calculateFileHashes( filePathEdit->text() );
+}
+
+void MainWindow::on_closeButton_clicked() {
+    filePathEdit->clear();
+    fileInfoWidget->setVisible( false );
+    closeButton->setVisible( false );
+    cleanHashEdits();
+}
+
+void MainWindow::cleanHashEdits() {
+    foreach( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+        if ( lineEdit != filePathEdit )
+            lineEdit->clear();
+    }
 }
 
 void MainWindow::readFileInfo( QString filePath ) {
@@ -113,8 +125,9 @@ void MainWindow::readFileInfo( QString filePath ) {
 #endif
 
     QFileInfo fileInfo( filePath );
-    fileInfoWidget->setVisible( true );
     fileInfoWidget->loadFileInfo( fileInfo );
+    fileInfoWidget->setVisible( true );
+    closeButton->setVisible( true );
 
 #ifdef Q_OS_WIN
     qt_ntfs_permission_lookup--;

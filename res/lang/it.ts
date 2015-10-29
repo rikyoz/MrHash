@@ -74,77 +74,77 @@ p, li { white-space: pre-wrap; }
         <translation>Percorso:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="64"/>
+        <location filename="../../ui/fileinfowidget.ui" line="67"/>
         <source>File Name:</source>
         <translation>Nome del File:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="84"/>
+        <location filename="../../ui/fileinfowidget.ui" line="87"/>
         <source>Extension:</source>
         <translation>Estensione:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="104"/>
+        <location filename="../../ui/fileinfowidget.ui" line="107"/>
         <source>MIME Type:</source>
         <translation>Tipo MIME:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="124"/>
+        <location filename="../../ui/fileinfowidget.ui" line="127"/>
         <source>Content Type:</source>
         <translation>Tipo Contenuto:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="144"/>
+        <location filename="../../ui/fileinfowidget.ui" line="147"/>
         <source>Magic Number:</source>
         <translation>Numero Magico:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="164"/>
+        <location filename="../../ui/fileinfowidget.ui" line="167"/>
         <source>Size:</source>
         <translation>Dimensioni:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="184"/>
+        <location filename="../../ui/fileinfowidget.ui" line="187"/>
         <source>Last Read:</source>
         <translation>Ultima Lettura:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="204"/>
+        <location filename="../../ui/fileinfowidget.ui" line="207"/>
         <source>Last Change:</source>
         <translation>Ultima Modifica:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="224"/>
+        <location filename="../../ui/fileinfowidget.ui" line="227"/>
         <source>Creation Date:</source>
         <translation>Data Creazione:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="244"/>
+        <location filename="../../ui/fileinfowidget.ui" line="247"/>
         <source>Hidden:</source>
         <translation>Nascosto:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="264"/>
+        <location filename="../../ui/fileinfowidget.ui" line="267"/>
         <source>Readable:</source>
         <translation>Leggibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="284"/>
+        <location filename="../../ui/fileinfowidget.ui" line="287"/>
         <source>Writable:</source>
         <translation>Scrivibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="304"/>
+        <location filename="../../ui/fileinfowidget.ui" line="307"/>
         <source>Executable:</source>
         <translation>Eseguibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="324"/>
+        <location filename="../../ui/fileinfowidget.ui" line="327"/>
         <source>Owner:</source>
         <translation>Proprietario:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="344"/>
+        <location filename="../../ui/fileinfowidget.ui" line="347"/>
         <source>File Icon:</source>
         <translation>Icona del File:</translation>
     </message>
@@ -282,63 +282,68 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="463"/>
+        <location filename="../../ui/mainwindow.ui" line="443"/>
         <source>Browse...</source>
         <translation>Sfoglia...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="471"/>
+        <location filename="../../ui/mainwindow.ui" line="470"/>
+        <source>Close File</source>
+        <translation>Chiudi File</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwindow.ui" line="478"/>
         <source>Text</source>
         <translation>Testo</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="498"/>
+        <location filename="../../ui/mainwindow.ui" line="505"/>
         <source>Plain text...</source>
         <translation>Testo in chiaro...</translation>
     </message>
     <message>
         <location filename="../../ui/mainwindow.ui" line="422"/>
-        <location filename="../../ui/mainwindow.ui" line="519"/>
+        <location filename="../../ui/mainwindow.ui" line="526"/>
         <source>File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="456"/>
+        <location filename="../../ui/mainwindow.ui" line="453"/>
         <source>Choose a file...</source>
         <translation>Scegli un file...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="525"/>
+        <location filename="../../ui/mainwindow.ui" line="532"/>
         <source>?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="532"/>
+        <location filename="../../ui/mainwindow.ui" line="539"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="542"/>
+        <location filename="../../ui/mainwindow.ui" line="549"/>
         <source>Exit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="545"/>
+        <location filename="../../ui/mainwindow.ui" line="552"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="554"/>
+        <location filename="../../ui/mainwindow.ui" line="561"/>
         <source>About Mr. Hash</source>
         <translation>Informazioni su Mr. Hash</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="563"/>
+        <location filename="../../ui/mainwindow.ui" line="570"/>
         <source>About Qt</source>
         <translation>Informazioni su Qt</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="571"/>
+        <location filename="../../ui/mainwindow.ui" line="578"/>
         <source>Use upper-case letters</source>
         <translation>Utilizza lettere maiuscole</translation>
     </message>
