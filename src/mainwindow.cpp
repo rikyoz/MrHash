@@ -47,11 +47,14 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
                                             qApp->desktop()->availableGeometry() ) );
     setWindowTitle( "Mr. Hash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
 
-    connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
-
     actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
     fileInfoWidget->setVisible( false );
     closeButton->setVisible( false );
+    actionClose->setDisabled( true );
+
+    connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
+    connect( actionOpen, SIGNAL( triggered() ), this, SLOT( on_browseButton_clicked() ) );
+    connect( actionClose, SIGNAL( triggered() ), this, SLOT( on_closeButton_clicked() ) );
 }
 
 MainWindow::~MainWindow() {}
@@ -83,7 +86,7 @@ void MainWindow::on_plainTextEdit_textChanged() {
     calculateHashes( text.toUtf8(), actionUseUppercase->isChecked() );
 }
 
-void MainWindow::on_pushButton_clicked() {
+void MainWindow::on_browseButton_clicked() {
     QFileDialog fileDialog(this);
     if ( fileDialog.exec() == QFileDialog::Accepted ) {
         if ( fileDialog.selectedFiles().size() == 0 ) return;
@@ -109,6 +112,7 @@ void MainWindow::on_closeButton_clicked() {
     filePathEdit->clear();
     fileInfoWidget->setVisible( false );
     closeButton->setVisible( false );
+    actionClose->setDisabled( true );
     cleanHashEdits();
 }
 
@@ -128,6 +132,7 @@ void MainWindow::readFileInfo( QString filePath ) {
     fileInfoWidget->loadFileInfo( fileInfo );
     fileInfoWidget->setVisible( true );
     closeButton->setVisible( true );
+    actionClose->setDisabled( false );
 
 #ifdef Q_OS_WIN
     qt_ntfs_permission_lookup--;

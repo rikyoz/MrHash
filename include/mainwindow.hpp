@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_actionEsci_triggered();
         void on_actionUseUppercase_toggled( bool useUppercase );
         void on_plainTextEdit_textChanged();
-        void on_pushButton_clicked();
+        void on_browseButton_clicked();
         void on_tabWidget_currentChanged( int index );
         void on_closeButton_clicked();
 

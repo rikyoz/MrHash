@@ -438,7 +438,7 @@
          <number>5</number>
         </property>
         <item row="0" column="2">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="browseButton">
           <property name="text">
            <string>Browse...</string>
           </property>
@@ -525,6 +525,9 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionClose"/>
+    <addaction name="separator"/>
     <addaction name="actionEsci"/>
    </widget>
    <widget class="QMenu" name="menu">
@@ -576,6 +579,16 @@
    </property>
    <property name="text">
     <string>Use upper-case letters</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
    </property>
   </action>
  </widget>

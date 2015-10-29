@@ -302,6 +302,16 @@ p, li { white-space: pre-wrap; }
         <translation>Testo in chiaro...</translation>
     </message>
     <message>
+        <location filename="../../ui/mainwindow.ui" line="586"/>
+        <source>Open</source>
+        <translation>Apri</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwindow.ui" line="591"/>
+        <source>Close</source>
+        <translation>Chiudi</translation>
+    </message>
+    <message>
         <location filename="../../ui/mainwindow.ui" line="422"/>
         <location filename="../../ui/mainwindow.ui" line="526"/>
         <source>File</source>
@@ -313,37 +323,37 @@ p, li { white-space: pre-wrap; }
         <translation>Scegli un file...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="532"/>
+        <location filename="../../ui/mainwindow.ui" line="535"/>
         <source>?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="539"/>
+        <location filename="../../ui/mainwindow.ui" line="542"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="549"/>
+        <location filename="../../ui/mainwindow.ui" line="552"/>
         <source>Exit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="552"/>
+        <location filename="../../ui/mainwindow.ui" line="555"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="561"/>
+        <location filename="../../ui/mainwindow.ui" line="564"/>
         <source>About Mr. Hash</source>
         <translation>Informazioni su Mr. Hash</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="570"/>
+        <location filename="../../ui/mainwindow.ui" line="573"/>
         <source>About Qt</source>
         <translation>Informazioni su Qt</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="578"/>
+        <location filename="../../ui/mainwindow.ui" line="581"/>
         <source>Use upper-case letters</source>
         <translation>Utilizza lettere maiuscole</translation>
     </message>
