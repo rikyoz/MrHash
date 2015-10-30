@@ -142,26 +142,6 @@
     </widget>
    </item>
    <item row="5" column="0">
-    <widget class="QLabel" name="label_37">
-     <property name="text">
-      <string>Magic Number:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QLabel" name="magicLabel">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="textInteractionFlags">
-      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
     <widget class="QLabel" name="label_24">
      <property name="text">
       <string>Size:</string>
@@ -171,7 +151,7 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
+   <item row="5" column="1">
     <widget class="QLabel" name="sizeLabel">
      <property name="text">
       <string/>
@@ -181,7 +161,7 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="label_29">
      <property name="text">
       <string>Last Read:</string>
@@ -191,7 +171,7 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="6" column="1">
     <widget class="QLabel" name="lastReadLabel">
      <property name="text">
       <string/>
@@ -201,7 +181,7 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item row="7" column="0">
     <widget class="QLabel" name="label_26">
      <property name="text">
       <string>Last Change:</string>
@@ -211,7 +191,7 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
+   <item row="7" column="1">
     <widget class="QLabel" name="lastChangeLabel">
      <property name="text">
       <string/>
@@ -221,7 +201,7 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="label_28">
      <property name="text">
       <string>Creation Date:</string>
@@ -231,7 +211,7 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="1">
+   <item row="8" column="1">
     <widget class="QLabel" name="creationLabel">
      <property name="text">
       <string/>
@@ -241,7 +221,7 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="0">
+   <item row="9" column="0">
     <widget class="QLabel" name="label_44">
      <property name="text">
       <string>Hidden:</string>
@@ -251,7 +231,7 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
+   <item row="9" column="1">
     <widget class="QLabel" name="hiddenLabel">
      <property name="text">
       <string/>
@@ -261,7 +241,7 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
+   <item row="10" column="0">
     <widget class="QLabel" name="label_41">
      <property name="text">
       <string>Readable:</string>
@@ -271,7 +251,7 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
+   <item row="10" column="1">
     <widget class="QLabel" name="readableLabel">
      <property name="text">
       <string/>
@@ -281,7 +261,7 @@
      </property>
     </widget>
    </item>
-   <item row="12" column="0">
+   <item row="11" column="0">
     <widget class="QLabel" name="label_42">
      <property name="text">
       <string>Writable:</string>
@@ -291,7 +271,7 @@
      </property>
     </widget>
    </item>
-   <item row="12" column="1">
+   <item row="11" column="1">
     <widget class="QLabel" name="writableLabel">
      <property name="text">
       <string/>
@@ -301,7 +281,7 @@
      </property>
     </widget>
    </item>
-   <item row="13" column="0">
+   <item row="12" column="0">
     <widget class="QLabel" name="label_43">
      <property name="text">
       <string>Executable:</string>
@@ -311,7 +291,7 @@
      </property>
     </widget>
    </item>
-   <item row="13" column="1">
+   <item row="12" column="1">
     <widget class="QLabel" name="executableLabel">
      <property name="text">
       <string/>
@@ -321,7 +301,7 @@
      </property>
     </widget>
    </item>
-   <item row="14" column="0">
+   <item row="13" column="0">
     <widget class="QLabel" name="label_45">
      <property name="text">
       <string>Owner:</string>
@@ -331,7 +311,7 @@
      </property>
     </widget>
    </item>
-   <item row="14" column="1">
+   <item row="13" column="1">
     <widget class="QLabel" name="ownerLabel">
      <property name="text">
       <string/>
@@ -341,14 +321,14 @@
      </property>
     </widget>
    </item>
-   <item row="15" column="0">
+   <item row="14" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>File Icon:</string>
      </property>
     </widget>
    </item>
-   <item row="15" column="1">
+   <item row="14" column="1">
     <widget class="QLabel" name="fileIconLabel">
      <property name="text">
       <string/>
