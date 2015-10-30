@@ -18,23 +18,26 @@ contains(QT_ARCH, i386) {
 
 VPATH += ./src/          \
          ./include/      \
+         ./lib/          \
          ./res/          \
          ./ui/
-         
-INCLUDEPATH += ./include/
+
+INCLUDEPATH += ./include/ \
+               ./lib/
 
 SOURCES += main.cpp mainwindow.cpp about.cpp \
-           crc32.cpp globalstuff.cpp tiger.cpp rmd160.cpp haval.cpp
+           globalstuff.cpp tiger.cpp rmd160.cpp haval.cpp \
+           qhasher.cpp fileinfowidget.cpp filehashcalculator.cpp
 
 HEADERS  += mainwindow.hpp about.hpp \
-            crc32.h bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h
+            bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h \
+            qhasher.hpp fileinfowidget.hpp filehashcalculator.hpp
 
-FORMS    += mainwindow.ui about.ui
+FORMS    += mainwindow.ui about.ui fileinfowidget.ui
 
-RESOURCES += res/icon.qrc
+RESOURCES += res/icon.qrc res/translations.qrc
 
-# Coming soon...
-#TRANSLATIONS = t1_it.ts qt_it.ts
+TRANSLATIONS = res/lang/it.ts
 
 ########################### CONFIGURATION ############################
 CONFIG += c++14
@@ -50,7 +53,7 @@ MOC_DIR     = ./$${BUILD}/.moc
 UI_DIR      = ./$${BUILD}/.ui
 
 MAJOR_VER  = 0
-MINOR_VER  = 2
+MINOR_VER  = 3
 PATCH_VER  = 0
 VERSION    = $${MAJOR_VER}.$${MINOR_VER}.$${PATCH_VER}
 DEFINES   += "MAJOR_VER=$${MAJOR_VER}" "MINOR_VER=$${MINOR_VER}" "PATCH_VER=$${PATCH_VER}"
@@ -62,11 +65,12 @@ win32 {
     QMAKE_TARGET_COMPANY = rikyoz
     QMAKE_TARGET_COPYRIGHT = Copyright (c) 2015 $${QMAKE_TARGET_COMPANY}
     RC_ICONS = res/icon.ico
-    RC_LANG  = 0x0410 #Italian Language
-    contains(QT_ARCH, i386) {
-        QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
-    } else {
-        QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
+    !win32-g++ {
+        contains(QT_ARCH, i386) {
+            QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+        } else {
+            QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010 Debugger20
+Copyright (c) 2015 rikyoz <rik20@live.it>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,76 +16,80 @@ A copy of the GNU General Public License is available at
 */
 #include <QCryptographicHash>
 #include <QDesktopWidget>
+#include <QFileDialog>
+#include <QMimeDatabase>
+#include <QDateTime>
+#include <QFileIconProvider>
 
-#include "crc32.h"
-#include "tiger.h"
-#include "rmd160.h"
-#include "haval.h"
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif
 
 #include "mainwindow.hpp"
 #include "about.hpp"
 
 using namespace std;
 
-MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ) {
-    setupUi( this );
-    this->setFixedSize( this->size() );
-    this->setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
-                                            qApp->desktop()->availableGeometry() ) );
-    this->setWindowTitle( "MrHash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
+#define UPPERCASE_SETTING QStringLiteral("show_uppercase")
 
+#ifdef Q_OS_WIN
+/* Needed to read correct file properties on NTFS file systems,
+ * see http://doc.qt.io/qt-5/qfiledevice.html#Permission-enum */
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#endif
+
+MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
+                                            settings( "settings.ini", QSettings::IniFormat ) {
+    setupUi( this );
+    setFixedSize( this->size() );
+    setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
+                                            qApp->desktop()->availableGeometry() ) );
+    setWindowTitle( "Mr. Hash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
+
+    actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
+    fileInfoWidget->setVisible( false );
+    closeButton->setVisible( false );
+    actionClose->setDisabled( true );
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
+    connect( actionOpen, SIGNAL( triggered() ), this, SLOT( on_browseButton_clicked() ) );
+    connect( actionClose, SIGNAL( triggered() ), this, SLOT( on_closeButton_clicked() ) );
+
+    hash_edits.push_front( base64edit );
+    hash_edits.push_front( haval256edit );
+    hash_edits.push_front( haval224edit );
+    hash_edits.push_front( haval192edit );
+    hash_edits.push_front( haval160edit );
+    hash_edits.push_front( haval128edit );
+    hash_edits.push_front( ripemdedit );
+    hash_edits.push_front( tigeredit );
+    hash_edits.push_front( sha3512edit );
+    hash_edits.push_front( sha3384edit );
+    hash_edits.push_front( sha3256edit );
+    hash_edits.push_front( sha3224edit );
+    hash_edits.push_front( sha512edit );
+    hash_edits.push_front( sha384edit );
+    hash_edits.push_front( sha256edit );
+    hash_edits.push_front( sha224edit );
+    hash_edits.push_front( sha1edit );
+    hash_edits.push_front( md5edit );
+    hash_edits.push_front( md4edit );
+    hash_edits.push_front( crc64edit );
+    hash_edits.push_front( crc32edit );
+    hash_edits.push_front( crc16edit );
 }
 
 MainWindow::~MainWindow() {}
 
-QString crc32( string msg ) {
-    int crc32_ctx = CRC32::crc32( 0, msg.c_str(), msg.length() );
-    //note: right(8) removes the unneeded Fs that appear sometimes at the start of the crc32
-    return QString::number(crc32_ctx, 16).right(8).toUpper();
-}
-
-QString tiger( string msg ) {
-    Tiger tigre;
-    return QString::fromStdString( tigre.calcTiger( msg ) ).toLower();
-}
-
-QString ripemd( string msg ) {
-    Rmd160 rmd;
-    return QString::fromStdString( rmd.calcRmd160( msg ) ).toLower();
-}
-
-void MainWindow::on_textEdit_textChanged() {
-    string text = textEdit->toPlainText().toStdString();
-    Haval hav;
-    QString haval128 = QString::fromStdString( hav.calcHaval( text, 128, 5 ) ).toLower();
-    QString haval160 = QString::fromStdString( hav.calcHaval( text, 160, 5 ) ).toLower();
-    QString haval192 = QString::fromStdString( hav.calcHaval( text, 192, 5 ) ).toLower();
-    QString haval224 = QString::fromStdString( hav.calcHaval( text, 224, 5 ) ).toLower();
-    QString haval256 = QString::fromStdString( hav.calcHaval( text, 256, 5 ) ).toLower();
-    QString base64 = textEdit->toPlainText().toUtf8().toBase64();
-    crc16edit->setText( QString::number( qChecksum( text.c_str(), qstrlen( text.c_str() ) ) ) );
-    crc32edit->setText( crc32( text ) );
-    md4edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md4 ).toHex() );
-    md5edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Md5 ).toHex() );
-    sha1edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha1 ).toHex() );
-    sha224edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha224 ).toHex() );
-    sha256edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha256 ).toHex() );
-    sha384edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha384 ).toHex() );
-    sha512edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha512 ).toHex() );
-    sha3224edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_224 ).toHex() );
-    sha3256edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_256 ).toHex() );
-    sha3384edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_384 ).toHex() );
-    sha3512edit->setText( QCryptographicHash::hash( text.c_str(), QCryptographicHash::Sha3_512 ).toHex() );
-    tigeredit->setText( tiger( text ) );
-    ripemdedit->setText( ripemd( text ) );
-    haval128edit->setText( haval128 );
-    haval160edit->setText( haval160 );
-    haval192edit->setText( haval192 );
-    haval224edit->setText( haval224 );
-    haval256edit->setText( haval256 );
-    base64edit->setText( base64 );
+void MainWindow::closeEvent( QCloseEvent *event ) {
+    settings.setValue( UPPERCASE_SETTING, actionUseUppercase->isChecked() );
+    if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
+        event->ignore();
+        FileHashCalculator* calculator = hash_calculator.release();
+        calculator->requestInterruption();
+        calculator->wait();
+        event->accept();
+    }
 }
 
 void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
@@ -94,5 +98,129 @@ void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
 }
 
 void MainWindow::on_actionEsci_triggered() {
-    this->close();
+    close();
+}
+
+void MainWindow::on_actionUseUppercase_toggled( bool useUppercase ){
+    foreach( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+        if ( lineEdit != filePathEdit && lineEdit != base64edit ) {
+            QString text = lineEdit->text();
+            lineEdit->setText( useUppercase ? text.toUpper() : text.toLower() );
+        }
+    }
+}
+
+void MainWindow::on_plainTextEdit_textChanged() {
+    QString text = plainTextEdit->toPlainText();
+    calculateHashes( text.toUtf8(), actionUseUppercase->isChecked() );
+}
+
+void MainWindow::on_browseButton_clicked() {
+    QFileDialog fileDialog(this);
+    if ( fileDialog.exec() == QFileDialog::Accepted ) {
+        if ( fileDialog.selectedFiles().size() == 0 ) return;
+
+        filePathEdit->setText( fileDialog.selectedFiles()[0] );
+        readFileInfo( fileDialog.selectedFiles()[0] );
+
+        calculateFileHashes( fileDialog.selectedFiles()[0] );
+    }
+}
+
+void MainWindow::on_tabWidget_currentChanged( int index ) {
+    if ( index != 0 )
+        on_plainTextEdit_textChanged();
+    else if ( filePathEdit->text().isEmpty() ) {
+        //no file selected, no hash to show
+        cleanHashEdits();
+    } else
+        calculateFileHashes( filePathEdit->text() );
+}
+
+void MainWindow::on_closeButton_clicked() {
+    if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
+        hash_calculator->disconnect();
+        hash_calculator->requestInterruption();
+        hash_calculator->wait();
+    }
+    filePathEdit->clear();
+    fileInfoWidget->setVisible( false );
+    closeButton->setVisible( false );
+    actionClose->setDisabled( true );
+    cleanHashEdits();
+}
+
+void MainWindow::on_newHashString( int index, QString hash ) {
+    hash_edits[index]->setText( hash );
+    hash_edits[index]->setCursorPosition( 0 );
+}
+
+void MainWindow::cleanHashEdits() {
+    foreach( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+        if ( lineEdit != filePathEdit )
+            lineEdit->clear();
+    }
+}
+
+void MainWindow::readFileInfo( QString filePath ) {
+#ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup++;
+#endif
+
+    QFileInfo fileInfo( filePath );
+    fileInfoWidget->loadFileInfo( fileInfo );
+    fileInfoWidget->setVisible( true );
+    closeButton->setVisible( true );
+    actionClose->setDisabled( false );
+
+#ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup--;
+#endif
+}
+
+void MainWindow::calculateFileHashes( QString fileName ) {
+    foreach( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+        if ( lineEdit != filePathEdit ) {
+            lineEdit->setText( tr("Calculating...") );
+            lineEdit->setCursorPosition( 0 );
+        }
+    }
+    if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
+        hash_calculator->disconnect();
+        hash_calculator->requestInterruption();
+        hash_calculator->wait();
+    }
+    hash_calculator.reset( new FileHashCalculator( this, fileName, actionUseUppercase->isChecked() ) );
+    connect( hash_calculator.get(), SIGNAL( newHashString(int, QString) ), this, SLOT( on_newHashString(int, QString) ) );
+    hash_calculator->start();
+}
+
+void MainWindow::calculateHashes( QByteArray content, bool show_uppercase ) {
+    crc16edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::CRC16 ) );
+    crc32edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::CRC32 ) );
+    crc64edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::CRC64 ) );
+    md4edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::MD4 ) );
+    md5edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::MD5 ) );
+    sha1edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA1 ) );
+    sha224edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA224 ) );
+    sha256edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA256 ) );
+    sha384edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA384 ) );
+    sha512edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA512 ) );
+    sha3224edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA3_224 ) );
+    sha3256edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA3_256 ) );
+    sha3384edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA3_384 ) );
+    sha3512edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::SHA3_512 ) );
+    tigeredit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::TIGER ) );
+    ripemdedit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::RIPEMD160 ) );
+    haval128edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::HAVAL128 ) );
+    haval160edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::HAVAL160 ) );
+    haval192edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::HAVAL192 ) );
+    haval224edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::HAVAL224 ) );
+    haval256edit->setText( QHashCalculator::hash( content, show_uppercase, QHashAlgorithm::HAVAL256 ) );
+    base64edit->setText( content.toBase64() );
+
+    sha384edit->setCursorPosition(0);
+    sha512edit->setCursorPosition(0);
+    sha3384edit->setCursorPosition(0);
+    sha3512edit->setCursorPosition(0);
 }
