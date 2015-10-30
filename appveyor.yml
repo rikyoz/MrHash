@@ -48,6 +48,8 @@ artifacts:
     - path: bin\**\*.7z
       name: binary
 
+test: off
+
 deploy:
     provider: GitHub
     release: Mr. Hash v%mrhash_version%
