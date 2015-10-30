@@ -192,7 +192,6 @@ void MainWindow::calculateFileHashes( QString fileName ) {
     }
     hash_calculator.reset( new FileHashCalculator( this, fileName, actionUseUppercase->isChecked() ) );
     connect( hash_calculator.get(), SIGNAL( newHashString(int, QString) ), this, SLOT( on_newHashString(int, QString) ) );
-    connect( hash_calculator.get(), SIGNAL( finished() ), hash_calculator.get(), SLOT( deleteLater() ) );
     hash_calculator->start();
 }
 

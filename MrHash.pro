@@ -31,7 +31,7 @@ SOURCES += main.cpp mainwindow.cpp about.cpp \
 
 HEADERS  += mainwindow.hpp about.hpp \
             bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h \
-            qhasher.hpp fileinfowidget.hpp filehashcalculator.hpp boost/crc.hpp
+            qhasher.hpp fileinfowidget.hpp filehashcalculator.hpp
 
 FORMS    += mainwindow.ui about.ui fileinfowidget.ui
 
@@ -65,7 +65,6 @@ win32 {
     QMAKE_TARGET_COMPANY = rikyoz
     QMAKE_TARGET_COPYRIGHT = Copyright (c) 2015 $${QMAKE_TARGET_COMPANY}
     RC_ICONS = res/icon.ico
-    RC_LANG  = 0x0410 #Italian Language
     !win32-g++ {
         contains(QT_ARCH, i386) {
             QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
