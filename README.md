@@ -1,7 +1,7 @@
 # Mr. Hash
 Mr. Hash is a cross-platform tool for calculating the hashes of files and plain texts.
 
-![](http://img.shields.io/badge/version-v0.3.0-blue.svg?style=flat) ![](https://img.shields.io/badge/platform-windows%20|%20linux%20|%20mac-red.svg?style=flat) ![](http://img.shields.io/badge/architecture-x86%20|%20x64-yellow.svg?style=flat) ![](http://img.shields.io/badge/license-GPL%20v2-lightgrey.svg?style=flat)
+[![Build status](https://ci.appveyor.com/api/projects/status/pfhxpfuj97g9jvme?svg=true&passingText=build%20OK%20&pendingText=building...%20&failingText=build%20failed%20)](https://ci.appveyor.com/project/rikyoz/mrhash) ![](http://img.shields.io/badge/version-v0.3.0-blue.svg?style=flat) ![](https://img.shields.io/badge/platform-windows%20|%20linux%20|%20mac-red.svg?style=flat) ![](http://img.shields.io/badge/architecture-x86%20|%20x64-yellow.svg?style=flat) ![](http://img.shields.io/badge/license-GPL%20v2-lightgrey.svg?style=flat)
 
 ## Screenshots
 ![](/doc/img/screenshot0-v0.3.png)
