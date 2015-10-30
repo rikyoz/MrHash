@@ -1,81 +1,91 @@
 #include "qhasher.hpp"
 
-#include "tiger.h"
-#include "rmd160.h"
-#include "haval.h"
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif
 
 #include "boost/crc.hpp"
 
-using boost::crc_optimal;
+boost::crc_optimal< 32, 0x04c11db7, 0xffffffff, 0xffffffff, true, true > crc32_calc;
+boost::crc_optimal< 64,
+                    0x42f0e1eba9ea3693,
+                    0xffffffffffffffffULL,
+                    0xffffffffffffffffULL, true, true > crc64_calc;
 
-crc_optimal<32, 0x04c11db7, 0xffffffff, 0xffffffff, true, true> crc32_calc;
-crc_optimal<64, 0x42f0e1eba9ea3693, 0xffffffffffffffffULL, 0xffffffffffffffffULL, true, true> crc64_calc;
+QString QHashCalculator::hash( QByteArray data, bool uppercase, QHashCalculator& calculator ) {
+    return calculator.hash( data, uppercase );
+}
 
-QString crc16( string msg, bool uppercase ) {
-    QString result = QString::number( qChecksum( msg.c_str(), msg.length() ), 16 );
+QString QCRC16::hash( QByteArray msg, bool uppercase ) {
+    QString result = QString::number( qChecksum( msg.constData(), msg.length() ), 16 );
     return uppercase ? result.toUpper() : result;
 }
 
-QString crc32( string msg, bool uppercase ) {
+QString QCRC32::hash( QByteArray msg, bool uppercase ) {
     crc32_calc.reset();
-    crc32_calc.process_bytes( msg.data(), msg.size() );
+    crc32_calc.process_bytes( msg.constData(), msg.size() );
     QString result = QString::number( crc32_calc.checksum(), 16 );
     return uppercase ? result.toUpper() : result;
 }
 
-QString crc64( string msg, bool uppercase ) {
+QString QCRC64::hash( QByteArray msg, bool uppercase ) {
     crc64_calc.reset();
-    crc64_calc.process_bytes( msg.data(), msg.size() );
+    crc64_calc.process_bytes( msg.constData(), msg.size() );
     QString result = QString::number( crc64_calc.checksum(), 16 );
     return uppercase ? result.toUpper() : result;
 }
 
-QString tiger( string msg, bool uppercase ) {
-    Tiger tiger;
-    QString result = QString::fromStdString( tiger.calcTiger( msg ) );
+QString QTiger::hash( QByteArray msg, bool uppercase ) {
+    tiger_init();
+    tiger_write( reinterpret_cast<const byte*>( msg.constData() ), msg.length() );
+    string std_result = charToHex( reinterpret_cast<const char *>( tiger_final() ), TIGER_HASHLEN_BYTE );
+    QString result = QString::fromStdString( std_result );
     return uppercase ? result : result.toLower();
 }
 
-QString ripemd( string msg, bool uppercase ) {
-    Rmd160 rmd;
-    QString result = QString::fromStdString( rmd.calcRmd160( msg ) );
+QString QRipeMD::hash( QByteArray msg, bool uppercase ) {
+    rmd160_init();
+    rmd160_write( reinterpret_cast<const byte*>( msg.constData() ), msg.length() );
+    string std_result = charToHex( reinterpret_cast<const char*>( rmd160_final() ), RMD160_HASHLEN_BYTE );
+    QString result = QString::fromStdString( std_result );
     return uppercase ? result : result.toLower();
 }
 
-QString haval( string msg, int bits, bool uppercase ) {
+QString QHaval::hash( QByteArray msg, bool uppercase ) {
+    string msg_str( msg.constData(), msg.length() );
     Haval hav;
-    QString result = QString::fromStdString( hav.calcHaval( msg, bits, 5 ) );
+    //Note: Mr Hash calculates only Haval hashes with 5 passes
+    string std_result = hav.calcHaval( msg_str, _bit, 5 );
+    QString result = QString::fromStdString( std_result );
     return uppercase ? result : result.toLower();
 }
 
-QString QHasher::hash( string text, bool uppercase, QHashAlgorithm algorithm ) {
-    switch( algorithm ) {
-        case QHashAlgorithm::CRC16:
-            return crc16( text, uppercase );
-        case QHashAlgorithm::CRC32:
-            return crc32( text, uppercase );
-        case QHashAlgorithm::CRC64:
-            return crc64( text, uppercase );
-        case QHashAlgorithm::TIGER:
-            return tiger( text, uppercase );
-        case QHashAlgorithm::RIPEMD160:
-            return ripemd( text, uppercase );
-        case QHashAlgorithm::HAVAL128:
-            return haval( text, 128, uppercase );
-        case QHashAlgorithm::HAVAL160:
-            return haval( text, 160, uppercase );
-        case QHashAlgorithm::HAVAL192:
-            return haval( text, 192, uppercase );
-        case QHashAlgorithm::HAVAL224:
-            return haval( text, 224, uppercase );
-        case QHashAlgorithm::HAVAL256:
-            return haval( text, 256, uppercase );
-        default:
-            return "(algorithm not supported)";
-    }
+QString QCryptoAlgorithm::hash( QByteArray msg, bool uppercase ) {
+    QString result = QCryptographicHash::hash( msg, _algorithm ).toHex();
+    return uppercase ? result.toUpper() : result;
 }
 
-QString QHasher::hash( QByteArray text, bool uppercase, QCryptographicHash::Algorithm algorithm ) {
-    QString result = QCryptographicHash::hash( text, algorithm ).toHex();
-    return uppercase ? result.toUpper() : result;
+namespace QHashAlgorithm {
+    QCRC16  CRC16;
+    QCRC32  CRC32;
+    QCRC64  CRC64;
+    QTiger  TIGER;
+    QRipeMD RIPEMD160;
+    QHaval  HAVAL128( 128 );
+    QHaval  HAVAL160( 160 );
+    QHaval  HAVAL192( 192 );
+    QHaval  HAVAL224( 224 );
+    QHaval  HAVAL256( 256 );
+    QCryptoAlgorithm MD4( QCryptographicHash::Md4 );
+    QCryptoAlgorithm MD5( QCryptographicHash::Md5 );
+    QCryptoAlgorithm SHA1( QCryptographicHash::Sha1 );
+    QCryptoAlgorithm SHA224( QCryptographicHash::Sha224 );
+    QCryptoAlgorithm SHA256( QCryptographicHash::Sha256 );
+    QCryptoAlgorithm SHA384( QCryptographicHash::Sha384 );
+    QCryptoAlgorithm SHA512( QCryptographicHash::Sha512 );
+    QCryptoAlgorithm SHA3_224( QCryptographicHash::Sha3_224 );
+    QCryptoAlgorithm SHA3_256( QCryptographicHash::Sha3_256 );
+    QCryptoAlgorithm SHA3_384( QCryptographicHash::Sha3_384 );
+    QCryptoAlgorithm SHA3_512( QCryptographicHash::Sha3_512 );
+
 }
