@@ -36,9 +36,9 @@ init:
     - vcvarsall.bat %platform%
 
 build_script:
-    - cd $(clone_folder)
+    - cd %clone_folder%
     - mkdir lib
-    - mklink /j $(clone_folder)\lib\boost %BOOST_DIR%\boost
+    - mklink /j %clone_folder%\lib\boost %BOOST_DIR%\boost
     - mkdir build
     - cd build
     - qmake ..\MrHash.pro
@@ -48,7 +48,7 @@ build_script:
     - 7z a -t7z mrhash-v%mrhash_version%-bin-%name%.7z *
     
 artifacts:
-    - path: $(clone_folder)\bin\**\*.7z
+    - path: bin\**\*.7z
       name: binary
 
 deploy:
