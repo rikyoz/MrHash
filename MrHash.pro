@@ -31,7 +31,7 @@ SOURCES += main.cpp mainwindow.cpp about.cpp \
 
 HEADERS  += mainwindow.hpp about.hpp \
             bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h \
-            qhasher.hpp fileinfowidget.hpp filehashcalculator.hpp boost/crc.hpp
+            qhasher.hpp fileinfowidget.hpp filehashcalculator.hpp
 
 FORMS    += mainwindow.ui about.ui fileinfowidget.ui
 
