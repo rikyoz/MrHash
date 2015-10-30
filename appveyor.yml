@@ -28,17 +28,14 @@ environment:
     platform: x64
     target: mrhash64.exe
     qt_dir: C:\Qt\%qt_version%\msvc2013_64\bin
-    
-clone_folder: c:\dev\mrhash
 
 init:
     - set PATH=%PATH%;%msvc_dir%;%qt_dir%;
     - vcvarsall.bat %platform%
 
 build_script:
-    - cd %clone_folder%
     - mkdir lib
-    - mklink /j %clone_folder%\lib\boost %BOOST_DIR%\boost
+    - mklink /j lib\boost %boost_dir%\boost
     - mkdir build
     - cd build
     - qmake ..\MrHash.pro
