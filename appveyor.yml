@@ -48,7 +48,7 @@ build_script:
     - 7z a -t7z mrhash-v%mrhash_version%-bin-%name%.7z *
     
 artifacts:
-    - path: %clone_folder%\bin\**\*.7z
+    - path: bin\**\*.7z
       name: binary
 
 deploy:
