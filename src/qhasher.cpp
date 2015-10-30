@@ -16,11 +16,6 @@ QString QHashCalculator::hash( QByteArray data, bool uppercase, QHashCalculator&
     return calculator.hash( data, uppercase );
 }
 
-QString QHashCalculator::hash( QByteArray text, bool uppercase, QCryptographicHash::Algorithm algorithm ) {
-    QString result = QCryptographicHash::hash( text, algorithm ).toHex();
-    return uppercase ? result.toUpper() : result;
-}
-
 QString QCRC16::hash( QByteArray msg, bool uppercase ) {
     QString result = QString::number( qChecksum( msg.constData(), msg.length() ), 16 );
     return uppercase ? result.toUpper() : result;
@@ -65,16 +60,32 @@ QString QHaval::hash( QByteArray msg, bool uppercase ) {
     return uppercase ? result : result.toLower();
 }
 
+QString QCryptoAlgorithm::hash( QByteArray msg, bool uppercase ) {
+    QString result = QCryptographicHash::hash( msg, _algorithm ).toHex();
+    return uppercase ? result.toUpper() : result;
+}
+
 namespace QHashAlgorithm {
     QCRC16  CRC16;
     QCRC32  CRC32;
     QCRC64  CRC64;
     QTiger  TIGER;
     QRipeMD RIPEMD160;
-    QHaval  HAVAL128(128);
-    QHaval  HAVAL160(160);
-    QHaval  HAVAL192(192);
-    QHaval  HAVAL224(224);
-    QHaval  HAVAL256(256);
+    QHaval  HAVAL128( 128 );
+    QHaval  HAVAL160( 160 );
+    QHaval  HAVAL192( 192 );
+    QHaval  HAVAL224( 224 );
+    QHaval  HAVAL256( 256 );
+    QCryptoAlgorithm MD4( QCryptographicHash::Md4 );
+    QCryptoAlgorithm MD5( QCryptographicHash::Md5 );
+    QCryptoAlgorithm SHA1( QCryptographicHash::Sha1 );
+    QCryptoAlgorithm SHA224( QCryptographicHash::Sha224 );
+    QCryptoAlgorithm SHA256( QCryptographicHash::Sha256 );
+    QCryptoAlgorithm SHA384( QCryptographicHash::Sha384 );
+    QCryptoAlgorithm SHA512( QCryptographicHash::Sha512 );
+    QCryptoAlgorithm SHA3_224( QCryptographicHash::Sha3_224 );
+    QCryptoAlgorithm SHA3_256( QCryptographicHash::Sha3_256 );
+    QCryptoAlgorithm SHA3_384( QCryptographicHash::Sha3_384 );
+    QCryptoAlgorithm SHA3_512( QCryptographicHash::Sha3_512 );
 
 }

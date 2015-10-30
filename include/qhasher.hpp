@@ -13,7 +13,6 @@ struct QHashCalculator {
     virtual QString hash( QByteArray msg, bool uppercase ) = 0;
 
     static QString hash( QByteArray text, bool uppercase, QHashCalculator& calculator );
-    static QString hash( QByteArray text, bool uppercase, QCryptographicHash::Algorithm algorithm );
 };
 
 struct QCRC16 : public QHashCalculator {
@@ -37,11 +36,19 @@ struct QRipeMD : private Rmd160, public QHashCalculator {
 };
 
 struct QHaval : private Haval, public QHashCalculator {
-    QHaval( int bit ) : _bit( bit ) { }
+    QHaval( int bit ) : _bit( bit ) {}
     QString hash( QByteArray msg, bool uppercase ) override;
 
     private:
         const int _bit;
+};
+
+struct QCryptoAlgorithm : public QHashCalculator {
+    QCryptoAlgorithm( QCryptographicHash::Algorithm algorithm ) : _algorithm( algorithm ) {}
+    QString hash(QByteArray msg, bool uppercase) override;
+
+    private:
+        const QCryptographicHash::Algorithm _algorithm;
 };
 
 namespace QHashAlgorithm {
@@ -55,6 +62,17 @@ namespace QHashAlgorithm {
     extern QHaval  HAVAL192;
     extern QHaval  HAVAL224;
     extern QHaval  HAVAL256;
+    extern QCryptoAlgorithm MD4;
+    extern QCryptoAlgorithm MD5;
+    extern QCryptoAlgorithm SHA1;
+    extern QCryptoAlgorithm SHA224;
+    extern QCryptoAlgorithm SHA256;
+    extern QCryptoAlgorithm SHA384;
+    extern QCryptoAlgorithm SHA512;
+    extern QCryptoAlgorithm SHA3_224;
+    extern QCryptoAlgorithm SHA3_256;
+    extern QCryptoAlgorithm SHA3_384;
+    extern QCryptoAlgorithm SHA3_512;
 }
 
 #endif // HASHER_H

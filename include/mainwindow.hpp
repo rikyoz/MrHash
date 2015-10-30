@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include <QSettings>
 
+#include <memory>
+
+#include "qhasher.hpp"
+#include "filehashcalculator.hpp"
+
 #include "ui_mainwindow.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow {
@@ -11,7 +16,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
 
     public:
         explicit MainWindow( QWidget* parent = 0 );
-        ~MainWindow();
+        virtual ~MainWindow();
         void closeEvent( QCloseEvent* );
 
     private slots:
@@ -22,9 +27,13 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_browseButton_clicked();
         void on_tabWidget_currentChanged( int index );
         void on_closeButton_clicked();
+        void on_newHashString( int index, QString hash );
 
     private:
         QSettings settings;
+        QList< QLineEdit* > hash_edits;
+        std::unique_ptr< FileHashCalculator > hash_calculator;
+
         QString boolToStr( bool value );
         void readFileInfo( QString filePath );
         void calculateHashes( QByteArray content, bool show_uppercase );
