@@ -1,11 +1,19 @@
 # Mr. Hash
 Mr. Hash is a cross-platform tool for calculating the hashes of files and plain texts.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/t7q9r8489kdkpfnr?svg=true&passingText=build%20OK%20&pendingText=building...%20&failingText=build%20failed%20)](https://ci.appveyor.com/project/rikyoz/mrhash) ![](http://img.shields.io/badge/version-v0.3.0-blue.svg?style=flat) ![](https://img.shields.io/badge/platform-windows%20|%20linux%20|%20mac-red.svg?style=flat) ![](http://img.shields.io/badge/architecture-x86%20|%20x64-yellow.svg?style=flat) ![](http://img.shields.io/badge/license-GPL%20v2-lightgrey.svg?style=flat)
+[![](http://img.shields.io/badge/version-v0.3.0-blue.png?style=flat)](https://github.com/rikyoz/mrhash/releases/latest)
+[![Build status](https://ci.appveyor.com/api/projects/status/t7q9r8489kdkpfnr?svg=true&passingText=Build%20OK&pendingText=Building...&failingText=Build%20Failed)](https://ci.appveyor.com/project/rikyoz/mrhash)
+![](https://img.shields.io/badge/platform-Windows%20|%20Linux%20|%20Mac-red.png?style=flat)
+![](http://img.shields.io/badge/architecture-x86%20|%20x64-yellow.png?style=flat)
+[![](http://img.shields.io/badge/license-GNU%20GPL%20v2-lightgrey.png?style=flat)](/LICENSE)
+
+
 
 ## Screenshots
-![](/doc/img/screenshot0-v0.3.png)
-![](/doc/img/screenshot1-v0.3.png)
+<p align="center">
+<img src="/doc/img/screenshot0-v0.3.png" /><br/>
+<img src="/doc/img/screenshot1-v0.3.png" />
+</p>
 
 ## Supported Algorithms
 + MD4
@@ -21,5 +29,5 @@ Mr. Hash is a cross-platform tool for calculating the hashes of files and plain 
 + CRC64
 
 <p align="center">
-	<img src="/res/icon.png" />
+<img src="/res/icon.png" />
 </p>
