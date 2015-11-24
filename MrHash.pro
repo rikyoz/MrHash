@@ -26,13 +26,28 @@ VPATH += ./src/          \
 INCLUDEPATH += ./include/ \
                ./lib/
 
-SOURCES += main.cpp mainwindow.cpp about.cpp \
-           globalstuff.cpp haval.cpp \
-           qhasher.cpp fileinfowidget.cpp filehashcalculator.cpp
+SOURCES += \
+           src/main.cpp               \
+           src/mainwindow.cpp         \
+           src/about.cpp              \
+           src/globalstuff.cpp        \
+           src/haval.cpp              \
+           src/qhasher.cpp            \
+           src/qextrahash.cpp         \
+           src/fileinfowidget.cpp     \
+           src/filehashcalculator.cpp
 
-HEADERS  += mainwindow.hpp about.hpp \
-            globalstuff.h haval.h \
-            qhasher.hpp fileinfowidget.hpp filehashcalculator.hpp
+
+HEADERS  += \
+            include/mainwindow.hpp         \
+            include/about.hpp              \
+            include/haval.hpp              \
+            include/qhasher.hpp            \
+            include/qextrahash.hpp         \
+            include/hashalgorithm.hpp      \
+            include/fileinfowidget.hpp     \
+            include/filehashcalculator.hpp \
+            include/globalstuff.hpp
 
 FORMS    += mainwindow.ui about.ui fileinfowidget.ui
 

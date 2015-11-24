@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "globalstuff.h"
+#include "globalstuff.hpp"
 
 #include <cstdio>
 #include <sys/stat.h>

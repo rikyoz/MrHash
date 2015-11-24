@@ -15,14 +15,18 @@
 #ifndef HAVAL_H
 #define HAVAL_H
 
-#include "globalstuff.h"
+#include "globalstuff.hpp"
+#include "hashalgorithm.hpp"
 
-#include <stdint.h>
+#include <cstdint>
 #include <string.h>
 #include <string>
+
+#include <QtGlobal>
+
 using std::string;
 
-class Haval {
+class Haval : public HashAlgorithm {
         struct HAVAL_CONTEXT {
             uint32_t digest[8];		/* message digest (fingerprint) */
             byte	 block[128];	/* context data block */
@@ -37,11 +41,11 @@ class Haval {
 
         string calcHaval( const string &buf );
     protected:
-        void init();
-        void write( const byte* dataBuffer, int dataLength );
-        byte* final();
+        void init() Q_DECL_OVERRIDE;
+        void write( const byte* dataBuffer, int dataLength ) Q_DECL_OVERRIDE;
+        byte* final() Q_DECL_OVERRIDE;
 
-        int hash_length() const { return _length / 8; }
+        unsigned int hash_length() const Q_DECL_OVERRIDE { return _length / 8; }
 
     private:
         void mhash_bzero( void* s, int n ) { memset( s, '\0', n ); }

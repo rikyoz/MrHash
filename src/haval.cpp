@@ -115,7 +115,7 @@
  * HAVAL-5-256 : CDE2484665A560F21EAD246EFF408828FEC111381D92EDDCFB502B36969FEA25
  */
 
-#include "haval.h"
+#include "haval.hpp"
 
 #include <cstdio>
 #include <cstring>
