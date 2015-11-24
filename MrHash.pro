@@ -27,11 +27,11 @@ INCLUDEPATH += ./include/ \
                ./lib/
 
 SOURCES += main.cpp mainwindow.cpp about.cpp \
-           globalstuff.cpp tiger.cpp rmd160.cpp haval.cpp \
+           globalstuff.cpp haval.cpp \
            qhasher.cpp fileinfowidget.cpp filehashcalculator.cpp
 
 HEADERS  += mainwindow.hpp about.hpp \
-            bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h \
+            globalstuff.h haval.h \
             qhasher.hpp fileinfowidget.hpp filehashcalculator.hpp
 
 FORMS    += mainwindow.ui about.ui fileinfowidget.ui

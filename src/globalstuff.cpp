@@ -11,9 +11,9 @@
 
 #include "globalstuff.h"
 
-#include <stdio.h>
+#include <cstdio>
 #include <sys/stat.h>
-#include <string.h>
+#include <cstring>
 
 using std::string;
 
@@ -34,18 +34,6 @@ string charToHex( const char* buf, unsigned int len ) {
             ret += tmp;
         }
     }
-
-    return ret;
-}
-
-unsigned int calcBufSize( struct stat file_stat ) {
-    unsigned int ret;
-
-    ret = file_stat.st_size;
-    if ( ret < 100000 )
-        ret = 100000;
-    else if ( ret > 200000 )
-        ret = 200000;
 
     return ret;
 }

@@ -6,13 +6,15 @@
 
 #include "boost/crc.hpp"
 
-boost::crc_optimal< 32, 0x04c11db7, 0xffffffff, 0xffffffff, true, true > crc32_calc;
-boost::crc_optimal< 64,
-                    0x42f0e1eba9ea3693,
-                    0xffffffffffffffffULL,
-                    0xffffffffffffffffULL, true, true > crc64_calc;
+using boost::crc_optimal;
 
-QString QHashCalculator::hash( QByteArray data, bool uppercase, QHashCalculator& calculator ) {
+typedef crc_optimal< 32, 0x04c11db7, 0xffffffff, 0xffffffff, true, true > boost_crc32;
+typedef crc_optimal< 64, 0x42f0e1eba9ea3693, 0xffffffffffffffffULL, 0xffffffffffffffffULL, true, true > boost_crc64;
+
+boost_crc32 crc32_calc;
+boost_crc64 crc64_calc;
+
+QString QHashCalculator::hash( QByteArray data, bool uppercase, QHashCalculator &calculator ) {
     return calculator.hash( data, uppercase );
 }
 
@@ -36,26 +38,19 @@ QString QCRC64::hash( QByteArray msg, bool uppercase ) {
 }
 
 QString QTiger::hash( QByteArray msg, bool uppercase ) {
-    tiger_init();
-    tiger_write( reinterpret_cast<const byte*>( msg.constData() ), msg.length() );
-    string std_result = charToHex( reinterpret_cast<const char *>( tiger_final() ), TIGER_HASHLEN_BYTE );
-    QString result = QString::fromStdString( std_result );
-    return uppercase ? result : result.toLower();
+    QString result = QCryptoHash::hash( msg, QCryptoHash::TIGER ).toHex();
+    return uppercase ? result.toUpper() : result;
 }
 
 QString QRipeMD::hash( QByteArray msg, bool uppercase ) {
-    rmd160_init();
-    rmd160_write( reinterpret_cast<const byte*>( msg.constData() ), msg.length() );
-    string std_result = charToHex( reinterpret_cast<const char*>( rmd160_final() ), RMD160_HASHLEN_BYTE );
-    QString result = QString::fromStdString( std_result );
-    return uppercase ? result : result.toLower();
+    QString result = QCryptoHash::hash( msg, QCryptoHash::RMD160 ).toHex();
+    return uppercase ? result.toUpper() : result;
 }
 
 QString QHaval::hash( QByteArray msg, bool uppercase ) {
     string msg_str( msg.constData(), msg.length() );
-    Haval hav;
-    //Note: Mr Hash calculates only Haval hashes with 5 passes
-    string std_result = hav.calcHaval( msg_str, _bit, 5 );
+    Haval hav( _bit, 5); //Note: Mr Hash calculates only Haval hashes with 5 passes
+    string std_result = hav.calcHaval( msg_str );
     QString result = QString::fromStdString( std_result );
     return uppercase ? result : result.toLower();
 }

@@ -4,15 +4,14 @@
 #include <QString>
 #include <QCryptographicHash>
 
-#include "tiger.h"
-#include "rmd160.h"
+#include "qtcryptohash/qcryptohash.hpp"
 #include "haval.h"
 
 struct QHashCalculator {
     virtual ~QHashCalculator() {}
     virtual QString hash( QByteArray msg, bool uppercase ) = 0;
 
-    static QString hash( QByteArray text, bool uppercase, QHashCalculator& calculator );
+    static QString hash( QByteArray text, bool uppercase, QHashCalculator &calculator );
 };
 
 struct QCRC16 : public QHashCalculator {
@@ -27,25 +26,25 @@ struct QCRC64 : public QHashCalculator {
     QString hash( QByteArray msg, bool uppercase ) override;
 };
 
-struct QTiger : private Tiger, public QHashCalculator {
+struct QTiger : public QHashCalculator {
     QString hash( QByteArray msg, bool uppercase ) override;
 };
 
-struct QRipeMD : private Rmd160, public QHashCalculator {
+struct QRipeMD : public QHashCalculator {
     QString hash( QByteArray msg, bool uppercase ) override;
 };
 
 struct QHaval : private Haval, public QHashCalculator {
-    QHaval( int bit ) : _bit( bit ) {}
-    QString hash( QByteArray msg, bool uppercase ) override;
+        QHaval( int bit ) : Haval( bit, 5 ), _bit( bit ) {}
+        QString hash( QByteArray msg, bool uppercase ) override;
 
     private:
         const int _bit;
 };
 
 struct QCryptoAlgorithm : public QHashCalculator {
-    QCryptoAlgorithm( QCryptographicHash::Algorithm algorithm ) : _algorithm( algorithm ) {}
-    QString hash(QByteArray msg, bool uppercase) override;
+        QCryptoAlgorithm( QCryptographicHash::Algorithm algorithm ) : _algorithm( algorithm ) {}
+        QString hash( QByteArray msg, bool uppercase ) override;
 
     private:
         const QCryptographicHash::Algorithm _algorithm;

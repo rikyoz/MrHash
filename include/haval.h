@@ -23,50 +23,34 @@
 using std::string;
 
 class Haval {
-	struct havalContext
-	{
-		uint16_t passes, hashLength;	/* HAVAL parameters */
-		uint32_t digest[8];		/* message digest (fingerprint) */
-		byte	 block[128];		/* context data block */
-		size_t	 occupied;		/* number of occupied bytes in the data block */
-		uint32_t bitCount[2];		/* 64-bit message bit count */
-		uint32_t temp[8];		/* temporary buffer */
-	};
+        struct HAVAL_CONTEXT {
+            uint32_t digest[8];		/* message digest (fingerprint) */
+            byte	 block[128];	/* context data block */
+            size_t	 occupied;		/* number of occupied bytes in the data block */
+            uint32_t bitCount[2];	/* 64-bit message bit count */
+            uint32_t temp[8];		/* temporary buffer */
+        };
 
-public:
-	Haval() {}
-	virtual ~Haval() {}
-	static bool selfTest();
+    public:
+        Haval( uint16_t hashLength, uint16_t passes );
+        virtual ~Haval();
 
-	string calcHaval(const string &buf, int bit, int passes);
-protected:
-	void havalTransform3(uint32_t E[8], const byte D[128], uint32_t T[8]);
-	void havalTransform4(uint32_t E[8], const byte D[128], uint32_t T[8]);
-	void havalTransform5(uint32_t E[8], const byte D[128], uint32_t T[8]);
-	void mhash_bzero(void *s, int n)
-			{ memset(s, '\0', n); }
-	/** Initialize a HAVAL hashing context according to the desired
-	  * number of passes and hash length.  Returns:
-	  *	0: no error.
-	  *	1: hcp is NULL.
-	  *	2: invalid number of passes (must be 3, 4, or 5).
-	  *	3: invalid hash length (must be 128, 160, 192, 224, or 256).
-	  */
-	int havalInit(havalContext *hcp, int passes, int length);
-	/** Updates a HAVAL hashing context with a data block dataBuffer
-	  * of length dataLength.  Returns:
-	  *	0: no error.
-	  *	1: hcp is NULL.
-	  */
-	int havalUpdate(havalContext *hcp, const byte *dataBuffer, size_t dataLength);
-	/** Finished evaluation of a HAVAL digest, clearing the context.
-	  * The digest buffer must be large enough to hold the desired
-	  * hash length.  Returns:
-	  *	0: no error.
-	  *	1: hcp is NULL.
-	  *	2: digest is NULL.
-	  */
-	int havalFinal(havalContext *hcp, byte *digest);
+        string calcHaval( const string &buf );
+    protected:
+        void init();
+        void write( const byte* dataBuffer, int dataLength );
+        byte* final();
+
+        int hash_length() const { return _length / 8; }
+
+    private:
+        void mhash_bzero( void* s, int n ) { memset( s, '\0', n ); }
+        void havalTransform3( uint32_t E[8], const byte D[128], uint32_t T[8] );
+        void havalTransform4( uint32_t E[8], const byte D[128], uint32_t T[8] );
+        void havalTransform5( uint32_t E[8], const byte D[128], uint32_t T[8] );
+
+        HAVAL_CONTEXT* context;
+        uint16_t _passes, _length; /* HAVAL parameters */
 };
 
 #endif
