@@ -10,11 +10,12 @@ TEMPLATE = app
 
 contains(QT_ARCH, i386) {
     PLATFORM = x86
-    TARGET       =  mrhash
 } else {
     PLATFORM = x64
-    TARGET       =  mrhash64
+    ARCH_SUFFIX = 64
 }
+
+TARGET       =  mrhash$${ARCH_SUFFIX}
 
 VPATH += ./src/          \
          ./include/      \
@@ -58,6 +59,8 @@ PATCH_VER  = 0
 VERSION    = $${MAJOR_VER}.$${MINOR_VER}.$${PATCH_VER}
 DEFINES   += "MAJOR_VER=$${MAJOR_VER}" "MINOR_VER=$${MINOR_VER}" "PATCH_VER=$${PATCH_VER}"
 
+LIBS += -L$$PWD/lib/qtcryptohash/bin/$${PLATFORM}/$${BUILD}/ -lQtCryptoHash$${ARCH_SUFFIX}
+DEFINES += STATIC_LIB
 ######################## OS DEPENDENT OPTIONS ########################
 win32 {
     # CONTENT OF THE RC FILE #
