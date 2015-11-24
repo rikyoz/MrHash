@@ -1,13 +1,11 @@
-# Mr. Hash
+# Mr. Hash <img src="https://ci.appveyor.com/api/projects/status/t7q9r8489kdkpfnr?svg=true&passingText=Build%20OK&pendingText=Building...&failingText=Build%20Failed" /><img src="/res/icon.png" width="40px" height="40px" align="right" />
+
 Mr. Hash is a cross-platform tool for calculating the hashes of files and plain texts.
 
 [![](http://img.shields.io/badge/version-v0.3.0-blue.png?style=flat)](https://github.com/rikyoz/mrhash/releases/latest)
-[![Build status](https://ci.appveyor.com/api/projects/status/t7q9r8489kdkpfnr?svg=true&passingText=Build%20OK&pendingText=Building...&failingText=Build%20Failed)](https://ci.appveyor.com/project/rikyoz/mrhash)
 ![](https://img.shields.io/badge/platform-Windows%20|%20Linux%20|%20Mac-red.png?style=flat)
 ![](http://img.shields.io/badge/architecture-x86%20|%20x64-yellow.png?style=flat)
 [![](http://img.shields.io/badge/license-GNU%20GPL%20v2-lightgrey.png?style=flat)](/LICENSE)
-
-
 
 ## Screenshots
 <p align="center">
@@ -27,7 +25,3 @@ Mr. Hash is a cross-platform tool for calculating the hashes of files and plain 
 + CRC16
 + CRC32
 + CRC64
-
-<p align="center">
-<img src="/res/icon.png" />
-</p>
