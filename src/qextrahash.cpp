@@ -1,7 +1,6 @@
 #include "qextrahash.hpp"
 
 #include "hashalgorithm.hpp"
-
 #include "haval.hpp"
 
 #include <stdexcept>
@@ -40,25 +39,8 @@ void QExtraHash::reset() {
     hash_algorithm->init();
 }
 
-void QExtraHash::addData( const char* data, int length ) {
-    hash_algorithm->write( reinterpret_cast< const byte* >( data ), length );
-}
-
 void QExtraHash::addData( const QByteArray &data ) {
-    addData( data.constData(), data.length() );
-}
-
-bool QExtraHash::addData( QIODevice* device ) {
-    if ( !device->isReadable() || !device->isOpen() )
-        return false;
-
-    char buffer[1024];
-    int length;
-
-    while ( ( length = device->read( buffer, sizeof( buffer ) ) ) > 0 )
-        addData( buffer, length );
-
-    return device->atEnd();
+    hash_algorithm->write( reinterpret_cast< const byte* >( data.constData() ), data.length() );
 }
 
 QByteArray QExtraHash::result() const {

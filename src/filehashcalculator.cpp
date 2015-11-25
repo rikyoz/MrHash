@@ -1,33 +1,44 @@
 #include "filehashcalculator.hpp"
 
 #include <QFile>
+#include <QCryptographicHash>
 
-#include "qhasher.hpp"
+#include <memory>
 
-FileHashCalculator::FileHashCalculator(QWidget* parent, QString fileName, bool uppercase) : QThread( parent ),
-    file_name( fileName ), use_uppercase( uppercase ) {
+#include "qtcryptohash/qcryptohash.hpp"
+#include "qextrahash.hpp"
+#include "crc.hpp"
+
+using std::vector;
+using std::unique_ptr;
+
+FileHashCalculator::FileHashCalculator( QWidget* parent, QString fileName ) : QThread( parent ),
+    file_name( fileName ) {
 }
 
 FileHashCalculator::~FileHashCalculator() {}
 
 void FileHashCalculator::run() {
-    QList< QHashCalculator* > hash_calculators = { &QHashAlgorithm::CRC16, &QHashAlgorithm::CRC32, &QHashAlgorithm::CRC64,
-                                                     &QHashAlgorithm::MD4, &QHashAlgorithm::MD5, &QHashAlgorithm::SHA1,
-                                                     &QHashAlgorithm::SHA224, &QHashAlgorithm::SHA256, &QHashAlgorithm::SHA384,
-                                                     &QHashAlgorithm::SHA512, &QHashAlgorithm::SHA3_224,
-                                                     &QHashAlgorithm::SHA3_256, &QHashAlgorithm::SHA3_384,
-                                                     &QHashAlgorithm::SHA3_512, &QHashAlgorithm::TIGER,
-                                                     &QHashAlgorithm::RIPEMD160, &QHashAlgorithm::HAVAL128,
-                                                     &QHashAlgorithm::HAVAL160, &QHashAlgorithm::HAVAL192,
-                                                     &QHashAlgorithm::HAVAL224, &QHashAlgorithm::HAVAL256 };
     QFile file( file_name );
     if ( file.open( QFile::ReadOnly ) ) {
         QByteArray content = file.readAll(); //TODO: Optimize file read and hash calculation!
-        int i = 0;
-        for( ; !isInterruptionRequested() && i < hash_calculators.length(); ++i ) {
-            emit newHashString( i, QHashCalculator::hash( content, use_uppercase, *hash_calculators[i] ) );
-        }
+        uint i = QChecksum::CRC16;
+        for( ; !isInterruptionRequested() && i <= QChecksum::CRC64; ++i )
+            emit newChecksumValue( i, QChecksum::checksum( content, static_cast<QChecksum::Algorithm>( i ) ) );
+
+        uint j = QCryptographicHash::Md4;
+        for( ; !isInterruptionRequested() && j <= QCryptographicHash::Sha3_512; ++j )
+            emit newHashString( i + j, QCryptographicHash::hash( content, static_cast<QCryptographicHash::Algorithm>( j ) ) );
+
+        uint k = QCryptoHash::TIGER;
+        for( ; !isInterruptionRequested() && k <= QCryptoHash::RMD160; ++k )
+            emit newHashString( i + j + k, QCryptoHash::hash( content, static_cast<QCryptoHash::Algorithm> ( k ) ) );
+
+        uint l = QExtraHash::HAVAL128;
+        for( ; !isInterruptionRequested() && l <= QExtraHash::HAVAL256; ++l )
+            emit newHashString( i + j + k + l, QExtraHash::hash( content, static_cast<QExtraHash::Algorithm> ( l ) ) );
+
         if ( !isInterruptionRequested() )
-            emit newHashString( i, content.toBase64() );
+            emit newHashString( i + j + k + l, content.toBase64( QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals ) );
     }
 }

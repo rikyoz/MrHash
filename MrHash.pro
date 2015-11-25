@@ -32,22 +32,24 @@ SOURCES += \
            src/about.cpp              \
            src/globalstuff.cpp        \
            src/haval.cpp              \
-           src/qhasher.cpp            \
            src/qextrahash.cpp         \
            src/fileinfowidget.cpp     \
-           src/filehashcalculator.cpp
+           src/filehashcalculator.cpp \
+           src/util.cpp \
+           src/crc.cpp
 
 
 HEADERS  += \
             include/mainwindow.hpp         \
             include/about.hpp              \
             include/haval.hpp              \
-            include/qhasher.hpp            \
             include/qextrahash.hpp         \
             include/hashalgorithm.hpp      \
             include/fileinfowidget.hpp     \
             include/filehashcalculator.hpp \
-            include/globalstuff.hpp
+            include/globalstuff.hpp \
+            include/util.hpp \
+            include/crc.hpp
 
 FORMS    += mainwindow.ui about.ui fileinfowidget.ui
 
