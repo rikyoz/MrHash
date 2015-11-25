@@ -321,22 +321,19 @@
      </property>
     </widget>
    </item>
-   <item row="14" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>File Icon:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="1">
-    <widget class="QLabel" name="fileIconLabel">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
+   <item row="14" column="0" colspan="2">
+    <widget class="FileIconWidget" name="fileIconWidget" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FileIconWidget</class>
+   <extends>QWidget</extends>
+   <header>fileiconwidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

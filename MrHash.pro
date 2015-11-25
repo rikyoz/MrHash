@@ -35,8 +35,9 @@ SOURCES += \
            src/qextrahash.cpp         \
            src/fileinfowidget.cpp     \
            src/filehashcalculator.cpp \
-           src/util.cpp \
-           src/crc.cpp
+           src/util.cpp               \
+           src/crc.cpp                \
+           src/fileiconwidget.cpp
 
 
 HEADERS  += \
@@ -47,11 +48,12 @@ HEADERS  += \
             include/hashalgorithm.hpp      \
             include/fileinfowidget.hpp     \
             include/filehashcalculator.hpp \
-            include/globalstuff.hpp \
-            include/util.hpp \
-            include/crc.hpp
+            include/globalstuff.hpp        \
+            include/util.hpp               \
+            include/crc.hpp                \
+            include/fileiconwidget.hpp
 
-FORMS    += mainwindow.ui about.ui fileinfowidget.ui
+FORMS    += mainwindow.ui about.ui fileinfowidget.ui fileiconwidget.ui
 
 RESOURCES += res/icon.qrc res/translations.qrc
 

@@ -62,6 +62,34 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>FileIconWidget</name>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="87"/>
+        <source>16x16</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="109"/>
+        <source>32x32</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="131"/>
+        <source>48x48</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="141"/>
+        <source>Other Sizes</source>
+        <translation>Altre Dimensioni</translation>
+    </message>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="157"/>
+        <source>File Icons</source>
+        <translation>Icone del File</translation>
+    </message>
+</context>
+<context>
     <name>FileInfoWidget</name>
     <message>
         <location filename="../../ui/fileinfowidget.ui" line="14"/>
@@ -94,67 +122,65 @@ p, li { white-space: pre-wrap; }
         <translation>Tipo Contenuto:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="147"/>
         <source>Magic Number:</source>
-        <translation>Numero Magico:</translation>
+        <translation type="vanished">Numero Magico:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="167"/>
+        <location filename="../../ui/fileinfowidget.ui" line="147"/>
         <source>Size:</source>
         <translation>Dimensioni:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="187"/>
+        <location filename="../../ui/fileinfowidget.ui" line="167"/>
         <source>Last Read:</source>
         <translation>Ultima Lettura:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="207"/>
+        <location filename="../../ui/fileinfowidget.ui" line="187"/>
         <source>Last Change:</source>
         <translation>Ultima Modifica:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="227"/>
+        <location filename="../../ui/fileinfowidget.ui" line="207"/>
         <source>Creation Date:</source>
         <translation>Data Creazione:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="247"/>
+        <location filename="../../ui/fileinfowidget.ui" line="227"/>
         <source>Hidden:</source>
         <translation>Nascosto:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="267"/>
+        <location filename="../../ui/fileinfowidget.ui" line="247"/>
         <source>Readable:</source>
         <translation>Leggibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="287"/>
+        <location filename="../../ui/fileinfowidget.ui" line="267"/>
         <source>Writable:</source>
         <translation>Scrivibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="307"/>
+        <location filename="../../ui/fileinfowidget.ui" line="287"/>
         <source>Executable:</source>
         <translation>Eseguibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="327"/>
+        <location filename="../../ui/fileinfowidget.ui" line="307"/>
         <source>Owner:</source>
         <translation>Proprietario:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="347"/>
         <source>File Icon:</source>
-        <translation>Icona del File:</translation>
+        <translation type="vanished">Icona del File:</translation>
     </message>
     <message>
-        <location filename="../../src/fileinfowidget.cpp" line="27"/>
+        <location filename="../../src/fileinfowidget.cpp" line="32"/>
         <source>yes</source>
         <translation>Si</translation>
     </message>
     <message>
-        <location filename="../../src/fileinfowidget.cpp" line="27"/>
+        <location filename="../../src/fileinfowidget.cpp" line="32"/>
         <source>no</source>
         <translation>No</translation>
     </message>
@@ -356,6 +382,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../../ui/mainwindow.ui" line="581"/>
         <source>Use upper-case letters</source>
         <translation>Utilizza lettere maiuscole</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="196"/>
+        <source>Calculating...</source>
+        <translation>Calcolando...</translation>
     </message>
 </context>
 </TS>

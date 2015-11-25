@@ -47,7 +47,5 @@ void FileInfoWidget::loadFileInfo( const QFileInfo& fileInfo ) {
     executableLabel->setText( boolToStr( fileInfo.isExecutable() ) );
     ownerLabel->setText( fileInfo.owner() );
 
-    QFileIconProvider iconProvider;
-    QIcon icon = iconProvider.icon( fileInfo );
-    fileIconLabel->setPixmap( icon.pixmap( icon.availableSizes().last() ) );
+    fileIconWidget->loadFileIcon( fileInfo );
 }
