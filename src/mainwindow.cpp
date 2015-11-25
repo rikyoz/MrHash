@@ -124,7 +124,7 @@ void MainWindow::on_browseButton_clicked() {
     if ( fileDialog.exec() == QFileDialog::Accepted ) {
         if ( fileDialog.selectedFiles().size() == 0 ) return;
 
-        filePathEdit->setText( fileDialog.selectedFiles()[0] );
+        filePathEdit->setText( QDir::toNativeSeparators( fileDialog.selectedFiles()[0] ) );
         readFileInfo( fileDialog.selectedFiles()[0] );
 
         calculateFileHashes( fileDialog.selectedFiles()[0] );

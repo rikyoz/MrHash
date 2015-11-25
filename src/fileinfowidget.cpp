@@ -1,5 +1,6 @@
 #include "include/fileinfowidget.hpp"
 
+#include <QDir>
 #include <QMimeDatabase>
 #include <QDateTime>
 #include <QFileIconProvider>
@@ -28,7 +29,7 @@ inline QString FileInfoWidget::boolToStr( bool value ) { return value ? tr("yes"
 
 
 void FileInfoWidget::loadFileInfo( const QFileInfo& fileInfo ) {
-    pathLabel->setText( fileInfo.absolutePath() );
+    pathLabel->setText( QDir::toNativeSeparators( fileInfo.absolutePath() ) );
     nameLabel->setText( fileInfo.fileName() );
     extLabel->setText( fileInfo.suffix() );
 
