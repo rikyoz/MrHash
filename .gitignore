@@ -4,3 +4,4 @@ bin/
 lib/boost/
 *.pro.user*
 *.cppcheck
+*.autosave
