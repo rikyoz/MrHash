@@ -49,7 +49,9 @@ void FileHashCalculator::run() {
         QExtraHash haval224( QExtraHash::HAVAL224 );
         QExtraHash haval256( QExtraHash::HAVAL256 );
 
-        while ( !file.atEnd() ) {
+        quint64 current = 0;
+        quint64 total = file.size();
+        while ( !isInterruptionRequested() && !file.atEnd() ) {
             QByteArray data = file.read( BUFFER_SIZE );
 
             crc16.process_bytes( data.constData(), data.length() );
@@ -76,30 +78,54 @@ void FileHashCalculator::run() {
             haval192.addData( data );
             haval224.addData( data );
             haval256.addData( data );
+
+            current += BUFFER_SIZE;
+            emit progressUpdate( (float)current / total );
         }
-        emit newChecksumValue( 0, crc16.checksum() );
-        emit newChecksumValue( 1, crc32.checksum() );
-        emit newChecksumValue( 2, crc64.checksum() );
+        if ( !isInterruptionRequested() )
+            emit newChecksumValue( 0, crc16.checksum() );
+        if ( !isInterruptionRequested() )
+            emit newChecksumValue( 1, crc32.checksum() );
+        if ( !isInterruptionRequested() )
+            emit newChecksumValue( 2, crc64.checksum() );
 
-        emit newHashString( 3, md4.result() );
-        emit newHashString( 4, md5.result() );
-        emit newHashString( 5, sha1.result() );
-        emit newHashString( 6, sha224.result() );
-        emit newHashString( 7, sha256.result() );
-        emit newHashString( 8, sha384.result() );
-        emit newHashString( 9, sha512.result() );
-        emit newHashString( 10, sha3_224.result() );
-        emit newHashString( 11, sha3_256.result() );
-        emit newHashString( 12, sha3_384.result() );
-        emit newHashString( 13, sha3_512.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 3, md4.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 4, md5.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 5, sha1.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 6, sha224.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 7, sha256.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 8, sha384.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 9, sha512.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 10, sha3_224.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 11, sha3_256.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 12, sha3_384.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 13, sha3_512.result() );
 
-        emit newHashString( 14, tiger.result() );
-        emit newHashString( 15, ripemd.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 14, tiger.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 15, ripemd.result() );
 
-        emit newHashString( 16, haval128.result() );
-        emit newHashString( 17, haval160.result() );
-        emit newHashString( 18, haval192.result() );
-        emit newHashString( 19, haval224.result() );
-        emit newHashString( 20, haval256.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 16, haval128.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 17, haval160.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 18, haval192.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 19, haval224.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 20, haval256.result() );
     }
 }

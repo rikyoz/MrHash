@@ -20,6 +20,7 @@ class FileHashCalculator : public QThread {
     signals:
         void newHashString( int index, QByteArray hash );
         void newChecksumValue( int index, quint64 value );
+        void progressUpdate( float progress );
 };
 
 #endif // FILEHASHCALCULATOR_H

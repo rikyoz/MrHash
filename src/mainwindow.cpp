@@ -60,6 +60,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     actionClose->setDisabled( true );
     base64button->setVisible( false );
     base64edit->setVisible( false );
+    progressBar->setVisible( false );
     label_7->setVisible( false );
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
@@ -134,6 +135,7 @@ void MainWindow::on_browseButton_clicked() {
         readFileInfo( fileDialog.selectedFiles()[0] );
 
         base64button->setVisible( true );
+        progressBar->setVisible( true );
         calculateFileHashes( fileDialog.selectedFiles()[0] );
     }
 }
@@ -146,8 +148,10 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
     else if ( filePathEdit->text().isEmpty() ) {
         //no file selected, no hash to show
         cleanHashEdits();
-    } else
+    } else {
+        progressBar->setVisible( true );
         calculateFileHashes( filePathEdit->text() );
+    }
 }
 
 void MainWindow::on_base64button_clicked() {
@@ -171,6 +175,7 @@ void MainWindow::on_closeButton_clicked() {
     closeButton->setVisible( false );
     actionClose->setDisabled( true );
     base64button->setVisible( false );
+    progressBar->setVisible( false );
     cleanHashEdits();
 }
 
@@ -185,6 +190,14 @@ void MainWindow::on_newHashString( int index, QByteArray hash ) {
 void MainWindow::on_newChecksumValue( int index, quint64 value ) {
     hash_edits[index]->setText( util::checksum_hex( value, actionUseUppercase->isChecked() ) );
     hash_edits[index]->setCursorPosition( 0 );
+}
+
+void MainWindow::on_hashCalcFinished() {
+    progressBar->setVisible( false );
+}
+
+void MainWindow::on_progressUpdate( float progress ) {
+    progressBar->setValue( progress * 100 );
 }
 
 void MainWindow::cleanHashEdits() {
@@ -225,6 +238,8 @@ void MainWindow::calculateFileHashes( QString fileName ) {
     hash_calculator.reset( new FileHashCalculator( this, fileName ) );
     connect( hash_calculator.get(), SIGNAL( newHashString( int, QByteArray ) ), this, SLOT( on_newHashString( int, QByteArray ) ) );
     connect( hash_calculator.get(), SIGNAL( newChecksumValue( int, quint64 ) ), this, SLOT( on_newChecksumValue( int, quint64 ) ) );
+    connect( hash_calculator.get(), SIGNAL( progressUpdate( float ) ), this, SLOT( on_progressUpdate( float ) ) );
+    connect( hash_calculator.get(), SIGNAL( finished() ), this, SLOT( on_hashCalcFinished() ) );
     hash_calculator->start();
 }
 

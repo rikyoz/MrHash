@@ -34,6 +34,9 @@
    </property>
    <item>
     <widget class="QPlainTextEdit" name="base64edit">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
      <property name="placeholderText">
       <string>Encoding...</string>
      </property>
