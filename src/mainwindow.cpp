@@ -20,6 +20,7 @@ A copy of the GNU General Public License is available at
 #include <QMimeDatabase>
 #include <QDateTime>
 #include <QFileIconProvider>
+#include <QMessageBox>
 
 #ifdef QT_DEBUG
 #include <QDebug>
@@ -29,10 +30,13 @@ A copy of the GNU General Public License is available at
 #include "qextrahash.hpp"
 
 #include "mainwindow.hpp"
+#include "base64dialog.hpp"
 #include "about.hpp"
 #include "util.hpp"
 
 using namespace std;
+
+#define MAX_BASE64_FILESIZE 5 * 1024 * 1024 // 5 MB
 
 #define UPPERCASE_SETTING QStringLiteral("show_uppercase")
 
@@ -54,12 +58,14 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     fileInfoWidget->setVisible( false );
     closeButton->setVisible( false );
     actionClose->setDisabled( true );
+    base64button->setVisible( false );
+    base64edit->setVisible( false );
+    label_7->setVisible( false );
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
     connect( actionOpen, SIGNAL( triggered() ), this, SLOT( on_browseButton_clicked() ) );
     connect( actionClose, SIGNAL( triggered() ), this, SLOT( on_closeButton_clicked() ) );
 
-    hash_edits.push_front( base64edit );
     hash_edits.push_front( haval256edit );
     hash_edits.push_front( haval224edit );
     hash_edits.push_front( haval192edit );
@@ -127,11 +133,14 @@ void MainWindow::on_browseButton_clicked() {
         filePathEdit->setText( QDir::toNativeSeparators( fileDialog.selectedFiles()[0] ) );
         readFileInfo( fileDialog.selectedFiles()[0] );
 
+        base64button->setVisible( true );
         calculateFileHashes( fileDialog.selectedFiles()[0] );
     }
 }
 
 void MainWindow::on_tabWidget_currentChanged( int index ) {
+    base64edit->setVisible( index != 0 );
+    label_7->setVisible( index != 0 );
     if ( index != 0 )
         on_plainTextEdit_textChanged();
     else if ( filePathEdit->text().isEmpty() ) {
@@ -139,6 +148,16 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
         cleanHashEdits();
     } else
         calculateFileHashes( filePathEdit->text() );
+}
+
+void MainWindow::on_base64button_clicked() {
+    QFileInfo fileInfo( filePathEdit->text() );
+    if ( fileInfo.size() <= MAX_BASE64_FILESIZE ) {
+        Base64Dialog base64dlg( filePathEdit->text(), this );
+        base64dlg.exec();
+    } else {
+        QMessageBox::information( this, "Base64", tr( "Base64 encoding of files with size greater than 5 MB is not allowed!" ) );
+    }
 }
 
 void MainWindow::on_closeButton_clicked() {
@@ -151,6 +170,7 @@ void MainWindow::on_closeButton_clicked() {
     fileInfoWidget->setVisible( false );
     closeButton->setVisible( false );
     actionClose->setDisabled( true );
+    base64button->setVisible( false );
     cleanHashEdits();
 }
 
@@ -162,7 +182,7 @@ void MainWindow::on_newHashString( int index, QByteArray hash ) {
     hash_edits[index]->setCursorPosition( 0 );
 }
 
-void MainWindow::on_newChecksumValue(int index, quint64 value) {
+void MainWindow::on_newChecksumValue( int index, quint64 value ) {
     hash_edits[index]->setText( util::checksum_hex( value, actionUseUppercase->isChecked() ) );
     hash_edits[index]->setCursorPosition( 0 );
 }

@@ -62,6 +62,19 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Base64Dialog</name>
+    <message>
+        <location filename="../../ui/base64dialog.ui" line="17"/>
+        <source>Base64</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/base64dialog.ui" line="38"/>
+        <source>Encoding...</source>
+        <translation>Codifica in corso...</translation>
+    </message>
+</context>
+<context>
     <name>FileIconWidget</name>
     <message>
         <location filename="../../ui/fileiconwidget.ui" line="87"/>
@@ -175,12 +188,12 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Icona del File:</translation>
     </message>
     <message>
-        <location filename="../../src/fileinfowidget.cpp" line="32"/>
+        <location filename="../../src/fileinfowidget.cpp" line="28"/>
         <source>yes</source>
         <translation>Si</translation>
     </message>
     <message>
-        <location filename="../../src/fileinfowidget.cpp" line="32"/>
+        <location filename="../../src/fileinfowidget.cpp" line="28"/>
         <source>no</source>
         <translation>No</translation>
     </message>
@@ -314,32 +327,37 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../ui/mainwindow.ui" line="470"/>
+        <source>Encode to Base64</source>
+        <translation>Codifica in Base64</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwindow.ui" line="477"/>
         <source>Close File</source>
         <translation>Chiudi File</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="478"/>
+        <location filename="../../ui/mainwindow.ui" line="485"/>
         <source>Text</source>
         <translation>Testo</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="505"/>
+        <location filename="../../ui/mainwindow.ui" line="512"/>
         <source>Plain text...</source>
         <translation>Testo in chiaro...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="586"/>
+        <location filename="../../ui/mainwindow.ui" line="593"/>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="591"/>
+        <location filename="../../ui/mainwindow.ui" line="598"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
         <location filename="../../ui/mainwindow.ui" line="422"/>
-        <location filename="../../ui/mainwindow.ui" line="526"/>
+        <location filename="../../ui/mainwindow.ui" line="533"/>
         <source>File</source>
         <translation></translation>
     </message>
@@ -349,42 +367,47 @@ p, li { white-space: pre-wrap; }
         <translation>Scegli un file...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="535"/>
+        <location filename="../../ui/mainwindow.ui" line="542"/>
         <source>?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="542"/>
+        <location filename="../../ui/mainwindow.ui" line="549"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="552"/>
+        <location filename="../../ui/mainwindow.ui" line="559"/>
         <source>Exit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="555"/>
+        <location filename="../../ui/mainwindow.ui" line="562"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="564"/>
+        <location filename="../../ui/mainwindow.ui" line="571"/>
         <source>About Mr. Hash</source>
         <translation>Informazioni su Mr. Hash</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="573"/>
+        <location filename="../../ui/mainwindow.ui" line="580"/>
         <source>About Qt</source>
         <translation>Informazioni su Qt</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="581"/>
+        <location filename="../../ui/mainwindow.ui" line="588"/>
         <source>Use upper-case letters</source>
         <translation>Utilizza lettere maiuscole</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="196"/>
+        <location filename="../../src/mainwindow.cpp" line="159"/>
+        <source>Base64 encoding of files with size greater than 5 MB is not allowed!</source>
+        <translation>La codifica in Base64 di file più grandi di 5 MB non è permessa!</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="216"/>
         <source>Calculating...</source>
         <translation>Calcolando...</translation>
     </message>

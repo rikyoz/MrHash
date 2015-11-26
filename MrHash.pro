@@ -37,7 +37,9 @@ SOURCES += \
            src/filehashcalculator.cpp \
            src/util.cpp               \
            src/crc.cpp                \
-           src/fileiconwidget.cpp
+           src/fileiconwidget.cpp     \
+           src/base64dialog.cpp       \
+           src/filebase64calculator.cpp
 
 
 HEADERS  += \
@@ -51,9 +53,11 @@ HEADERS  += \
             include/globalstuff.hpp        \
             include/util.hpp               \
             include/crc.hpp                \
-            include/fileiconwidget.hpp
+            include/fileiconwidget.hpp     \
+            include/base64dialog.hpp       \
+            include/filebase64calculator.hpp
 
-FORMS    += mainwindow.ui about.ui fileinfowidget.ui fileiconwidget.ui
+FORMS    += mainwindow.ui about.ui fileinfowidget.ui fileiconwidget.ui base64dialog.ui
 
 RESOURCES += res/icon.qrc res/translations.qrc
 

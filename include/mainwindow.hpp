@@ -30,6 +30,8 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_newHashString( int index, QByteArray hash );
         void on_newChecksumValue( int index, quint64 value );
 
+        void on_base64button_clicked();
+
     private:
         QSettings settings;
         QList< QLineEdit* > hash_edits;
