@@ -79,7 +79,7 @@ VERSION    = $${MAJOR_VER}.$${MINOR_VER}.$${PATCH_VER}
 DEFINES   += "MAJOR_VER=$${MAJOR_VER}" "MINOR_VER=$${MINOR_VER}" "PATCH_VER=$${PATCH_VER}"
 
 LIBS += -L$$PWD/lib/qtcryptohash/bin/$${PLATFORM}/$${BUILD}/ -lQtCryptoHash$${ARCH_SUFFIX}
-DEFINES += STATIC_LIB
+DEFINES += QTCRYPTOHASH_STATIC
 ######################## OS DEPENDENT OPTIONS ########################
 win32 {
     # CONTENT OF THE RC FILE #

@@ -16,9 +16,9 @@
 #include <QIODevice>
 #include <QtGlobal>
 
-#ifdef STATIC_LIB
+#ifdef QTCRYPTOHASH_STATIC
 #define LIBSHARED_EXPORT
-#elif defined(LIB_LIBRARY)
+#elif defined(QTCRYPTOHASH_EXPORT)
 #define LIBSHARED_EXPORT Q_DECL_EXPORT
 #else
 #define LIBSHARED_EXPORT Q_DECL_IMPORT
