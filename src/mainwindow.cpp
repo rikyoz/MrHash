@@ -192,7 +192,7 @@ void MainWindow::on_newChecksumValue( int index, quint64 value ) {
     hash_edits[index]->setCursorPosition( 0 );
 }
 
-void MainWindow::on_hashCalcFinished() {
+void MainWindow::on_finished() {
     progressBar->setVisible( false );
 }
 
@@ -239,7 +239,7 @@ void MainWindow::calculateFileHashes( QString fileName ) {
     connect( hash_calculator.get(), SIGNAL( newHashString( int, QByteArray ) ), this, SLOT( on_newHashString( int, QByteArray ) ) );
     connect( hash_calculator.get(), SIGNAL( newChecksumValue( int, quint64 ) ), this, SLOT( on_newChecksumValue( int, quint64 ) ) );
     connect( hash_calculator.get(), SIGNAL( progressUpdate( float ) ), this, SLOT( on_progressUpdate( float ) ) );
-    connect( hash_calculator.get(), SIGNAL( finished() ), this, SLOT( on_hashCalcFinished() ) );
+    connect( hash_calculator.get(), SIGNAL( finished() ), this, SLOT( on_finished() ) );
     hash_calculator->start();
 }
 
