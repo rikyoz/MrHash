@@ -31,13 +31,14 @@ environment:
     qt_dir: C:\Qt\%qt_version%\msvc2013_64\bin
 
 init:
-    - set PATH=%PATH%;%msvc_dir%;%qt_dir%;
+    - set PATH=%PATH%;%msvc_dir%;%qt_dir%
     - vcvarsall.bat %platform%
-    - mkdir lib
+    #- mkdir lib
     - mklink /j lib\boost %boost_dir%\boost
     - cd lib
+    - set PATH=.;%PATH%
     - mkdir qtcryptohash
-    - ./dependencies.cmd
+    - dependencies.cmd
 
 build_script:
     - mkdir build
