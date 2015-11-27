@@ -23,9 +23,7 @@ void FileIconWidget::loadFileIcon( const QFileInfo &fileInfo ) {
         availableSizes.removeOne( QSize( 48, 48 ) );
         icon48->setPixmap( icon.pixmap( QSize( 48, 48 ) ) );
     }
-    QString otherSizes;
-    for ( const QSize& size : availableSizes ) {
-        otherSizes.append( QString("%1x%2\n").arg( size.width() ).arg( size.height() ) );
+    for ( const QSize &size : availableSizes ) {
+        sizeList->addItem( QString( "%1x%2\n" ).arg( size.width() ).arg( size.height() ) );
     }
-    labelOther->setText( otherSizes );
 }
