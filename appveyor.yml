@@ -33,14 +33,13 @@ environment:
 init:
     - set PATH=%PATH%;%msvc_dir%;%qt_dir%
     - vcvarsall.bat %platform%
-    #- mkdir lib
-    - mklink /j lib\boost %boost_dir%\boost
-    - cd lib
-    - set PATH=.;%PATH%
-    - mkdir qtcryptohash
-    - dependencies.cmd
 
 build_script:
+    - mklink /j lib\boost %boost_dir%\boost
+    - cd lib
+    - mkdir qtcryptohash
+    - dependencies.cmd
+    - cd ..
     - mkdir build
     - cd build
     - qmake ..\MrHash.pro
