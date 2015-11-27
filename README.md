@@ -16,8 +16,8 @@
 
 ## Screenshots
 <p align="center">
-<img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3/screenshot0.png" /><br/>
-<img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3/screenshot1.png" />
+<img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.1/screenshot0.png" /><br/>
+<img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.1/screenshot1.png" />
 </p>
 
 ## Supported Algorithms
