@@ -35,6 +35,7 @@ init:
     - vcvarsall.bat %arch%
     
 install:
+    - mkdir lib
     - mklink /j lib\boost %boost_dir%\boost
     - cd lib
     - mkdir qtcryptohash
