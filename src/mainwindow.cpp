@@ -58,7 +58,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     setFixedSize( this->size() );
     setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
                                       qApp->desktop()->availableGeometry() ) );
-    setWindowTitle( "Mr. Hash v" + QString::number( MAJOR_VER ) + "." + QString::number( MINOR_VER ) );
+    setWindowTitle( "Mr. Hash v" + QString( "%1.%2.%3" ).arg( MAJOR_VER ).arg( MINOR_VER ).arg( PATCH_VER ) );
 
     actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
     fileInfoWidget->setVisible( false );

@@ -190,7 +190,7 @@ p, li { white-space: pre-wrap; }
       </size>
      </property>
      <property name="text">
-      <string>vX.Y</string>
+      <string>vX.Y.Z</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
