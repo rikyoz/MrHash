@@ -49,6 +49,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     settings( "settings.ini", QSettings::IniFormat ) {
     setupUi( this );
+#ifdef Q_OS_LINUX
+    setFixedHeight( height() + 80 );
+    foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+        lineEdit->setFixedHeight( 24 );
+    }
+#endif
     setFixedSize( this->size() );
     setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
                                       qApp->desktop()->availableGeometry() ) );
