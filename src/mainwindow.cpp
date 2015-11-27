@@ -147,6 +147,7 @@ void MainWindow::on_browseButton_clicked() {
 }
 
 void MainWindow::on_tabWidget_currentChanged( int index ) {
+    base64edit->setText( "" );
     base64edit->setEnabled( index != 0 );
     label_7->setEnabled( index != 0 );
     if ( index != 0 ) {
