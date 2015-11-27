@@ -59,9 +59,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     closeButton->setVisible( false );
     actionClose->setDisabled( true );
     base64button->setVisible( false );
-    base64edit->setVisible( false );
+    base64edit->setEnabled( false );
     progressBar->setVisible( false );
-    label_7->setVisible( false );
+    label_7->setEnabled( false );
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
     connect( actionOpen, SIGNAL( triggered() ), this, SLOT( on_browseButton_clicked() ) );
@@ -141,11 +141,16 @@ void MainWindow::on_browseButton_clicked() {
 }
 
 void MainWindow::on_tabWidget_currentChanged( int index ) {
-    base64edit->setVisible( index != 0 );
-    label_7->setVisible( index != 0 );
-    if ( index != 0 )
+    base64edit->setEnabled( index != 0 );
+    label_7->setEnabled( index != 0 );
+    if ( index != 0 ) {
+        if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
+            hash_calculator->disconnect();
+            hash_calculator->requestInterruption();
+            hash_calculator->wait();
+        }
         on_plainTextEdit_textChanged();
-    else if ( filePathEdit->text().isEmpty() ) {
+    } else if ( filePathEdit->text().isEmpty() ) {
         //no file selected, no hash to show
         cleanHashEdits();
     } else {
@@ -202,8 +207,10 @@ void MainWindow::on_progressUpdate( float progress ) {
 
 void MainWindow::cleanHashEdits() {
     foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
-        if ( lineEdit != filePathEdit )
+        if ( lineEdit != filePathEdit && lineEdit != base64edit ) {
             lineEdit->clear();
+            lineEdit->setPlaceholderText( "" );
+        }
     }
 }
 
@@ -226,7 +233,9 @@ void MainWindow::readFileInfo( QString filePath ) {
 void MainWindow::calculateFileHashes( QString fileName ) {
     foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
         if ( lineEdit != filePathEdit ) {
-            lineEdit->setText( tr( "Calculating..." ) );
+            if ( lineEdit != base64edit )
+                lineEdit->setPlaceholderText( tr( "Calculating..." ) );
+            lineEdit->clear();
             lineEdit->setCursorPosition( 0 );
         }
     }
