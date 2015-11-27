@@ -5,3 +5,4 @@ lib/boost/
 *.pro.user*
 *.cppcheck
 *.autosave
+lib/qtcryptohash/
