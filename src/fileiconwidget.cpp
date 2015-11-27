@@ -1,5 +1,7 @@
 #include "fileiconwidget.hpp"
 
+#include <algorithm>
+
 #include <QFileIconProvider>
 
 FileIconWidget::FileIconWidget( QWidget* parent ) :
@@ -23,6 +25,10 @@ void FileIconWidget::loadFileIcon( const QFileInfo &fileInfo ) {
         availableSizes.removeOne( QSize( 48, 48 ) );
         icon48->setPixmap( icon.pixmap( QSize( 48, 48 ) ) );
     }
+    //it puts the available sizes in increasing order according to width
+    std::sort( availableSizes.begin(), availableSizes.end(), []( const QSize& a, const QSize& b ) -> bool {
+           return a.width() < b.width();
+    } );
     for ( const QSize &size : availableSizes ) {
         sizeList->addItem( QString( "%1x%2\n" ).arg( size.width() ).arg( size.height() ) );
     }
