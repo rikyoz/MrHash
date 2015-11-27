@@ -1,4 +1,4 @@
-version: 0.3.0-build{build}
+version: 0.3.1-dev{build}
 skip_non_tags: true
 os: Windows Server 2012 R2
 shallow_clone: true
@@ -6,6 +6,7 @@ shallow_clone: true
 branches:
   only:
   - master
+  - develop
   
 configuration:
   - release
@@ -32,10 +33,16 @@ environment:
 init:
     - set PATH=%PATH%;%msvc_dir%;%qt_dir%;
     - vcvarsall.bat %platform%
-
-build_script:
     - mkdir lib
     - mklink /j lib\boost %boost_dir%\boost
+    - cd lib
+    - mkdir qtcryptohash
+    - curl -fsSL -v -H "Accept: application/octet-stream" -o qtcryptohash-static.7z https://api.github.com/repos/rikyoz/QtCryptoHash/releases/assets/1073796
+    - 7z x qtcryptohash-static.7z -oqtcryptohash/ -aoa
+    - curl -fsSL -v -H "Accept: application/octet-stream" -o qtcryptohash64-static.7z https://api.github.com/repos/rikyoz/QtCryptoHash/releases/assets/1073794  
+    - 7z x qtcryptohash64-static.7z -oqtcryptohash/ -aoa
+
+build_script:
     - mkdir build
     - cd build
     - qmake ..\MrHash.pro
@@ -52,8 +59,8 @@ test: off
 
 deploy:
     provider: GitHub
-    release: Mr. Hash v%mrhash_version%
-    description: ''
+    release: $(APPVEYOR_REPO_TAG_NAME)
+    description: 'Binaries of Mr. Hash v%mrhash_version%'
     auth_token:
       secure: 4V5xJQT+iVPUhK05TBLkNkLY8HTArZ+omH394hfXqQuxfrkaQqnR8132rDnB/HVm
     artifact: /.*\.7z/

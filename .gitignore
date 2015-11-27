@@ -6,3 +6,4 @@ lib/boost/
 *.cppcheck
 *.autosave
 lib/qtcryptohash/
+*.7z
