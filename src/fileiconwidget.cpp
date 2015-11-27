@@ -31,6 +31,8 @@ void FileIconWidget::loadFileIcon( const QFileInfo &fileInfo ) {
     } );
     sizeList->clear();
     for ( const QSize &size : availableSizes ) {
-        sizeList->addItem( QString( "%1x%2\n" ).arg( size.width() ).arg( size.height() ) );
+        QListWidgetItem *item = new QListWidgetItem( QString( "%1x%2\n" ).arg( size.width() ).arg( size.height() ) );
+        item->setTextAlignment( Qt::AlignCenter );
+        sizeList->addItem( item );
     }
 }
