@@ -37,7 +37,7 @@ init:
     - mklink /j lib\boost %boost_dir%\boost
     - cd lib
     - mkdir qtcryptohash
-    - dependencies.cmd
+    - ./dependencies.cmd
 
 build_script:
     - mkdir build
