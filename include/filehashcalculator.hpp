@@ -8,7 +8,7 @@ class FileHashCalculator : public QThread {
         Q_OBJECT
 
     public:
-        FileHashCalculator( QWidget* parent, QString fileName, bool uppercase );
+        FileHashCalculator( QWidget* parent, QString fileName );
         virtual ~FileHashCalculator();
 
     protected:
@@ -16,10 +16,11 @@ class FileHashCalculator : public QThread {
 
     private:
         const QString file_name;
-        const bool use_uppercase;
 
     signals:
-        void newHashString( int index, QString hash );
+        void newHashString( int index, QByteArray hash );
+        void newChecksumValue( int index, quint64 value );
+        void progressUpdate( float progress );
 };
 
 #endif // FILEHASHCALCULATOR_H

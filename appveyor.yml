@@ -1,4 +1,4 @@
-version: 0.3.0-build{build}
+version: 0.3.1-build{build}
 skip_non_tags: true
 os: Windows Server 2012 R2
 shallow_clone: true
@@ -6,12 +6,13 @@ shallow_clone: true
 branches:
   only:
   - master
+  - develop
   
 configuration:
   - release
 
 environment:
-  mrhash_version: 0.3.0
+  mrhash_version: 0.3.1
   qt_version: 5.5
   boost_dir: C:\Libraries\boost_1_59_0
   msvc_dir: C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC
@@ -19,28 +20,37 @@ environment:
   matrix:
   #MSVC x86
   - name: win32
-    platform: x86
+    arch: x86
     target: mrhash.exe
     qt_dir: C:\Qt\%qt_version%\msvc2013\bin
     
   #MSVC x64
   - name: win64
-    platform: x64
+    arch: x64
     target: mrhash64.exe
     qt_dir: C:\Qt\%qt_version%\msvc2013_64\bin
 
 init:
-    - set PATH=%PATH%;%msvc_dir%;%qt_dir%;
-    - vcvarsall.bat %platform%
-
-build_script:
+    - set PATH=%PATH%;%msvc_dir%;%qt_dir%
+    - vcvarsall.bat %arch%
+    
+install:
     - mkdir lib
     - mklink /j lib\boost %boost_dir%\boost
+    - cd lib
+    - mkdir qtcryptohash
+    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.0/QtCryptoHash-v0.1.0-msvc2013-win32-static.7z -FileName qtcryptohash-static.7z 
+    - 7z x qtcryptohash-static.7z -oqtcryptohash/ -aoa
+    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.0/QtCryptoHash-v0.1.0-msvc2013-win64-static.7z -FileName qtcryptohash64-static.7z
+    - 7z x qtcryptohash64-static.7z -oqtcryptohash/ -aoa
+    - cd ..
+    
+build_script:
     - mkdir build
     - cd build
-    - qmake ..\MrHash.pro
+    - qmake ..\MrHash.pro "CONFIG += release"
     - nmake release
-    - cd ..\bin\%platform%\release
+    - cd ..\bin\%arch%\release
     - windeployqt %target% --release --no-translations --no-svg --no-angle --no-system-d3d-compiler --no-quick-import
     - 7z a -t7z mrhash-v%mrhash_version%-bin-%name%.7z *
     
@@ -52,8 +62,8 @@ test: off
 
 deploy:
     provider: GitHub
-    release: Mr. Hash v%mrhash_version%
-    description: ''
+    release: $(APPVEYOR_REPO_TAG_NAME)
+    description: 'Binaries of Mr. Hash v%mrhash_version%'
     auth_token:
       secure: 4V5xJQT+iVPUhK05TBLkNkLY8HTArZ+omH394hfXqQuxfrkaQqnR8132rDnB/HVm
     artifact: /.*\.7z/

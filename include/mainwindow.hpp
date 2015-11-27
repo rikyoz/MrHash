@@ -6,7 +6,7 @@
 
 #include <memory>
 
-#include "qhasher.hpp"
+#include "crc.hpp"
 #include "filehashcalculator.hpp"
 
 #include "ui_mainwindow.h"
@@ -27,7 +27,12 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_browseButton_clicked();
         void on_tabWidget_currentChanged( int index );
         void on_closeButton_clicked();
-        void on_newHashString( int index, QString hash );
+        void on_base64button_clicked();
+
+        void on_newHashString( int index, QByteArray hash );
+        void on_newChecksumValue( int index, quint64 value );
+        void on_progressUpdate( float progress );
+        void on_finished();
 
     private:
         QSettings settings;

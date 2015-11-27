@@ -10,11 +10,12 @@ TEMPLATE = app
 
 contains(QT_ARCH, i386) {
     PLATFORM = x86
-    TARGET       =  mrhash
 } else {
     PLATFORM = x64
-    TARGET       =  mrhash64
+    ARCH_SUFFIX = 64
 }
+
+TARGET       =  mrhash$${ARCH_SUFFIX}
 
 VPATH += ./src/          \
          ./include/      \
@@ -25,15 +26,38 @@ VPATH += ./src/          \
 INCLUDEPATH += ./include/ \
                ./lib/
 
-SOURCES += main.cpp mainwindow.cpp about.cpp \
-           globalstuff.cpp tiger.cpp rmd160.cpp haval.cpp \
-           qhasher.cpp fileinfowidget.cpp filehashcalculator.cpp
+SOURCES += \
+           src/main.cpp               \
+           src/mainwindow.cpp         \
+           src/about.cpp              \
+           src/globalstuff.cpp        \
+           src/haval.cpp              \
+           src/qextrahash.cpp         \
+           src/fileinfowidget.cpp     \
+           src/filehashcalculator.cpp \
+           src/util.cpp               \
+           src/crc.cpp                \
+           src/fileiconwidget.cpp     \
+           src/base64dialog.cpp       \
+           src/filebase64calculator.cpp
 
-HEADERS  += mainwindow.hpp about.hpp \
-            bithelp.h globalstuff.h tiger.h rmd160.h haval.h err.h \
-            qhasher.hpp fileinfowidget.hpp filehashcalculator.hpp
 
-FORMS    += mainwindow.ui about.ui fileinfowidget.ui
+HEADERS  += \
+            include/mainwindow.hpp         \
+            include/about.hpp              \
+            include/haval.hpp              \
+            include/qextrahash.hpp         \
+            include/hashalgorithm.hpp      \
+            include/fileinfowidget.hpp     \
+            include/filehashcalculator.hpp \
+            include/globalstuff.hpp        \
+            include/util.hpp               \
+            include/crc.hpp                \
+            include/fileiconwidget.hpp     \
+            include/base64dialog.hpp       \
+            include/filebase64calculator.hpp
+
+FORMS    += mainwindow.ui about.ui fileinfowidget.ui fileiconwidget.ui base64dialog.ui
 
 RESOURCES += res/icon.qrc res/translations.qrc
 
@@ -54,10 +78,12 @@ UI_DIR      = ./$${BUILD}/.ui
 
 MAJOR_VER  = 0
 MINOR_VER  = 3
-PATCH_VER  = 0
+PATCH_VER  = 1
 VERSION    = $${MAJOR_VER}.$${MINOR_VER}.$${PATCH_VER}
 DEFINES   += "MAJOR_VER=$${MAJOR_VER}" "MINOR_VER=$${MINOR_VER}" "PATCH_VER=$${PATCH_VER}"
 
+LIBS += -L$$PWD/lib/qtcryptohash/bin/$${PLATFORM}/$${BUILD}/ -lQtCryptoHash$${ARCH_SUFFIX}
+DEFINES += QTCRYPTOHASH_STATIC
 ######################## OS DEPENDENT OPTIONS ########################
 win32 {
     # CONTENT OF THE RC FILE #

@@ -62,6 +62,47 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Base64Dialog</name>
+    <message>
+        <location filename="../../ui/base64dialog.ui" line="17"/>
+        <source>Base64</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/base64dialog.ui" line="41"/>
+        <source>Encoding...</source>
+        <translation>Codifica in corso...</translation>
+    </message>
+</context>
+<context>
+    <name>FileIconWidget</name>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="116"/>
+        <source>16x16</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="138"/>
+        <source>32x32</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="160"/>
+        <source>48x48</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="170"/>
+        <source>Other Sizes</source>
+        <translation>Altre Dimensioni</translation>
+    </message>
+    <message>
+        <location filename="../../ui/fileiconwidget.ui" line="186"/>
+        <source>File Icons</source>
+        <translation>Icone del File</translation>
+    </message>
+</context>
+<context>
     <name>FileInfoWidget</name>
     <message>
         <location filename="../../ui/fileinfowidget.ui" line="14"/>
@@ -94,67 +135,65 @@ p, li { white-space: pre-wrap; }
         <translation>Tipo Contenuto:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="147"/>
         <source>Magic Number:</source>
-        <translation>Numero Magico:</translation>
+        <translation type="vanished">Numero Magico:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="167"/>
+        <location filename="../../ui/fileinfowidget.ui" line="147"/>
         <source>Size:</source>
         <translation>Dimensioni:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="187"/>
+        <location filename="../../ui/fileinfowidget.ui" line="167"/>
         <source>Last Read:</source>
         <translation>Ultima Lettura:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="207"/>
+        <location filename="../../ui/fileinfowidget.ui" line="187"/>
         <source>Last Change:</source>
         <translation>Ultima Modifica:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="227"/>
+        <location filename="../../ui/fileinfowidget.ui" line="207"/>
         <source>Creation Date:</source>
         <translation>Data Creazione:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="247"/>
+        <location filename="../../ui/fileinfowidget.ui" line="227"/>
         <source>Hidden:</source>
         <translation>Nascosto:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="267"/>
+        <location filename="../../ui/fileinfowidget.ui" line="247"/>
         <source>Readable:</source>
         <translation>Leggibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="287"/>
+        <location filename="../../ui/fileinfowidget.ui" line="267"/>
         <source>Writable:</source>
         <translation>Scrivibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="307"/>
+        <location filename="../../ui/fileinfowidget.ui" line="287"/>
         <source>Executable:</source>
         <translation>Eseguibile:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="327"/>
+        <location filename="../../ui/fileinfowidget.ui" line="307"/>
         <source>Owner:</source>
         <translation>Proprietario:</translation>
     </message>
     <message>
-        <location filename="../../ui/fileinfowidget.ui" line="347"/>
         <source>File Icon:</source>
-        <translation>Icona del File:</translation>
+        <translation type="vanished">Icona del File:</translation>
     </message>
     <message>
-        <location filename="../../src/fileinfowidget.cpp" line="27"/>
+        <location filename="../../src/fileinfowidget.cpp" line="28"/>
         <source>yes</source>
         <translation>Si</translation>
     </message>
     <message>
-        <location filename="../../src/fileinfowidget.cpp" line="27"/>
+        <location filename="../../src/fileinfowidget.cpp" line="28"/>
         <source>no</source>
         <translation>No</translation>
     </message>
@@ -177,185 +216,200 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="66"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CRC16 CCITT X.25&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../../ui/mainwindow.ui" line="69"/>
         <source>CRC16:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="113"/>
+        <location filename="../../ui/mainwindow.ui" line="119"/>
         <source>MD4:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="127"/>
+        <location filename="../../ui/mainwindow.ui" line="145"/>
         <source>MD5:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="141"/>
+        <location filename="../../ui/mainwindow.ui" line="171"/>
         <source>SHA-1:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="155"/>
+        <location filename="../../ui/mainwindow.ui" line="197"/>
         <source>SHA-224:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="169"/>
+        <location filename="../../ui/mainwindow.ui" line="223"/>
         <source>SHA-256:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="183"/>
+        <location filename="../../ui/mainwindow.ui" line="249"/>
         <source>SHA-384:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="197"/>
+        <location filename="../../ui/mainwindow.ui" line="275"/>
         <source>SHA-512:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="211"/>
+        <location filename="../../ui/mainwindow.ui" line="301"/>
         <source>Tiger:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="228"/>
+        <location filename="../../ui/mainwindow.ui" line="330"/>
         <source>RIPEMD-160:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="245"/>
+        <location filename="../../ui/mainwindow.ui" line="359"/>
         <source>HAVAL-128:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="262"/>
+        <location filename="../../ui/mainwindow.ui" line="388"/>
         <source>HAVAL-160:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="279"/>
+        <location filename="../../ui/mainwindow.ui" line="417"/>
         <source>HAVAL-192:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="296"/>
+        <location filename="../../ui/mainwindow.ui" line="446"/>
         <source>HAVAL-224:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="313"/>
+        <location filename="../../ui/mainwindow.ui" line="475"/>
         <source>HAVAL-256:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="330"/>
+        <location filename="../../ui/mainwindow.ui" line="504"/>
         <source>Base64:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="347"/>
+        <location filename="../../ui/mainwindow.ui" line="533"/>
         <source>SHA3-224:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="354"/>
+        <location filename="../../ui/mainwindow.ui" line="546"/>
         <source>SHA3-256:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="361"/>
+        <location filename="../../ui/mainwindow.ui" line="559"/>
         <source>SHA3-384:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="368"/>
+        <location filename="../../ui/mainwindow.ui" line="572"/>
         <source>SHA3-512:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="443"/>
+        <location filename="../../ui/mainwindow.ui" line="690"/>
         <source>Browse...</source>
         <translation>Sfoglia...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="470"/>
+        <location filename="../../ui/mainwindow.ui" line="717"/>
+        <source>Encode to Base64</source>
+        <translation>Codifica in Base64</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwindow.ui" line="724"/>
         <source>Close File</source>
         <translation>Chiudi File</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="478"/>
+        <location filename="../../ui/mainwindow.ui" line="732"/>
         <source>Text</source>
         <translation>Testo</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="505"/>
+        <location filename="../../ui/mainwindow.ui" line="759"/>
         <source>Plain text...</source>
         <translation>Testo in chiaro...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="586"/>
+        <location filename="../../ui/mainwindow.ui" line="840"/>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="591"/>
+        <location filename="../../ui/mainwindow.ui" line="845"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="422"/>
-        <location filename="../../ui/mainwindow.ui" line="526"/>
+        <location filename="../../ui/mainwindow.ui" line="669"/>
+        <location filename="../../ui/mainwindow.ui" line="780"/>
         <source>File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="453"/>
+        <location filename="../../ui/mainwindow.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CRC16 CCITT&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwindow.ui" line="700"/>
         <source>Choose a file...</source>
         <translation>Scegli un file...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="535"/>
+        <location filename="../../ui/mainwindow.ui" line="789"/>
         <source>?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="542"/>
+        <location filename="../../ui/mainwindow.ui" line="796"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="552"/>
+        <location filename="../../ui/mainwindow.ui" line="806"/>
         <source>Exit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="555"/>
+        <location filename="../../ui/mainwindow.ui" line="809"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="564"/>
+        <location filename="../../ui/mainwindow.ui" line="818"/>
         <source>About Mr. Hash</source>
         <translation>Informazioni su Mr. Hash</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="573"/>
+        <location filename="../../ui/mainwindow.ui" line="827"/>
         <source>About Qt</source>
         <translation>Informazioni su Qt</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="581"/>
+        <location filename="../../ui/mainwindow.ui" line="835"/>
         <source>Use upper-case letters</source>
         <translation>Utilizza lettere maiuscole</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="175"/>
+        <source>Base64 encoding of files with size greater than 5 MB is not allowed!</source>
+        <translation>La codifica in Base64 di file più grandi di 5 MB non è permessa!</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="244"/>
+        <source>Calculating...</source>
+        <translation>Calcolo in corso...</translation>
     </message>
 </context>
 </TS>

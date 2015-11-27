@@ -1,5 +1,6 @@
 #include "include/fileinfowidget.hpp"
 
+#include <QDir>
 #include <QMimeDatabase>
 #include <QDateTime>
 #include <QFileIconProvider>
@@ -28,7 +29,7 @@ inline QString FileInfoWidget::boolToStr( bool value ) { return value ? tr("yes"
 
 
 void FileInfoWidget::loadFileInfo( const QFileInfo& fileInfo ) {
-    pathLabel->setText( fileInfo.absolutePath() );
+    pathLabel->setText( QDir::toNativeSeparators( fileInfo.absolutePath() ) );
     nameLabel->setText( fileInfo.fileName() );
     extLabel->setText( fileInfo.suffix() );
 
@@ -46,7 +47,5 @@ void FileInfoWidget::loadFileInfo( const QFileInfo& fileInfo ) {
     executableLabel->setText( boolToStr( fileInfo.isExecutable() ) );
     ownerLabel->setText( fileInfo.owner() );
 
-    QFileIconProvider iconProvider;
-    QIcon icon = iconProvider.icon( fileInfo );
-    fileIconLabel->setPixmap( icon.pixmap( icon.availableSizes().last() ) );
+    fileIconWidget->loadFileIcon( fileInfo );
 }
