@@ -1,5 +1,5 @@
 version: 0.3.1-dev{build}
-skip_non_tags: true
+#skip_non_tags: true
 os: Windows Server 2012 R2
 shallow_clone: true
 
