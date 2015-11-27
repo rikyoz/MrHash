@@ -26,7 +26,6 @@ void FileHashCalculator::run() {
         boost_crc16 crc16;
         boost_crc32 crc32;
         boost_crc64 crc64;
-        crc16.reset( 0 );
 
         QCryptographicHash md4( QCryptographicHash::Md4 );
         QCryptographicHash md5( QCryptographicHash::Md5 );
