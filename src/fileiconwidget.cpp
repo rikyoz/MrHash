@@ -29,6 +29,7 @@ void FileIconWidget::loadFileIcon( const QFileInfo &fileInfo ) {
     std::sort( availableSizes.begin(), availableSizes.end(), []( const QSize& a, const QSize& b ) -> bool {
            return a.width() < b.width();
     } );
+    sizeList->clear();
     for ( const QSize &size : availableSizes ) {
         sizeList->addItem( QString( "%1x%2\n" ).arg( size.width() ).arg( size.height() ) );
     }
