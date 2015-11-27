@@ -1,4 +1,4 @@
-curl -fsSL -v -H 'Accept: application/octet-stream' -o qtcryptohash-static.7z https://api.github.com/repos/rikyoz/QtCryptoHash/releases/assets/1073796
+curl -fsSL -v -H -o qtcryptohash-static.7z https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.0/QtCryptoHash-v0.1.0-msvc2013-win32-static.7z
 7z x qtcryptohash-static.7z -oqtcryptohash/ -aoa
-curl -fsSL -v -H 'Accept: application/octet-stream' -o qtcryptohash64-static.7z https://api.github.com/repos/rikyoz/QtCryptoHash/releases/assets/1073794  
+curl -fsSL -v -H -o qtcryptohash64-static.7z https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.0/QtCryptoHash-v0.1.0-msvc2013-win64-static.7z 
 7z x qtcryptohash64-static.7z -oqtcryptohash/ -aoa
