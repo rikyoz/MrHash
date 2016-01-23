@@ -17,6 +17,7 @@ A copy of the GNU General Public License is available at
 #include <QCryptographicHash>
 #include <QDesktopWidget>
 #include <QFileDialog>
+#include <QMimeData>
 #include <QMimeDatabase>
 #include <QDateTime>
 #include <QFileIconProvider>
@@ -59,6 +60,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, this->size(),
                                       qApp->desktop()->availableGeometry() ) );
     setWindowTitle( "Mr. Hash v" + QString( "%1.%2.%3" ).arg( MAJOR_VER ).arg( MINOR_VER ).arg( PATCH_VER ) );
+    setAcceptDrops( true );
 
     actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
     fileInfoWidget->setVisible( false );
@@ -109,6 +111,24 @@ void MainWindow::closeEvent( QCloseEvent* event ) {
     }
 }
 
+void MainWindow::dragEnterEvent( QDragEnterEvent* event ) {
+    event->acceptProposedAction();
+}
+
+void MainWindow::dropEvent( QDropEvent* event ) {
+    const QMimeData* mimeData = event->mimeData();
+
+    if ( mimeData->hasUrls() ) {
+        QList< QUrl > urlList = mimeData->urls();
+        if ( urlList.length() > 1 ) {
+            QMessageBox::information( this, tr( "Too many files!" ), tr( "Mr. Hash can calculate the hashes of just one file!" ) );
+            event->ignore();
+        } else {
+            openFile( urlList.at( 0 ).toLocalFile() );
+        }
+    }
+}
+
 void MainWindow::on_actionInformazioni_su_Hasher_triggered() {
     About abt_dlg;
     abt_dlg.exec();
@@ -132,17 +152,23 @@ void MainWindow::on_plainTextEdit_textChanged() {
     calculateHashes( text.toUtf8(), actionUseUppercase->isChecked() );
 }
 
+void MainWindow::openFile( QString filePath ) {
+    dragDropLabel->setVisible( false );
+
+    filePathEdit->setText( QDir::toNativeSeparators( filePath  ) );
+    readFileInfo( filePath );
+
+    base64button->setVisible( true );
+    progressBar->setVisible( true );
+    calculateFileHashes( filePath );
+}
+
 void MainWindow::on_browseButton_clicked() {
     QFileDialog fileDialog( this );
     if ( fileDialog.exec() == QFileDialog::Accepted ) {
         if ( fileDialog.selectedFiles().size() == 0 ) return;
 
-        filePathEdit->setText( QDir::toNativeSeparators( fileDialog.selectedFiles()[0] ) );
-        readFileInfo( fileDialog.selectedFiles()[0] );
-
-        base64button->setVisible( true );
-        progressBar->setVisible( true );
-        calculateFileHashes( fileDialog.selectedFiles()[0] );
+        openFile( fileDialog.selectedFiles()[0] );
     }
 }
 
@@ -184,6 +210,7 @@ void MainWindow::on_closeButton_clicked() {
         hash_calculator->wait();
     }
     filePathEdit->clear();
+    dragDropLabel->setVisible( true );
     fileInfoWidget->setVisible( false );
     closeButton->setVisible( false );
     actionClose->setDisabled( true );

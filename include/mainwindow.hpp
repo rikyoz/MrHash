@@ -18,6 +18,9 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         explicit MainWindow( QWidget* parent = 0 );
         virtual ~MainWindow();
         void closeEvent( QCloseEvent* );
+        void dragEnterEvent(QDragEnterEvent *event);
+        void dropEvent( QDropEvent* event );
+        void openFile( QString fileDialog );
 
     private slots:
         void on_actionInformazioni_su_Hasher_triggered();
