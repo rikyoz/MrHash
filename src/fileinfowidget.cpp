@@ -38,9 +38,9 @@ void FileInfoWidget::loadFileInfo( const QFileInfo& fileInfo ) {
     ctypeLabel->setText( mimeDatabase.mimeTypeForFile( fileInfo, QMimeDatabase::MatchContent ).name() );
 
     sizeLabel->setText( humanReadableSize( fileInfo.size() ) );
-    lastReadLabel->setText( fileInfo.lastRead().toString( Qt::DefaultLocaleLongDate ) );
-    lastChangeLabel->setText( fileInfo.lastModified().toString( Qt::DefaultLocaleLongDate ) );
-    creationLabel->setText( fileInfo.created().toString( Qt::DefaultLocaleLongDate ) );
+    lastReadLabel->setText( fileInfo.lastRead().toString( Qt::DefaultLocaleShortDate ) );
+    lastChangeLabel->setText( fileInfo.lastModified().toString( Qt::DefaultLocaleShortDate ) );
+    creationLabel->setText( fileInfo.created().toString( Qt::DefaultLocaleShortDate ) );
     hiddenLabel->setText( boolToStr( fileInfo.isHidden() ) );
     readableLabel->setText( boolToStr( fileInfo.isReadable() ) );
     writableLabel->setText( boolToStr( fileInfo.isWritable() ) );
