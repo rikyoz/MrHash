@@ -124,6 +124,7 @@ void MainWindow::dropEvent( QDropEvent* event ) {
             QMessageBox::information( this, tr( "Too many files!" ), tr( "Mr. Hash can calculate the hashes of just one file!" ) );
             event->ignore();
         } else {
+            tabWidget->setCurrentIndex( 0 );
             openFile( urlList.at( 0 ).toLocalFile() );
         }
     }
@@ -266,6 +267,11 @@ void MainWindow::readFileInfo( QString filePath ) {
 }
 
 void MainWindow::calculateFileHashes( QString fileName ) {
+    if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
+        hash_calculator->disconnect();
+        hash_calculator->requestInterruption();
+        hash_calculator->wait();
+    }
     foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
         if ( lineEdit != filePathEdit ) {
             if ( lineEdit != base64edit )
@@ -273,11 +279,6 @@ void MainWindow::calculateFileHashes( QString fileName ) {
             lineEdit->clear();
             lineEdit->setCursorPosition( 0 );
         }
-    }
-    if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
-        hash_calculator->disconnect();
-        hash_calculator->requestInterruption();
-        hash_calculator->wait();
     }
     hash_calculator.reset( new FileHashCalculator( this, fileName ) );
     connect( hash_calculator.get(), SIGNAL( newHashString( int, QByteArray ) ), this, SLOT( on_newHashString( int, QByteArray ) ) );
