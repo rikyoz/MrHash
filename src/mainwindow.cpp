@@ -156,6 +156,7 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
             hash_calculator->requestInterruption();
             hash_calculator->wait();
         }
+        progressBar->setVisible( false );
         on_plainTextEdit_textChanged();
     } else if ( filePathEdit->text().isEmpty() ) {
         //no file selected, no hash to show
