@@ -211,7 +211,17 @@ void MainWindow::on_base64button_clicked() {
 
 void MainWindow::on_closeButton_clicked() {
     if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
-        if ( mHashCalculator->isPaused() ) {
+        QMessageBox closeMsg( QMessageBox::Question,
+                              tr( "Close?" ),
+                              tr( "The calculation hasn't finished yet. Do you really want to close the file?" ),
+                              QMessageBox::Yes | QMessageBox::No,
+                              this );
+        closeMsg.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
+        closeMsg.setButtonText( QMessageBox::No, tr( "No" ) );
+        closeMsg.exec();
+        if ( closeMsg.result() == QMessageBox::No ) {
+            return;
+        } else if ( mHashCalculator->isPaused() ) {
             mHashCalculator->resume();
         }
         mHashCalculator->stop();

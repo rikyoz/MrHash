@@ -214,7 +214,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../ui/mainwindow.ui" line="631"/>
-        <location filename="../../src/mainwindow.cpp" line="258"/>
+        <location filename="../../src/mainwindow.cpp" line="268"/>
         <source>Pause</source>
         <translation>Pausa</translation>
     </message>
@@ -431,11 +431,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="111"/>
+        <location filename="../../src/mainwindow.cpp" line="219"/>
         <source>Yes</source>
         <translation>Si</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="112"/>
+        <location filename="../../src/mainwindow.cpp" line="220"/>
         <source>No</source>
         <translation>No</translation>
     </message>
@@ -450,12 +452,22 @@ p, li { white-space: pre-wrap; }
         <translation>La codifica in Base64 di file più grandi di 5 MB non è permessa!</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="261"/>
+        <location filename="../../src/mainwindow.cpp" line="215"/>
+        <source>Close?</source>
+        <translation>Chiudere?</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="216"/>
+        <source>The calculation hasn&apos;t finished yet. Do you really want to close the file?</source>
+        <translation>Il calcolo non è ancora terminato. Vuoi veramente chiudere il file?</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="271"/>
         <source>Calculation suspended</source>
         <translation>Calcolo sospeso</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="262"/>
+        <location filename="../../src/mainwindow.cpp" line="272"/>
         <source>Resume</source>
         <translation>Riprendi</translation>
     </message>
