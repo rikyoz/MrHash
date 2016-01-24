@@ -14,11 +14,34 @@
 using std::vector;
 using std::unique_ptr;
 
-FileHashCalculator::FileHashCalculator( QWidget* parent, QString fileName ) : QThread( parent ),
-    mFileName( fileName ) {
+FileHashCalculator::FileHashCalculator( QWidget* parent, QString fileName )
+    : QThread( parent ), mFileName( fileName ), mIsPaused( false ) {
 }
 
 FileHashCalculator::~FileHashCalculator() {}
+
+void FileHashCalculator::stop() {
+    disconnect();
+    requestInterruption();
+    wait();
+}
+
+void FileHashCalculator::resume() {
+    mMutex.lock();
+    mIsPaused = false;
+    mMutex.unlock();
+    mPauseCondition.wakeAll();
+}
+
+void FileHashCalculator::pause() {
+    QMutexLocker locker( &mMutex );
+    mIsPaused = true;
+}
+
+bool FileHashCalculator::isPaused() {
+    QMutexLocker locker( &mMutex );
+    return mIsPaused;
+}
 
 void FileHashCalculator::run() {
     QFile file( mFileName );
@@ -51,6 +74,12 @@ void FileHashCalculator::run() {
         quint64 current = 0;
         quint64 total = file.size();
         while ( !isInterruptionRequested() && !file.atEnd() ) {
+            mMutex.lock();
+            if ( mIsPaused ) {
+                mPauseCondition.wait( &mMutex ); //wait for a call to resume()
+            }
+            mMutex.unlock();
+
             QByteArray data = file.read( BUFFER_SIZE );
 
             crc16.process_bytes( data.constData(), data.length() );
@@ -79,7 +108,7 @@ void FileHashCalculator::run() {
             haval256.addData( data );
 
             current += data.size();
-            emit progressUpdate( (float)current / total );
+            emit progressUpdate( ( float )current / total );
         }
         if ( !isInterruptionRequested() )
             emit newChecksumValue( 0, crc16.checksum() );

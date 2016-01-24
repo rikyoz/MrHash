@@ -67,6 +67,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     base64button->setVisible( false );
     base64edit->setEnabled( false );
     progressBar->setVisible( false );
+    pauseButton->setVisible( false );
     label_7->setEnabled( false );
 
     connect( actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
@@ -102,10 +103,22 @@ void MainWindow::closeEvent( QCloseEvent* event ) {
     mSettings.setValue( UPPERCASE_SETTING, actionUseUppercase->isChecked() );
     if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
         event->ignore();
-        FileHashCalculator* calculator = mHashCalculator.release();
-        calculator->requestInterruption();
-        calculator->wait();
-        event->accept();
+        QMessageBox closeMsg( QMessageBox::Question,
+                              tr( "Work in progress..." ),
+                              tr( "The calculation hasn't finished. Do you really want to quit?" ),
+                              QMessageBox::Yes | QMessageBox::No,
+                              this );
+        closeMsg.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
+        closeMsg.setButtonText( QMessageBox::No, tr( "No" ) );
+        closeMsg.exec();
+        if ( closeMsg.result() == QMessageBox::Yes ) {
+            FileHashCalculator* calculator = mHashCalculator.release();
+            if ( calculator->isPaused() ) {
+                calculator->resume();
+            }
+            calculator->stop();
+            event->accept();
+        }
     }
 }
 
@@ -153,9 +166,7 @@ void MainWindow::on_plainTextEdit_textChanged() {
 
 void MainWindow::on_browseButton_clicked() {
     QFileDialog fileDialog( this );
-    if ( fileDialog.exec() == QFileDialog::Accepted ) {
-        if ( fileDialog.selectedFiles().size() == 0 ) return;
-
+    if ( fileDialog.exec() == QFileDialog::Accepted && fileDialog.selectedFiles().size() != 0 ) {
         openFile( fileDialog.selectedFiles()[0] );
     }
 }
@@ -164,34 +175,27 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
     base64edit->setText( "" );
     base64edit->setEnabled( index != 0 );
     label_7->setEnabled( index != 0 );
-    if ( index != 0 ) {
-        if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
-            mHashCalculator->disconnect();
-            mHashCalculator->requestInterruption();
-            mHashCalculator->wait();
-        } else {
-            foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
-                if ( lineEdit != filePathEdit && lineEdit != base64edit ) {
-                    mHashCache.insert( lineEdit, lineEdit->text() );
-                }
+    if ( index != 0 ) { // text tab selected!
+        foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+            if ( lineEdit != filePathEdit && lineEdit != base64edit ) {
+                mHashCache.insert( lineEdit, lineEdit->text() );
             }
         }
         progressBar->setVisible( false );
+        pauseButton->setVisible( false );
         on_plainTextEdit_textChanged();
-    } else if ( filePathEdit->text().isEmpty() ) {
-        //no file selected, no hash to show
+    } else if ( filePathEdit->text().isEmpty() ) { // no file selected, no hash to show
         cleanHashEdits();
-    } else {
-        if ( mHashCache.isEmpty() ) {
-            progressBar->setVisible( true );
-            calculateFileHashes( filePathEdit->text() );
-        } else {
-            foreach ( QLineEdit* lineEdit, mHashCache.keys() ) {
-                QString hash_text = mHashCache.value( lineEdit );
-                lineEdit->setText( actionUseUppercase->isChecked() ? hash_text.toUpper() : hash_text.toLower() );
-            }
-            mHashCache.clear();
+    } else if ( mHashCache.isEmpty() ) { // file selected but calculation not yet started
+        progressBar->setVisible( true );
+        pauseButton->setVisible( true );
+        calculateFileHashes( filePathEdit->text() );
+    } else { // a previous file hash calculation was completed (cached)
+        foreach ( QLineEdit* lineEdit, mHashCache.keys() ) {
+            QString hash_text = mHashCache.value( lineEdit );
+            lineEdit->setText( actionUseUppercase->isChecked() ? hash_text.toUpper() : hash_text.toLower() );
         }
+        mHashCache.clear();
     }
 }
 
@@ -207,16 +211,19 @@ void MainWindow::on_base64button_clicked() {
 
 void MainWindow::on_closeButton_clicked() {
     if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
-        mHashCalculator->disconnect();
-        mHashCalculator->requestInterruption();
-        mHashCalculator->wait();
+        if ( mHashCalculator->isPaused() ) {
+            mHashCalculator->resume();
+        }
+        mHashCalculator->stop();
     }
+    tabWidget->tabBar()->setEnabled( true );
     filePathEdit->clear();
     dragDropLabel->setVisible( true );
     fileInfoWidget->setVisible( false );
     closeButton->setVisible( false );
     actionClose->setDisabled( true );
     base64button->setVisible( false );
+    pauseButton->setVisible( false );
     progressBar->setVisible( false );
     cleanHashEdits();
 }
@@ -234,19 +241,35 @@ void MainWindow::on_newChecksumValue( int index, quint64 value ) {
     mHashEdits[index]->setCursorPosition( 0 );
 }
 
-void MainWindow::on_finished() {
-    progressBar->setVisible( false );
-}
-
 void MainWindow::on_progressUpdate( float progress ) {
     progressBar->setValue( progress * 100 );
 }
 
-void MainWindow::cleanHashEdits() {
+void MainWindow::on_finished() {
+    progressBar->setVisible( false );
+    pauseButton->setVisible( false );
+    tabWidget->tabBar()->setEnabled( true );
+}
+
+void MainWindow::on_pauseButton_clicked() {
+    if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
+        if ( mHashCalculator->isPaused() ) {
+            cleanHashEdits( true );
+            pauseButton->setText( tr( "Pause" ) );
+            mHashCalculator->resume();
+        } else {
+            cleanHashEdits( true, tr( "Calculation suspended" ) );
+            pauseButton->setText( tr( "Resume" ) );
+            mHashCalculator->pause();
+        }
+    }
+}
+
+void MainWindow::cleanHashEdits( bool usePlaceholder, QString placeholder ) {
     foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
-        if ( lineEdit != filePathEdit && lineEdit != base64edit ) {
+        if ( lineEdit != filePathEdit ) {
+            lineEdit->setPlaceholderText( usePlaceholder && lineEdit != base64edit ? placeholder : "" );
             lineEdit->clear();
-            lineEdit->setPlaceholderText( "" );
         }
     }
 }
@@ -259,6 +282,7 @@ void MainWindow::openFile( QString filePath ) {
 
     base64button->setVisible( true );
     progressBar->setVisible( true );
+    pauseButton->setVisible( true );
     calculateFileHashes( filePath );
 }
 
@@ -280,18 +304,10 @@ void MainWindow::readFileInfo( QString filePath ) {
 
 void MainWindow::calculateFileHashes( QString fileName ) {
     if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
-        mHashCalculator->disconnect();
-        mHashCalculator->requestInterruption();
-        mHashCalculator->wait();
+        mHashCalculator->stop();
     }
-    foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
-        if ( lineEdit != filePathEdit ) {
-            if ( lineEdit != base64edit )
-                lineEdit->setPlaceholderText( tr( "Calculating..." ) );
-            lineEdit->clear();
-            lineEdit->setCursorPosition( 0 );
-        }
-    }
+    tabWidget->tabBar()->setEnabled( false );
+    cleanHashEdits( true );
     mHashCalculator.reset( new FileHashCalculator( this, fileName ) );
     connect( mHashCalculator.get(), SIGNAL( newHashString( int, QByteArray ) ), this, SLOT( on_newHashString( int, QByteArray ) ) );
     connect( mHashCalculator.get(), SIGNAL( newChecksumValue( int, quint64 ) ), this, SLOT( on_newChecksumValue( int, quint64 ) ) );
