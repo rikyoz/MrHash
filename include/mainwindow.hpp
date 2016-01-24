@@ -42,7 +42,6 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         QMap< QLineEdit*, QString > hash_cache;
         std::unique_ptr< FileHashCalculator > hash_calculator;
 
-        QString boolToStr( bool value );
         void openFile( QString filePath );
         void readFileInfo( QString filePath );
         void calculateHashes( QByteArray content, bool show_uppercase );
