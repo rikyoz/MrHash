@@ -8,8 +8,10 @@ branches:
   - master
   - develop
   
-configuration:
-  - release
+  except:
+  - screenshots
+
+configuration: Release
 
 environment:
   mrhash_version: 0.3.2
