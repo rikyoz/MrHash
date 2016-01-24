@@ -15,7 +15,7 @@ class FileBase64Calculator : public QThread {
         void run() override;
 
     private:
-        const QString file_name;
+        const QString mFileName;
 
     signals:
         void completed( QByteArray base64 );

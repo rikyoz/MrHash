@@ -44,7 +44,7 @@ class Haval : public HashAlgorithm {
         void write( const byte* dataBuffer, int dataLength ) Q_DECL_OVERRIDE;
         byte* final() Q_DECL_OVERRIDE;
 
-        unsigned int hash_length() const Q_DECL_OVERRIDE { return _length / 8; }
+        unsigned int hash_length() const Q_DECL_OVERRIDE { return mLength / 8; }
 
     private:
         void mhash_bzero( void* s, int n ) { memset( s, '\0', n ); }
@@ -52,8 +52,8 @@ class Haval : public HashAlgorithm {
         void havalTransform4( uint32_t E[8], const byte D[128], uint32_t T[8] );
         void havalTransform5( uint32_t E[8], const byte D[128], uint32_t T[8] );
 
-        HAVAL_CONTEXT* context;
-        uint16_t _passes, _length; /* HAVAL parameters */
+        HAVAL_CONTEXT* mContext;
+        uint16_t mPasses, mLength; /* HAVAL parameters */
 };
 
 #endif

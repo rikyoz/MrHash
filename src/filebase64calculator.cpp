@@ -3,12 +3,12 @@
 #include <QFile>
 
 FileBase64Calculator::FileBase64Calculator( QWidget* parent, QString fileName ) : QThread( parent ),
-    file_name( fileName ) {}
+    mFileName( fileName ) {}
 
 FileBase64Calculator::~FileBase64Calculator() {}
 
 void FileBase64Calculator::run() {
-    QFile file( file_name );
+    QFile file( mFileName );
     if ( file.open( QFile::ReadOnly ) ) {
         QByteArray content = file.readAll();
         if ( !isInterruptionRequested() )

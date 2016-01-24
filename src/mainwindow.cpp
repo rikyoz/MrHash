@@ -18,9 +18,6 @@ A copy of the GNU General Public License is available at
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QMimeData>
-#include <QMimeDatabase>
-#include <QDateTime>
-#include <QFileIconProvider>
 #include <QMessageBox>
 
 #ifdef QT_DEBUG
@@ -49,7 +46,7 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
-    settings( "settings.ini", QSettings::IniFormat ) {
+    mSettings( "settings.ini", QSettings::IniFormat ) {
     setupUi( this );
 #ifdef Q_OS_LINUX
     setFixedHeight( height() + 80 );
@@ -63,7 +60,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     setWindowTitle( "Mr. Hash v" + QString( "%1.%2.%3" ).arg( MAJOR_VER ).arg( MINOR_VER ).arg( PATCH_VER ) );
     setAcceptDrops( true );
 
-    actionUseUppercase->setChecked( settings.value( UPPERCASE_SETTING, false ).toBool() );
+    actionUseUppercase->setChecked( mSettings.value( UPPERCASE_SETTING, false ).toBool() );
     fileInfoWidget->setVisible( false );
     closeButton->setVisible( false );
     actionClose->setDisabled( true );
@@ -76,36 +73,36 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     connect( actionOpen, SIGNAL( triggered() ), this, SLOT( on_browseButton_clicked() ) );
     connect( actionClose, SIGNAL( triggered() ), this, SLOT( on_closeButton_clicked() ) );
 
-    hash_edits.push_front( haval256edit );
-    hash_edits.push_front( haval224edit );
-    hash_edits.push_front( haval192edit );
-    hash_edits.push_front( haval160edit );
-    hash_edits.push_front( haval128edit );
-    hash_edits.push_front( ripemdedit );
-    hash_edits.push_front( tigeredit );
-    hash_edits.push_front( sha3512edit );
-    hash_edits.push_front( sha3384edit );
-    hash_edits.push_front( sha3256edit );
-    hash_edits.push_front( sha3224edit );
-    hash_edits.push_front( sha512edit );
-    hash_edits.push_front( sha384edit );
-    hash_edits.push_front( sha256edit );
-    hash_edits.push_front( sha224edit );
-    hash_edits.push_front( sha1edit );
-    hash_edits.push_front( md5edit );
-    hash_edits.push_front( md4edit );
-    hash_edits.push_front( crc64edit );
-    hash_edits.push_front( crc32edit );
-    hash_edits.push_front( crc16edit );
+    mHashEdits.push_front( haval256edit );
+    mHashEdits.push_front( haval224edit );
+    mHashEdits.push_front( haval192edit );
+    mHashEdits.push_front( haval160edit );
+    mHashEdits.push_front( haval128edit );
+    mHashEdits.push_front( ripemdedit );
+    mHashEdits.push_front( tigeredit );
+    mHashEdits.push_front( sha3512edit );
+    mHashEdits.push_front( sha3384edit );
+    mHashEdits.push_front( sha3256edit );
+    mHashEdits.push_front( sha3224edit );
+    mHashEdits.push_front( sha512edit );
+    mHashEdits.push_front( sha384edit );
+    mHashEdits.push_front( sha256edit );
+    mHashEdits.push_front( sha224edit );
+    mHashEdits.push_front( sha1edit );
+    mHashEdits.push_front( md5edit );
+    mHashEdits.push_front( md4edit );
+    mHashEdits.push_front( crc64edit );
+    mHashEdits.push_front( crc32edit );
+    mHashEdits.push_front( crc16edit );
 }
 
 MainWindow::~MainWindow() {}
 
 void MainWindow::closeEvent( QCloseEvent* event ) {
-    settings.setValue( UPPERCASE_SETTING, actionUseUppercase->isChecked() );
-    if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
+    mSettings.setValue( UPPERCASE_SETTING, actionUseUppercase->isChecked() );
+    if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
         event->ignore();
-        FileHashCalculator* calculator = hash_calculator.release();
+        FileHashCalculator* calculator = mHashCalculator.release();
         calculator->requestInterruption();
         calculator->wait();
         event->accept();
@@ -168,14 +165,14 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
     base64edit->setEnabled( index != 0 );
     label_7->setEnabled( index != 0 );
     if ( index != 0 ) {
-        if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
-            hash_calculator->disconnect();
-            hash_calculator->requestInterruption();
-            hash_calculator->wait();
+        if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
+            mHashCalculator->disconnect();
+            mHashCalculator->requestInterruption();
+            mHashCalculator->wait();
         } else {
             foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
                 if ( lineEdit != filePathEdit && lineEdit != base64edit ) {
-                    hash_cache.insert( lineEdit, lineEdit->text() );
+                    mHashCache.insert( lineEdit, lineEdit->text() );
                 }
             }
         }
@@ -185,15 +182,15 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
         //no file selected, no hash to show
         cleanHashEdits();
     } else {
-        if ( hash_cache.isEmpty() ) {
+        if ( mHashCache.isEmpty() ) {
             progressBar->setVisible( true );
             calculateFileHashes( filePathEdit->text() );
         } else {
-            foreach ( QLineEdit* lineEdit, hash_cache.keys() ) {
-                QString hash_text = hash_cache.value( lineEdit );
+            foreach ( QLineEdit* lineEdit, mHashCache.keys() ) {
+                QString hash_text = mHashCache.value( lineEdit );
                 lineEdit->setText( actionUseUppercase->isChecked() ? hash_text.toUpper() : hash_text.toLower() );
             }
-            hash_cache.clear();
+            mHashCache.clear();
         }
     }
 }
@@ -209,10 +206,10 @@ void MainWindow::on_base64button_clicked() {
 }
 
 void MainWindow::on_closeButton_clicked() {
-    if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
-        hash_calculator->disconnect();
-        hash_calculator->requestInterruption();
-        hash_calculator->wait();
+    if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
+        mHashCalculator->disconnect();
+        mHashCalculator->requestInterruption();
+        mHashCalculator->wait();
     }
     filePathEdit->clear();
     dragDropLabel->setVisible( true );
@@ -225,16 +222,16 @@ void MainWindow::on_closeButton_clicked() {
 }
 
 void MainWindow::on_newHashString( int index, QByteArray hash ) {
-    if ( hash_edits[index] == base64edit )
-        hash_edits[index]->setText( hash );
+    if ( mHashEdits[index] == base64edit )
+        mHashEdits[index]->setText( hash );
     else
-        hash_edits[index]->setText( util::hash_hex( hash, actionUseUppercase->isChecked() ) );
-    hash_edits[index]->setCursorPosition( 0 );
+        mHashEdits[index]->setText( util::hash_hex( hash, actionUseUppercase->isChecked() ) );
+    mHashEdits[index]->setCursorPosition( 0 );
 }
 
 void MainWindow::on_newChecksumValue( int index, quint64 value ) {
-    hash_edits[index]->setText( util::checksum_hex( value, actionUseUppercase->isChecked() ) );
-    hash_edits[index]->setCursorPosition( 0 );
+    mHashEdits[index]->setText( util::checksum_hex( value, actionUseUppercase->isChecked() ) );
+    mHashEdits[index]->setCursorPosition( 0 );
 }
 
 void MainWindow::on_finished() {
@@ -282,10 +279,10 @@ void MainWindow::readFileInfo( QString filePath ) {
 }
 
 void MainWindow::calculateFileHashes( QString fileName ) {
-    if ( hash_calculator != nullptr && hash_calculator->isRunning() ) {
-        hash_calculator->disconnect();
-        hash_calculator->requestInterruption();
-        hash_calculator->wait();
+    if ( mHashCalculator != nullptr && mHashCalculator->isRunning() ) {
+        mHashCalculator->disconnect();
+        mHashCalculator->requestInterruption();
+        mHashCalculator->wait();
     }
     foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
         if ( lineEdit != filePathEdit ) {
@@ -295,12 +292,12 @@ void MainWindow::calculateFileHashes( QString fileName ) {
             lineEdit->setCursorPosition( 0 );
         }
     }
-    hash_calculator.reset( new FileHashCalculator( this, fileName ) );
-    connect( hash_calculator.get(), SIGNAL( newHashString( int, QByteArray ) ), this, SLOT( on_newHashString( int, QByteArray ) ) );
-    connect( hash_calculator.get(), SIGNAL( newChecksumValue( int, quint64 ) ), this, SLOT( on_newChecksumValue( int, quint64 ) ) );
-    connect( hash_calculator.get(), SIGNAL( progressUpdate( float ) ), this, SLOT( on_progressUpdate( float ) ) );
-    connect( hash_calculator.get(), SIGNAL( finished() ), this, SLOT( on_finished() ) );
-    hash_calculator->start();
+    mHashCalculator.reset( new FileHashCalculator( this, fileName ) );
+    connect( mHashCalculator.get(), SIGNAL( newHashString( int, QByteArray ) ), this, SLOT( on_newHashString( int, QByteArray ) ) );
+    connect( mHashCalculator.get(), SIGNAL( newChecksumValue( int, quint64 ) ), this, SLOT( on_newChecksumValue( int, quint64 ) ) );
+    connect( mHashCalculator.get(), SIGNAL( progressUpdate( float ) ), this, SLOT( on_progressUpdate( float ) ) );
+    connect( mHashCalculator.get(), SIGNAL( finished() ), this, SLOT( on_finished() ) );
+    mHashCalculator->start();
 }
 
 void MainWindow::calculateHashes( QByteArray content, bool show_uppercase ) {

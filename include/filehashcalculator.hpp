@@ -15,7 +15,7 @@ class FileHashCalculator : public QThread {
         void run() override;
 
     private:
-        const QString file_name;
+        const QString mFileName;
 
     signals:
         void newHashString( int index, QByteArray hash );

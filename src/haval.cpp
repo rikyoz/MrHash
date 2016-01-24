@@ -664,7 +664,7 @@ void Haval::havalTransform5 ( uint32_t E[8], const byte D[128], uint32_t T[8] ) 
 
 }
 
-Haval::Haval( uint16_t hashLength, uint16_t passes ) : context( new HAVAL_CONTEXT ), _passes( passes ), _length( hashLength )  {
+Haval::Haval( uint16_t hashLength, uint16_t passes ) : mContext( new HAVAL_CONTEXT ), mPasses( passes ), mLength( hashLength )  {
     if ( passes != 3 && passes != 4 && passes != 5 )
         throw std::invalid_argument( "Invalid number of passes" );
     if ( hashLength != 128 && hashLength != 160 && hashLength != 192 &&
@@ -674,21 +674,21 @@ Haval::Haval( uint16_t hashLength, uint16_t passes ) : context( new HAVAL_CONTEX
 }
 
 Haval::~Haval() {
-    delete context;
-    context = NULL;
+    delete mContext;
+    mContext = NULL;
 }
 
 void Haval::init() {
     /* properly initialize HAVAL context: */
-    mhash_bzero( context, sizeof ( HAVAL_CONTEXT ) );
-    context->digest[0] = 0x243F6A88UL;
-    context->digest[1] = 0x85A308D3UL;
-    context->digest[2] = 0x13198A2EUL;
-    context->digest[3] = 0x03707344UL;
-    context->digest[4] = 0xA4093822UL;
-    context->digest[5] = 0x299F31D0UL;
-    context->digest[6] = 0x082EFA98UL;
-    context->digest[7] = 0xEC4E6C89UL;
+    mhash_bzero( mContext, sizeof ( HAVAL_CONTEXT ) );
+    mContext->digest[0] = 0x243F6A88UL;
+    mContext->digest[1] = 0x85A308D3UL;
+    mContext->digest[2] = 0x13198A2EUL;
+    mContext->digest[3] = 0x03707344UL;
+    mContext->digest[4] = 0xA4093822UL;
+    mContext->digest[5] = 0x299F31D0UL;
+    mContext->digest[6] = 0x082EFA98UL;
+    mContext->digest[7] = 0xEC4E6C89UL;
 }
 
 void Haval::write( const byte* dataBuffer, int dataLength ) {
@@ -697,51 +697,51 @@ void Haval::write( const byte* dataBuffer, int dataLength ) {
     }
 
     /* update bit count: Extra parentheses for Borland C++ --Tines*/
-    if ( ( ( uint32_t )dataLength << 3 ) > ( 0xFFFFFFFFUL - context->bitCount[0] ) ) {
-        context->bitCount[1]++;
+    if ( ( ( uint32_t )dataLength << 3 ) > ( 0xFFFFFFFFUL - mContext->bitCount[0] ) ) {
+        mContext->bitCount[1]++;
     }
-    context->bitCount[0] += ( uint32_t )dataLength << 3;
+    mContext->bitCount[0] += ( uint32_t )dataLength << 3;
 
     /* if the data buffer is not enough to complete */
     /* the context data block, just append it: */
-    if ( context->occupied + ( uint32_t )dataLength < 128 ) { /* caveat: typecast avoids 16-bit overflow */
-        memcpy ( &context->block[context->occupied], dataBuffer, dataLength );
-        context->occupied += dataLength;
+    if ( mContext->occupied + ( uint32_t )dataLength < 128 ) { /* caveat: typecast avoids 16-bit overflow */
+        memcpy ( &mContext->block[mContext->occupied], dataBuffer, dataLength );
+        mContext->occupied += dataLength;
         return; /* delay processing */
     }
 
     /* complete the context data block: */
-    memcpy ( &context->block[context->occupied], dataBuffer, 128 - context->occupied );
-    dataBuffer += 128 - context->occupied;
-    dataLength -= 128 - context->occupied;
+    memcpy ( &mContext->block[mContext->occupied], dataBuffer, 128 - mContext->occupied );
+    dataBuffer += 128 - mContext->occupied;
+    dataLength -= 128 - mContext->occupied;
 
-    switch ( _passes ) {
+    switch ( mPasses ) {
         case 3:
             /* process the completed context data block: */
-            havalTransform3 ( context->digest, context->block, context->temp );
+            havalTransform3 ( mContext->digest, mContext->block, mContext->temp );
             /* process data in chunks of 128 bytes: */
             while ( dataLength >= 128 ) {
-                havalTransform3 ( context->digest, dataBuffer, context->temp );
+                havalTransform3 ( mContext->digest, dataBuffer, mContext->temp );
                 dataBuffer += 128;
                 dataLength -= 128;
             }
             break;
         case 4:
             /* process the completed context data block: */
-            havalTransform4 ( context->digest, context->block, context->temp );
+            havalTransform4 ( mContext->digest, mContext->block, mContext->temp );
             /* process data in chunks of 128 bytes: */
             while ( dataLength >= 128 ) {
-                havalTransform4 ( context->digest, dataBuffer, context->temp );
+                havalTransform4 ( mContext->digest, dataBuffer, mContext->temp );
                 dataBuffer += 128;
                 dataLength -= 128;
             }
             break;
         case 5:
             /* process the completed context data block: */
-            havalTransform5 ( context->digest, context->block, context->temp );
+            havalTransform5 ( mContext->digest, mContext->block, mContext->temp );
             /* process data in chunks of 128 bytes: */
             while ( dataLength >= 128 ) {
-                havalTransform5 ( context->digest, dataBuffer, context->temp );
+                havalTransform5 ( mContext->digest, dataBuffer, mContext->temp );
                 dataBuffer += 128;
                 dataLength -= 128;
             }
@@ -749,8 +749,8 @@ void Haval::write( const byte* dataBuffer, int dataLength ) {
     }
 
     /* delay processing of remaining data: */
-    memcpy ( context->block, dataBuffer, dataLength );
-    context->occupied = dataLength; /* < 128 */
+    memcpy ( mContext->block, dataBuffer, dataLength );
+    mContext->occupied = dataLength; /* < 128 */
 }
 
 
@@ -758,122 +758,122 @@ byte* Haval::final() {
     uint32_t w;
 
     /* append toggle to the context data block: */
-    context->block[context->occupied] = 0x01; /* corrected from 0x80 */
+    mContext->block[mContext->occupied] = 0x01; /* corrected from 0x80 */
 
     /* pad the message with null bytes to make it 944 (mod 1024) bits long: */
-    if ( context->occupied++ >= 118 ) {
+    if ( mContext->occupied++ >= 118 ) {
         /* no room for tail data on the current context block */
-        mhash_bzero ( &context->block[context->occupied], 128 - context->occupied );
+        mhash_bzero ( &mContext->block[mContext->occupied], 128 - mContext->occupied );
         /* process the completed context data block: */
-        switch ( _passes ) {
+        switch ( mPasses ) {
             case 3:
-                havalTransform3 ( context->digest, context->block, context->temp );
+                havalTransform3 ( mContext->digest, mContext->block, mContext->temp );
                 break;
             case 4:
-                havalTransform4 ( context->digest, context->block, context->temp );
+                havalTransform4 ( mContext->digest, mContext->block, mContext->temp );
                 break;
             case 5:
-                havalTransform5 ( context->digest, context->block, context->temp );
+                havalTransform5 ( mContext->digest, mContext->block, mContext->temp );
                 break;
         }
-        mhash_bzero ( context->block, 118 );
+        mhash_bzero ( mContext->block, 118 );
     } else {
-        mhash_bzero ( &context->block[context->occupied], 118 - context->occupied );
+        mhash_bzero ( &mContext->block[mContext->occupied], 118 - mContext->occupied );
     }
     /* append tail data and process last (padded) message block: */
-    context->block[118] = ( byte )(
-                              ( ( _length & 0x03U ) << 6 ) |
-                              ( ( _passes & 0x07U ) << 3 ) |
+    mContext->block[118] = ( byte )(
+                              ( ( mLength & 0x03U ) << 6 ) |
+                              ( ( mPasses & 0x07U ) << 3 ) |
                               ( HAVAL_VERSION           & 0x07U ) );
-    context->block[119] = ( byte ) ( _length >> 2 );
-    w = context->bitCount[0];
-    context->block[120] = ( byte )( w );
-    context->block[121] = ( byte )( w >>  8 );
-    context->block[122] = ( byte )( w >> 16 );
-    context->block[123] = ( byte )( w >> 24 );
-    w = context->bitCount[1];
-    context->block[124] = ( byte )( w );
-    context->block[125] = ( byte )( w >>  8 );
-    context->block[126] = ( byte )( w >> 16 );
-    context->block[127] = ( byte )( w >> 24 );
-    switch ( _passes ) {
+    mContext->block[119] = ( byte ) ( mLength >> 2 );
+    w = mContext->bitCount[0];
+    mContext->block[120] = ( byte )( w );
+    mContext->block[121] = ( byte )( w >>  8 );
+    mContext->block[122] = ( byte )( w >> 16 );
+    mContext->block[123] = ( byte )( w >> 24 );
+    w = mContext->bitCount[1];
+    mContext->block[124] = ( byte )( w );
+    mContext->block[125] = ( byte )( w >>  8 );
+    mContext->block[126] = ( byte )( w >> 16 );
+    mContext->block[127] = ( byte )( w >> 24 );
+    switch ( mPasses ) {
         case 3:
-            havalTransform3 ( context->digest, context->block, context->temp );
+            havalTransform3 ( mContext->digest, mContext->block, mContext->temp );
             break;
         case 4:
-            havalTransform4 ( context->digest, context->block, context->temp );
+            havalTransform4 ( mContext->digest, mContext->block, mContext->temp );
             break;
         case 5:
-            havalTransform5 ( context->digest, context->block, context->temp );
+            havalTransform5 ( mContext->digest, mContext->block, mContext->temp );
             break;
     }
 
     /* fold 256-bit digest to fit the desired hash length (blaargh!): */
     /* Byte reverse each 32-bit section while outputting if big-endian -- Tines*/
-    switch ( _length ) {
+    switch ( mLength ) {
         case 128:
-            context->digest[3] +=
-                ( ( context->digest[7] & 0xFF000000UL )
-                  | ( context->digest[6] & 0x00FF0000UL )
-                  | ( context->digest[5] & 0x0000FF00UL )
-                  | ( context->digest[4] & 0x000000FFUL )
+            mContext->digest[3] +=
+                ( ( mContext->digest[7] & 0xFF000000UL )
+                  | ( mContext->digest[6] & 0x00FF0000UL )
+                  | ( mContext->digest[5] & 0x0000FF00UL )
+                  | ( mContext->digest[4] & 0x000000FFUL )
                 );
-            context->digest[2] +=
-                ( ( ( context->digest[7] & 0x00FF0000UL )
-                    | ( context->digest[6] & 0x0000FF00UL )
-                    | ( context->digest[5] & 0x000000FFUL )
+            mContext->digest[2] +=
+                ( ( ( mContext->digest[7] & 0x00FF0000UL )
+                    | ( mContext->digest[6] & 0x0000FF00UL )
+                    | ( mContext->digest[5] & 0x000000FFUL )
                   ) << 8 ) |
-                ( ( context->digest[4] & 0xFF000000UL ) >> 24 );
-            context->digest[1] +=
-                ( ( ( context->digest[7] & 0x0000FF00UL )
-                    | ( context->digest[6] & 0x000000FFUL ) ) << 16 ) |
-                ( ( ( context->digest[5] & 0xFF000000UL )
-                    | ( context->digest[4] & 0x00FF0000UL ) ) >> 16 );
-            context->digest[0] +=
-                ( ( ( context->digest[6] & 0xFF000000UL )
-                    | ( context->digest[5] & 0x00FF0000UL )
-                    | ( context->digest[4] & 0x0000FF00UL )
+                ( ( mContext->digest[4] & 0xFF000000UL ) >> 24 );
+            mContext->digest[1] +=
+                ( ( ( mContext->digest[7] & 0x0000FF00UL )
+                    | ( mContext->digest[6] & 0x000000FFUL ) ) << 16 ) |
+                ( ( ( mContext->digest[5] & 0xFF000000UL )
+                    | ( mContext->digest[4] & 0x00FF0000UL ) ) >> 16 );
+            mContext->digest[0] +=
+                ( ( ( mContext->digest[6] & 0xFF000000UL )
+                    | ( mContext->digest[5] & 0x00FF0000UL )
+                    | ( mContext->digest[4] & 0x0000FF00UL )
                   ) >> 8 ) |
-                ( ( context->digest[7] & 0x000000FFUL ) << 24 );
+                ( ( mContext->digest[7] & 0x000000FFUL ) << 24 );
             break;
         case 160:
-            context->digest[4] +=
-                ( ( context->digest[7] & 0xFE000000UL ) | ( context->digest[6] & 0x01F80000UL ) | ( context->digest[5] & 0x0007F000UL ) ) >> 12;
-            context->digest[3] +=
-                ( ( context->digest[7] & 0x01F80000UL ) | ( context->digest[6] & 0x0007F000UL ) | ( context->digest[5] & 0x00000FC0UL ) ) >> 6;
-            context->digest[2] +=
-                ( ( context->digest[7] & 0x0007F000UL ) | ( context->digest[6] & 0x00000FC0UL ) | ( context->digest[5] & 0x0000003FUL ) );
-            context->digest[1] +=
+            mContext->digest[4] +=
+                ( ( mContext->digest[7] & 0xFE000000UL ) | ( mContext->digest[6] & 0x01F80000UL ) | ( mContext->digest[5] & 0x0007F000UL ) ) >> 12;
+            mContext->digest[3] +=
+                ( ( mContext->digest[7] & 0x01F80000UL ) | ( mContext->digest[6] & 0x0007F000UL ) | ( mContext->digest[5] & 0x00000FC0UL ) ) >> 6;
+            mContext->digest[2] +=
+                ( ( mContext->digest[7] & 0x0007F000UL ) | ( mContext->digest[6] & 0x00000FC0UL ) | ( mContext->digest[5] & 0x0000003FUL ) );
+            mContext->digest[1] +=
                 HAVAL_ROTR
-                ( ( context->digest[7] & 0x00000FC0UL ) | ( context->digest[6] & 0x0000003FUL ) | ( context->digest[5] & 0xFE000000UL ), 25 );
-            context->digest[0] +=
+                ( ( mContext->digest[7] & 0x00000FC0UL ) | ( mContext->digest[6] & 0x0000003FUL ) | ( mContext->digest[5] & 0xFE000000UL ), 25 );
+            mContext->digest[0] +=
                 HAVAL_ROTR
-                ( ( context->digest[7] & 0x0000003FUL ) | ( context->digest[6] & 0xFE000000UL ) | ( context->digest[5] & 0x01F80000UL ), 19 );
+                ( ( mContext->digest[7] & 0x0000003FUL ) | ( mContext->digest[6] & 0xFE000000UL ) | ( mContext->digest[5] & 0x01F80000UL ), 19 );
             break;
         case 192:
-            context->digest[5] +=
-                ( ( context->digest[7] & 0xFC000000UL ) | ( context->digest[6] & 0x03E00000UL ) ) >> 21;
-            context->digest[4] +=
-                ( ( context->digest[7] & 0x03E00000UL ) | ( context->digest[6] & 0x001F0000UL ) ) >> 16;
-            context->digest[3] +=
-                ( ( context->digest[7] & 0x001F0000UL ) | ( context->digest[6] & 0x0000FC00UL ) ) >> 10;
-            context->digest[2] +=
-                ( ( context->digest[7] & 0x0000FC00UL ) | ( context->digest[6] & 0x000003E0UL ) ) >>  5;
-            context->digest[1] +=
-                ( ( context->digest[7] & 0x000003E0UL ) | ( context->digest[6] & 0x0000001FUL ) );
-            context->digest[0] +=
+            mContext->digest[5] +=
+                ( ( mContext->digest[7] & 0xFC000000UL ) | ( mContext->digest[6] & 0x03E00000UL ) ) >> 21;
+            mContext->digest[4] +=
+                ( ( mContext->digest[7] & 0x03E00000UL ) | ( mContext->digest[6] & 0x001F0000UL ) ) >> 16;
+            mContext->digest[3] +=
+                ( ( mContext->digest[7] & 0x001F0000UL ) | ( mContext->digest[6] & 0x0000FC00UL ) ) >> 10;
+            mContext->digest[2] +=
+                ( ( mContext->digest[7] & 0x0000FC00UL ) | ( mContext->digest[6] & 0x000003E0UL ) ) >>  5;
+            mContext->digest[1] +=
+                ( ( mContext->digest[7] & 0x000003E0UL ) | ( mContext->digest[6] & 0x0000001FUL ) );
+            mContext->digest[0] +=
                 HAVAL_ROTR
-                ( ( context->digest[7] & 0x0000001FUL ) | ( context->digest[6] & 0xFC000000UL ), 26 );
+                ( ( mContext->digest[7] & 0x0000001FUL ) | ( mContext->digest[6] & 0xFC000000UL ), 26 );
             break;
         case 224:
-            context->digest[6] += ( context->digest[7]      ) & 0x0000000FUL;
-            context->digest[5] += ( context->digest[7] >>  4 ) & 0x0000001FUL;
-            context->digest[4] += ( context->digest[7] >>  9 ) & 0x0000000FUL;
-            context->digest[3] += ( context->digest[7] >> 13 ) & 0x0000001FUL;
-            context->digest[2] += ( context->digest[7] >> 18 ) & 0x0000000FUL;
-            context->digest[1] += ( context->digest[7] >> 22 ) & 0x0000001FUL;
-            context->digest[0] += ( context->digest[7] >> 27 ) & 0x0000001FUL;
+            mContext->digest[6] += ( mContext->digest[7]      ) & 0x0000000FUL;
+            mContext->digest[5] += ( mContext->digest[7] >>  4 ) & 0x0000001FUL;
+            mContext->digest[4] += ( mContext->digest[7] >>  9 ) & 0x0000000FUL;
+            mContext->digest[3] += ( mContext->digest[7] >> 13 ) & 0x0000001FUL;
+            mContext->digest[2] += ( mContext->digest[7] >> 18 ) & 0x0000000FUL;
+            mContext->digest[1] += ( mContext->digest[7] >> 22 ) & 0x0000001FUL;
+            mContext->digest[0] += ( mContext->digest[7] >> 27 ) & 0x0000001FUL;
             break;
     }
-    return reinterpret_cast<byte*>( context->digest );
+    return reinterpret_cast<byte*>( mContext->digest );
 }

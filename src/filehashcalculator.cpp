@@ -15,13 +15,13 @@ using std::vector;
 using std::unique_ptr;
 
 FileHashCalculator::FileHashCalculator( QWidget* parent, QString fileName ) : QThread( parent ),
-    file_name( fileName ) {
+    mFileName( fileName ) {
 }
 
 FileHashCalculator::~FileHashCalculator() {}
 
 void FileHashCalculator::run() {
-    QFile file( file_name );
+    QFile file( mFileName );
     if ( file.open( QFile::ReadOnly ) ) {
         boost_crc16 crc16;
         boost_crc32 crc32;
@@ -78,7 +78,7 @@ void FileHashCalculator::run() {
             haval224.addData( data );
             haval256.addData( data );
 
-            current += BUFFER_SIZE;
+            current += data.size();
             emit progressUpdate( (float)current / total );
         }
         if ( !isInterruptionRequested() )

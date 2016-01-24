@@ -18,8 +18,7 @@ class Base64Dialog : public QDialog, private Ui::Base64Dialog {
         void on_complete( QByteArray base64 );
 
     private:
-        QString m_filename;
-        std::unique_ptr< FileBase64Calculator > m_base64calculator;
+        std::unique_ptr< FileBase64Calculator > mBase64Calculator;
 
     protected:
         void closeEvent( QCloseEvent* event ) Q_DECL_OVERRIDE;

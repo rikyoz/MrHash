@@ -36,10 +36,10 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_finished();
 
     private:
-        QSettings settings;
-        QList< QLineEdit* > hash_edits;
-        QMap< QLineEdit*, QString > hash_cache;
-        std::unique_ptr< FileHashCalculator > hash_calculator;
+        QSettings mSettings;
+        QList< QLineEdit* > mHashEdits;
+        QMap< QLineEdit*, QString > mHashCache;
+        std::unique_ptr< FileHashCalculator > mHashCalculator;
 
         void openFile( QString filePath );
         void readFileInfo( QString filePath );
