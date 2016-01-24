@@ -877,11 +877,3 @@ byte* Haval::final() {
     }
     return reinterpret_cast<byte*>( context->digest );
 }
-
-string Haval::calcHaval( const string &buf ) {
-    init();
-    write( reinterpret_cast<const byte*>( buf.c_str() ), buf.length() );
-    byte* ret = final();
-
-    return charToHex( reinterpret_cast<const char*>( ret ), hash_length() );
-}

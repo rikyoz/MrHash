@@ -15,7 +15,6 @@
 #ifndef HAVAL_H
 #define HAVAL_H
 
-#include "globalstuff.hpp"
 #include "hashalgorithm.hpp"
 
 #include <cstdint>
