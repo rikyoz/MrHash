@@ -2,6 +2,7 @@
 #define FILEHASHCALCULATOR_H
 
 #include <QWidget>
+#include <QMutex>
 #include <QWaitCondition>
 #include <QThread>
 
