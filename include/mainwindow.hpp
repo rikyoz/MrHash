@@ -20,7 +20,6 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void closeEvent( QCloseEvent* );
         void dragEnterEvent(QDragEnterEvent *event);
         void dropEvent( QDropEvent* event );
-        void openFile( QString fileDialog );
 
     private slots:
         void on_actionInformazioni_su_Hasher_triggered();
@@ -44,6 +43,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         std::unique_ptr< FileHashCalculator > hash_calculator;
 
         QString boolToStr( bool value );
+        void openFile( QString filePath );
         void readFileInfo( QString filePath );
         void calculateHashes( QByteArray content, bool show_uppercase );
         void calculateFileHashes( QString fileName );

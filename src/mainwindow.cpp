@@ -153,17 +153,6 @@ void MainWindow::on_plainTextEdit_textChanged() {
     calculateHashes( text.toUtf8(), actionUseUppercase->isChecked() );
 }
 
-void MainWindow::openFile( QString filePath ) {
-    dragDropLabel->setVisible( false );
-
-    filePathEdit->setText( QDir::toNativeSeparators( filePath  ) );
-    readFileInfo( filePath );
-
-    base64button->setVisible( true );
-    progressBar->setVisible( true );
-    calculateFileHashes( filePath );
-}
-
 void MainWindow::on_browseButton_clicked() {
     QFileDialog fileDialog( this );
     if ( fileDialog.exec() == QFileDialog::Accepted ) {
@@ -262,6 +251,17 @@ void MainWindow::cleanHashEdits() {
             lineEdit->setPlaceholderText( "" );
         }
     }
+}
+
+void MainWindow::openFile( QString filePath ) {
+    dragDropLabel->setVisible( false );
+
+    filePathEdit->setText( QDir::toNativeSeparators( filePath  ) );
+    readFileInfo( filePath );
+
+    base64button->setVisible( true );
+    progressBar->setVisible( true );
+    calculateFileHashes( filePath );
 }
 
 void MainWindow::readFileInfo( QString filePath ) {
