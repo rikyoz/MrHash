@@ -15,7 +15,7 @@ contains(QT_ARCH, i386) {
     ARCH_SUFFIX = 64
 }
 
-TARGET       =  mrhash$${ARCH_SUFFIX}
+TARGET =  mrhash$${ARCH_SUFFIX}
 
 VPATH += ./src/          \
          ./include/      \
@@ -76,7 +76,7 @@ UI_DIR      = ./$${BUILD}/.ui
 
 MAJOR_VER  = 0
 MINOR_VER  = 3
-PATCH_VER  = 1
+PATCH_VER  = 2
 VERSION    = $${MAJOR_VER}.$${MINOR_VER}.$${PATCH_VER}
 DEFINES   += "MAJOR_VER=$${MAJOR_VER}" "MINOR_VER=$${MINOR_VER}" "PATCH_VER=$${PATCH_VER}"
 
@@ -88,7 +88,7 @@ win32 {
     # CONTENT OF THE RC FILE #
     QMAKE_TARGET_PRODUCT = MrHash
     QMAKE_TARGET_COMPANY = rikyoz
-    QMAKE_TARGET_COPYRIGHT = Copyright (c) 2015 $${QMAKE_TARGET_COMPANY}
+    QMAKE_TARGET_COPYRIGHT = Copyright (c) 2016 $${QMAKE_TARGET_COMPANY}
     RC_ICONS = res/icon.ico
     !win32-g++ {
         contains(QT_ARCH, i386) {
