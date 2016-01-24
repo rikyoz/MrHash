@@ -25,7 +25,7 @@ class QExtraHash {
     private:
         Q_DISABLE_COPY( QExtraHash )
 
-        HashAlgorithm* hash_algorithm;
+        HashAlgorithm* mHashAlgorithm;
 };
 
 #endif // QEXTRAHASH_HPP

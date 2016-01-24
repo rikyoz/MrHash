@@ -2,8 +2,7 @@
 
 #include <QDesktopWidget>
 
-Base64Dialog::Base64Dialog( QString fileName, QWidget* parent ) : m_filename( fileName ),
-    QDialog( parent ) {
+Base64Dialog::Base64Dialog( QString fileName, QWidget* parent ) : QDialog( parent ) {
     setupUi( this );
 
     setWindowFlags( Qt::Tool );
@@ -11,9 +10,9 @@ Base64Dialog::Base64Dialog( QString fileName, QWidget* parent ) : m_filename( fi
     setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, size(),
                                       qApp->desktop()->availableGeometry() ) );
 
-    m_base64calculator.reset( new FileBase64Calculator( this, fileName ) );
-    connect( m_base64calculator.get(), SIGNAL( completed( QByteArray ) ), this, SLOT( on_complete( QByteArray ) ) );
-    m_base64calculator->start();
+    mBase64Calculator.reset( new FileBase64Calculator( this, fileName ) );
+    connect( mBase64Calculator.get(), SIGNAL( completed( QByteArray ) ), this, SLOT( on_complete( QByteArray ) ) );
+    mBase64Calculator->start();
 }
 
 Base64Dialog::~Base64Dialog() {}
@@ -24,10 +23,10 @@ void Base64Dialog::on_complete( QByteArray base64 ) {
 }
 
 void Base64Dialog::closeEvent( QCloseEvent* event ) {
-    if ( m_base64calculator != nullptr && m_base64calculator->isRunning() ) {
+    if ( mBase64Calculator != nullptr && mBase64Calculator->isRunning() ) {
         event->ignore();
-        m_base64calculator->requestInterruption();
-        m_base64calculator->wait();
+        mBase64Calculator->requestInterruption();
+        mBase64Calculator->wait();
         event->accept();
     }
 }

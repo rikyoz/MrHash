@@ -8,19 +8,19 @@
 QExtraHash::QExtraHash( Algorithm method ) {
     switch ( method ) {
         case QExtraHash::HAVAL128:
-            hash_algorithm = new Haval( 128, 5 );
+            mHashAlgorithm = new Haval( 128, 5 );
             break;
         case QExtraHash::HAVAL160:
-            hash_algorithm = new Haval( 160, 5 );
+            mHashAlgorithm = new Haval( 160, 5 );
             break;
         case QExtraHash::HAVAL192:
-            hash_algorithm = new Haval( 192, 5 );
+            mHashAlgorithm = new Haval( 192, 5 );
             break;
         case QExtraHash::HAVAL224:
-            hash_algorithm = new Haval( 224, 5 );
+            mHashAlgorithm = new Haval( 224, 5 );
             break;
         case QExtraHash::HAVAL256:
-            hash_algorithm = new Haval( 256, 5 );
+            mHashAlgorithm = new Haval( 256, 5 );
             break;
         default:
             throw std::invalid_argument( "Algorithm not supported" );
@@ -29,23 +29,23 @@ QExtraHash::QExtraHash( Algorithm method ) {
 }
 
 QExtraHash::~QExtraHash() {
-    if ( hash_algorithm ) {
-        delete hash_algorithm;
-        hash_algorithm = NULL;
+    if ( mHashAlgorithm ) {
+        delete mHashAlgorithm;
+        mHashAlgorithm = NULL;
     }
 }
 
 void QExtraHash::reset() {
-    hash_algorithm->init();
+    mHashAlgorithm->init();
 }
 
 void QExtraHash::addData( const QByteArray &data ) {
-    hash_algorithm->write( reinterpret_cast< const byte* >( data.constData() ), data.length() );
+    mHashAlgorithm->write( reinterpret_cast< const byte* >( data.constData() ), data.length() );
 }
 
 QByteArray QExtraHash::result() const {
-    byte* hash_array = hash_algorithm->final();
-    return QByteArray( reinterpret_cast< char* >( hash_array ), hash_algorithm->hash_length() );
+    byte* hash_array = mHashAlgorithm->final();
+    return QByteArray( reinterpret_cast< char* >( hash_array ), mHashAlgorithm->hash_length() );
 }
 
 QByteArray QExtraHash::hash( const QByteArray &data, QExtraHash::Algorithm method ) {

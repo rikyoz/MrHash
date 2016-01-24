@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>529</height>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -289,6 +289,110 @@
         </property>
        </widget>
       </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_17">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>SHA3-224:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="sha3224edit">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_19">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>SHA3-256:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLineEdit" name="sha3256edit">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="label_20">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>SHA3-384:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QLineEdit" name="sha3384edit">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_21">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>SHA3-512:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QLineEdit" name="sha3512edit">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item row="11" column="0">
        <widget class="QLabel" name="label_9">
         <property name="maximumSize">
@@ -521,118 +625,21 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
-       <widget class="QLabel" name="label_17">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
+      <item row="19" column="0">
+       <widget class="QPushButton" name="pauseButton">
         <property name="text">
-         <string>SHA3-224:</string>
+         <string>Pause</string>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="8" column="0">
-       <widget class="QLabel" name="label_19">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>SHA3-256:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
-       <widget class="QLabel" name="label_20">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>SHA3-384:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="0">
-       <widget class="QLabel" name="label_21">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>SHA3-512:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QLineEdit" name="sha3224edit">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QLineEdit" name="sha3256edit">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <widget class="QLineEdit" name="sha3384edit">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="1">
-       <widget class="QLineEdit" name="sha3512edit">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="19" column="0" colspan="2">
+      <item row="19" column="1">
        <widget class="QProgressBar" name="progressBar">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
         <property name="value">
          <number>0</number>
         </property>
@@ -655,10 +662,22 @@
     </item>
     <item row="0" column="0" colspan="6">
      <widget class="QTabWidget" name="tabWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
-        <width>380</width>
-        <height>400</height>
+        <width>400</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>400</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="currentIndex">
@@ -684,24 +703,7 @@
         <property name="spacing">
          <number>5</number>
         </property>
-        <item row="0" column="2">
-         <widget class="QPushButton" name="browseButton">
-          <property name="text">
-           <string>Browse...</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QLineEdit" name="filePathEdit">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="placeholderText">
-           <string>Choose a file...</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="3">
+        <item row="4" column="0" colspan="3">
          <widget class="FileInfoWidget" name="fileInfoWidget" native="true">
           <property name="minimumSize">
            <size>
@@ -711,19 +713,83 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="2" column="2">
+         <widget class="QPushButton" name="browseButton">
+          <property name="text">
+           <string>Browse...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <widget class="QPushButton" name="closeButton">
+          <property name="text">
+           <string>Close File</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QLineEdit" name="filePathEdit">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+          <property name="placeholderText">
+           <string>Choose a file...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
          <widget class="QPushButton" name="base64button">
           <property name="text">
            <string>Encode to Base64</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="closeButton">
+        <item row="1" column="0" colspan="3">
+         <widget class="QLabel" name="dragDropLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Close File</string>
+           <string>&lt;html&gt;
+&lt;head/&gt;
+&lt;body&gt;
+&lt;img src=&quot;:/res/dragdrop.png&quot;/&gt;&lt;p style=&quot;color:#7e7e7e&quot;&gt;&lt;span style=&quot;font-size:18pt; font-weight:600;&quot;&gt;Drag and drop a file here&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;or&lt;br/&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
           </property>
          </widget>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>

@@ -15,7 +15,7 @@ contains(QT_ARCH, i386) {
     ARCH_SUFFIX = 64
 }
 
-TARGET       =  mrhash$${ARCH_SUFFIX}
+TARGET =  mrhash$${ARCH_SUFFIX}
 
 VPATH += ./src/          \
          ./include/      \
@@ -30,7 +30,6 @@ SOURCES += \
            src/main.cpp               \
            src/mainwindow.cpp         \
            src/about.cpp              \
-           src/globalstuff.cpp        \
            src/haval.cpp              \
            src/qextrahash.cpp         \
            src/fileinfowidget.cpp     \
@@ -50,7 +49,6 @@ HEADERS  += \
             include/hashalgorithm.hpp      \
             include/fileinfowidget.hpp     \
             include/filehashcalculator.hpp \
-            include/globalstuff.hpp        \
             include/util.hpp               \
             include/crc.hpp                \
             include/fileiconwidget.hpp     \
@@ -78,18 +76,19 @@ UI_DIR      = ./$${BUILD}/.ui
 
 MAJOR_VER  = 0
 MINOR_VER  = 3
-PATCH_VER  = 1
+PATCH_VER  = 2
 VERSION    = $${MAJOR_VER}.$${MINOR_VER}.$${PATCH_VER}
 DEFINES   += "MAJOR_VER=$${MAJOR_VER}" "MINOR_VER=$${MINOR_VER}" "PATCH_VER=$${PATCH_VER}"
 
 LIBS += -L$$PWD/lib/qtcryptohash/bin/$${PLATFORM}/$${BUILD}/ -lQtCryptoHash$${ARCH_SUFFIX}
 DEFINES += QTCRYPTOHASH_STATIC
+
 ######################## OS DEPENDENT OPTIONS ########################
 win32 {
     # CONTENT OF THE RC FILE #
     QMAKE_TARGET_PRODUCT = MrHash
     QMAKE_TARGET_COMPANY = rikyoz
-    QMAKE_TARGET_COPYRIGHT = Copyright (c) 2015 $${QMAKE_TARGET_COMPANY}
+    QMAKE_TARGET_COPYRIGHT = Copyright (c) 2016 $${QMAKE_TARGET_COMPANY}
     RC_ICONS = res/icon.ico
     !win32-g++ {
         contains(QT_ARCH, i386) {

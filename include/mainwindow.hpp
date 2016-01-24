@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "crc.hpp"
 #include "filehashcalculator.hpp"
 
 #include "ui_mainwindow.h"
@@ -18,6 +17,8 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         explicit MainWindow( QWidget* parent = 0 );
         virtual ~MainWindow();
         void closeEvent( QCloseEvent* );
+        void dragEnterEvent( QDragEnterEvent* event );
+        void dropEvent( QDropEvent* event );
 
     private slots:
         void on_actionInformazioni_su_Hasher_triggered();
@@ -33,17 +34,19 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
         void on_newChecksumValue( int index, quint64 value );
         void on_progressUpdate( float progress );
         void on_finished();
+        void on_pauseButton_clicked();
 
     private:
-        QSettings settings;
-        QList< QLineEdit* > hash_edits;
-        std::unique_ptr< FileHashCalculator > hash_calculator;
+        QSettings mSettings;
+        QList< QLineEdit* > mHashEdits;
+        QMap< QLineEdit*, QString > mHashCache;
+        std::unique_ptr< FileHashCalculator > mHashCalculator;
 
-        QString boolToStr( bool value );
+        void openFile( QString filePath );
         void readFileInfo( QString filePath );
         void calculateHashes( QByteArray content, bool show_uppercase );
         void calculateFileHashes( QString fileName );
-        void cleanHashEdits();
+        void cleanHashEdits( bool usePlaceholder = false , QString placeholder = tr( "Calculating..." ) );
 };
 
 #endif // MAINWINDOW_H

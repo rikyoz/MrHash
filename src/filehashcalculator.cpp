@@ -14,14 +14,37 @@
 using std::vector;
 using std::unique_ptr;
 
-FileHashCalculator::FileHashCalculator( QWidget* parent, QString fileName ) : QThread( parent ),
-    file_name( fileName ) {
+FileHashCalculator::FileHashCalculator( QWidget* parent, QString fileName )
+    : QThread( parent ), mFileName( fileName ), mIsPaused( false ) {
 }
 
 FileHashCalculator::~FileHashCalculator() {}
 
+void FileHashCalculator::stop() {
+    disconnect();
+    requestInterruption();
+    wait();
+}
+
+void FileHashCalculator::resume() {
+    mMutex.lock();
+    mIsPaused = false;
+    mMutex.unlock();
+    mPauseCondition.wakeAll();
+}
+
+void FileHashCalculator::pause() {
+    QMutexLocker locker( &mMutex );
+    mIsPaused = true;
+}
+
+bool FileHashCalculator::isPaused() {
+    QMutexLocker locker( &mMutex );
+    return mIsPaused;
+}
+
 void FileHashCalculator::run() {
-    QFile file( file_name );
+    QFile file( mFileName );
     if ( file.open( QFile::ReadOnly ) ) {
         boost_crc16 crc16;
         boost_crc32 crc32;
@@ -51,6 +74,12 @@ void FileHashCalculator::run() {
         quint64 current = 0;
         quint64 total = file.size();
         while ( !isInterruptionRequested() && !file.atEnd() ) {
+            mMutex.lock();
+            if ( mIsPaused ) {
+                mPauseCondition.wait( &mMutex ); //wait for a call to resume()
+            }
+            mMutex.unlock();
+
             QByteArray data = file.read( BUFFER_SIZE );
 
             crc16.process_bytes( data.constData(), data.length() );
@@ -78,8 +107,8 @@ void FileHashCalculator::run() {
             haval224.addData( data );
             haval256.addData( data );
 
-            current += BUFFER_SIZE;
-            emit progressUpdate( (float)current / total );
+            current += data.size();
+            emit progressUpdate( ( float )current / total );
         }
         if ( !isInterruptionRequested() )
             emit newChecksumValue( 0, crc16.checksum() );
