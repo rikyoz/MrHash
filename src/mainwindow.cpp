@@ -40,7 +40,7 @@ using namespace std;
 #define UPPERCASE_SETTING QStringLiteral("show_uppercase")
 
 #ifdef Q_OS_WIN
-/* Needed to read correct file properties on NTFS file systems,
+/* Needed to read correctly the file properties on NTFS file systems,
  * see http://doc.qt.io/qt-5/qfiledevice.html#Permission-enum */
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
