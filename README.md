@@ -2,7 +2,7 @@
 
 **Mr. Hash** is a cross-platform tool for calculating the hashes of files and plain texts.
 
-[![](http://img.shields.io/badge/version-v0.3.1-blue.png?style=flat)](https://github.com/rikyoz/mrhash/releases/latest)
+[![](http://img.shields.io/badge/version-v0.3.2-blue.png?style=flat)](https://github.com/rikyoz/mrhash/releases/latest)
 ![](https://img.shields.io/badge/platform-Windows%20|%20Linux%20|%20Mac%20OS%20X-red.png?style=flat)
 ![](http://img.shields.io/badge/architecture-x86%20|%20x64-yellow.png?style=flat)
 [![](http://img.shields.io/badge/license-GNU%20GPL%20v2-lightgrey.png?style=flat)](/LICENSE)
