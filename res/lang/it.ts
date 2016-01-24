@@ -329,28 +329,43 @@ p, li { white-space: pre-wrap; }
         <translation>Chiudi File</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="799"/>
+        <location filename="../../ui/mainwindow.ui" line="762"/>
+        <source>&lt;html&gt;
+&lt;head/&gt;
+&lt;body&gt;
+&lt;img src=&quot;:/res/dragdrop.png&quot;/&gt;&lt;p style=&quot;color:#7e7e7e&quot;&gt;&lt;span style=&quot;font-size:18pt; font-weight:600;&quot;&gt;Drag and drop a file here&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;or&lt;br/&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</source>
+        <translation>&lt;html&gt;
+&lt;head/&gt;
+&lt;body&gt;
+&lt;img src=&quot;:/res/dragdrop.png&quot;/&gt;&lt;p style=&quot;color:#7e7e7e&quot;&gt;&lt;span style=&quot;font-size:18pt; font-weight:600;&quot;&gt;Trascina e rilascia un file qui&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;oppure&lt;br/&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainwindow.ui" line="804"/>
         <source>Text</source>
         <translation>Testo</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="826"/>
+        <location filename="../../ui/mainwindow.ui" line="831"/>
         <source>Plain text...</source>
         <translation>Testo in chiaro...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="907"/>
+        <location filename="../../ui/mainwindow.ui" line="912"/>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="912"/>
+        <location filename="../../ui/mainwindow.ui" line="917"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
         <location filename="../../ui/mainwindow.ui" line="694"/>
-        <location filename="../../ui/mainwindow.ui" line="847"/>
+        <location filename="../../ui/mainwindow.ui" line="852"/>
         <source>File</source>
         <translation></translation>
     </message>
@@ -365,42 +380,37 @@ p, li { white-space: pre-wrap; }
         <translation>Scegli un file...</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="762"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/res/dragdrop.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; font-weight:600; color:#7e7e7e;&quot;&gt;Drag and drop a file here&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#7e7e7e;&quot;&gt;or&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/res/dragdrop.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; font-weight:600; color:#7e7e7e;&quot;&gt;Trascina un file qui&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#7e7e7e;&quot;&gt;oppure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="856"/>
+        <location filename="../../ui/mainwindow.ui" line="861"/>
         <source>?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="863"/>
+        <location filename="../../ui/mainwindow.ui" line="868"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="873"/>
+        <location filename="../../ui/mainwindow.ui" line="878"/>
         <source>Exit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="876"/>
+        <location filename="../../ui/mainwindow.ui" line="881"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="885"/>
+        <location filename="../../ui/mainwindow.ui" line="890"/>
         <source>About Mr. Hash</source>
         <translation>Informazioni su Mr. Hash</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="894"/>
+        <location filename="../../ui/mainwindow.ui" line="899"/>
         <source>About Qt</source>
         <translation>Informazioni su Qt</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="902"/>
+        <location filename="../../ui/mainwindow.ui" line="907"/>
         <source>Use upper-case letters</source>
         <translation>Utilizza lettere maiuscole</translation>
     </message>

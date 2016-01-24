@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>529</height>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -759,7 +759,12 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/res/dragdrop.png&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; font-weight:600; color:#7e7e7e;&quot;&gt;Drag and drop a file here&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#7e7e7e;&quot;&gt;or&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;
+&lt;head/&gt;
+&lt;body&gt;
+&lt;img src=&quot;:/res/dragdrop.png&quot;/&gt;&lt;p style=&quot;color:#7e7e7e&quot;&gt;&lt;span style=&quot;font-size:18pt; font-weight:600;&quot;&gt;Drag and drop a file here&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;or&lt;br/&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignBottom|Qt::AlignHCenter</set>
