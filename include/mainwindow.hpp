@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "crc.hpp"
 #include "filehashcalculator.hpp"
 
 #include "ui_mainwindow.h"

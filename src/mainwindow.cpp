@@ -29,6 +29,7 @@ A copy of the GNU General Public License is available at
 
 #include "qtcryptohash/qcryptohash.hpp"
 #include "qextrahash.hpp"
+#include "crc.hpp"
 
 #include "mainwindow.hpp"
 #include "base64dialog.hpp"
