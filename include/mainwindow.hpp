@@ -40,6 +40,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
     private:
         QSettings settings;
         QList< QLineEdit* > hash_edits;
+        QMap< QLineEdit*, QString > hash_cache;
         std::unique_ptr< FileHashCalculator > hash_calculator;
 
         QString boolToStr( bool value );

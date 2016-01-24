@@ -182,6 +182,12 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
             hash_calculator->disconnect();
             hash_calculator->requestInterruption();
             hash_calculator->wait();
+        } else {
+            foreach ( QLineEdit* lineEdit, findChildren<QLineEdit*>() ) {
+                if ( lineEdit != filePathEdit && lineEdit != base64edit ) {
+                    hash_cache.insert( lineEdit, lineEdit->text() );
+                }
+            }
         }
         progressBar->setVisible( false );
         on_plainTextEdit_textChanged();
@@ -189,8 +195,16 @@ void MainWindow::on_tabWidget_currentChanged( int index ) {
         //no file selected, no hash to show
         cleanHashEdits();
     } else {
-        progressBar->setVisible( true );
-        calculateFileHashes( filePathEdit->text() );
+        if ( hash_cache.isEmpty() ) {
+            progressBar->setVisible( true );
+            calculateFileHashes( filePathEdit->text() );
+        } else {
+            foreach ( QLineEdit* lineEdit, hash_cache.keys() ) {
+                QString hash_text = hash_cache.value( lineEdit );
+                lineEdit->setText( actionUseUppercase->isChecked() ? hash_text.toUpper() : hash_text.toLower() );
+            }
+            hash_cache.clear();
+        }
     }
 }
 
