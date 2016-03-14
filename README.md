@@ -1,4 +1,4 @@
-# Mr. Hash [![Build  Status](https://ci.appveyor.com/api/projects/status/t7q9r8489kdkpfnr?svg=true&passingText=Build%20OK&pendingText=Building...&failingText=Build%20Failed")](https://ci.appveyor.com/project/rikyoz/mrhash)<img src="/res/icon.png" width="40px" height="40px" align="right" />
+# Mr. Hash <img src="/res/icon.png" width="40px" height="40px" align="right" />
 
 **Mr. Hash** is a cross-platform tool for calculating the hashes of files and plain texts.
 
@@ -6,6 +6,10 @@
 ![](https://img.shields.io/badge/platform-Windows%20|%20Linux%20|%20Mac%20OS%20X-red.png?style=flat)
 ![](http://img.shields.io/badge/architecture-x86%20|%20x64-yellow.png?style=flat)
 [![](http://img.shields.io/badge/license-GNU%20GPL%20v2-lightgrey.png?style=flat)](/LICENSE)
+
+| Windows |
+|:-------:|
+|[![Build  Status](https://ci.appveyor.com/api/projects/status/t7q9r8489kdkpfnr?svg=true&passingText=Build%20OK&pendingText=Building...&failingText=Build%20Failed")](https://ci.appveyor.com/project/rikyoz/mrhash)|
 
 ## Features
 + Supports hashing of **files** and **plain text**
