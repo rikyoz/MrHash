@@ -6,7 +6,6 @@
 #include <memory>
 
 #include "qtcryptohash/qcryptohash.hpp"
-#include "qextrahash.hpp"
 #include "crc.hpp"
 
 #define BUFFER_SIZE 8 * 1024 //8 KB
@@ -65,12 +64,6 @@ void FileHashCalculator::run() {
         QCryptoHash tiger( QCryptoHash::TIGER );
         QCryptoHash ripemd( QCryptoHash::RMD160 );
 
-        QExtraHash haval128( QExtraHash::HAVAL128 );
-        QExtraHash haval160( QExtraHash::HAVAL160 );
-        QExtraHash haval192( QExtraHash::HAVAL192 );
-        QExtraHash haval224( QExtraHash::HAVAL224 );
-        QExtraHash haval256( QExtraHash::HAVAL256 );
-
         quint64 current = 0;
         quint64 total = file.size();
         while ( !isInterruptionRequested() && !file.atEnd() ) {
@@ -100,12 +93,6 @@ void FileHashCalculator::run() {
 
             tiger.addData( data );
             ripemd.addData( data );
-
-            haval128.addData( data );
-            haval160.addData( data );
-            haval192.addData( data );
-            haval224.addData( data );
-            haval256.addData( data );
 
             current += data.size();
             emit progressUpdate( ( float )current / total );
@@ -144,16 +131,5 @@ void FileHashCalculator::run() {
             emit newHashString( 14, tiger.result() );
         if ( !isInterruptionRequested() )
             emit newHashString( 15, ripemd.result() );
-
-        if ( !isInterruptionRequested() )
-            emit newHashString( 16, haval128.result() );
-        if ( !isInterruptionRequested() )
-            emit newHashString( 17, haval160.result() );
-        if ( !isInterruptionRequested() )
-            emit newHashString( 18, haval192.result() );
-        if ( !isInterruptionRequested() )
-            emit newHashString( 19, haval224.result() );
-        if ( !isInterruptionRequested() )
-            emit newHashString( 20, haval256.result() );
     }
 }

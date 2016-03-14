@@ -30,8 +30,6 @@ SOURCES += \
            src/main.cpp               \
            src/mainwindow.cpp         \
            src/about.cpp              \
-           src/haval.cpp              \
-           src/qextrahash.cpp         \
            src/fileinfowidget.cpp     \
            src/filehashcalculator.cpp \
            src/util.cpp               \
@@ -44,9 +42,6 @@ SOURCES += \
 HEADERS  += \
             include/mainwindow.hpp         \
             include/about.hpp              \
-            include/haval.hpp              \
-            include/qextrahash.hpp         \
-            include/hashalgorithm.hpp      \
             include/fileinfowidget.hpp     \
             include/filehashcalculator.hpp \
             include/util.hpp               \

@@ -25,7 +25,6 @@ A copy of the GNU General Public License is available at
 #endif
 
 #include "qtcryptohash/qcryptohash.hpp"
-#include "qextrahash.hpp"
 #include "crc.hpp"
 
 #include "mainwindow.hpp"
@@ -74,11 +73,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     connect( actionOpen, SIGNAL( triggered() ), this, SLOT( on_browseButton_clicked() ) );
     connect( actionClose, SIGNAL( triggered() ), this, SLOT( on_closeButton_clicked() ) );
 
-    mHashEdits.push_front( haval256edit );
-    mHashEdits.push_front( haval224edit );
-    mHashEdits.push_front( haval192edit );
-    mHashEdits.push_front( haval160edit );
-    mHashEdits.push_front( haval128edit );
     mHashEdits.push_front( ripemdedit );
     mHashEdits.push_front( tigeredit );
     mHashEdits.push_front( sha3512edit );
@@ -239,6 +233,8 @@ void MainWindow::on_closeButton_clicked() {
 }
 
 void MainWindow::on_newHashString( int index, QByteArray hash ) {
+    if ( index < 0 || index > mHashEdits.length() )
+        return;
     if ( mHashEdits[index] == base64edit )
         mHashEdits[index]->setText( hash );
     else
@@ -344,11 +340,6 @@ void MainWindow::calculateHashes( QByteArray content, bool show_uppercase ) {
     sha3512edit->setText( hash_hex( QCryptographicHash::hash( content, QCryptographicHash::Sha3_512 ), show_uppercase ) );
     tigeredit->setText( hash_hex( QCryptoHash::hash( content, QCryptoHash::TIGER ), show_uppercase ) );
     ripemdedit->setText( hash_hex( QCryptoHash::hash( content, QCryptoHash::RMD160 ), show_uppercase ) );
-    haval128edit->setText( hash_hex( QExtraHash::hash( content, QExtraHash::HAVAL128 ), show_uppercase ) );
-    haval160edit->setText( hash_hex( QExtraHash::hash( content, QExtraHash::HAVAL160 ), show_uppercase ) );
-    haval192edit->setText( hash_hex( QExtraHash::hash( content, QExtraHash::HAVAL192 ), show_uppercase ) );
-    haval224edit->setText( hash_hex( QExtraHash::hash( content, QExtraHash::HAVAL224 ), show_uppercase ) );
-    haval256edit->setText( hash_hex( QExtraHash::hash( content, QExtraHash::HAVAL256 ), show_uppercase ) );
     base64edit->setText( content.toBase64( QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals ) );
 
     sha384edit->setCursorPosition( 0 );
