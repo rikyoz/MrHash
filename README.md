@@ -23,7 +23,9 @@
 
 ## Screenshots
 <p align="center">
-<img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot0.png"" width="49%"></img> <img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot1.png"" width="49%"></img> <img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot2.png"" width="49%"></img>
+<img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot0.png"" width="49%" />
+<img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot1.png"" width="49%" />
+<img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot2.png"" width="49%" />
 </p>
 
 ## Supported Algorithms
