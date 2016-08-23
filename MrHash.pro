@@ -57,17 +57,18 @@ RESOURCES += res/icon.qrc res/translations.qrc
 TRANSLATIONS = res/lang/it.ts
 
 ########################### CONFIGURATION ############################
-CONFIG += c++14
+CONFIG += c++14 strict_c++
 CONFIG(debug, debug|release) {
     BUILD = debug
 } else {
     BUILD = release
 }
 DESTDIR     = $$PWD/bin/$${PLATFORM}/$${BUILD}/
-OBJECTS_DIR = ./$${BUILD}/.obj
-RCC_DIR     = ./$${BUILD}/.rcc
-MOC_DIR     = ./$${BUILD}/.moc
-UI_DIR      = ./$${BUILD}/.ui
+BUILDDIR    = $$PWD/build/$${PLATFORM}/$${BUILD}
+OBJECTS_DIR = $${BUILDDIR}/.obj
+RCC_DIR     = $${BUILDDIR}/.rcc
+MOC_DIR     = $${BUILDDIR}/.moc
+UI_DIR      = $${BUILDDIR}/.ui
 
 MAJOR_VER  = 0
 MINOR_VER  = 3
@@ -77,6 +78,10 @@ DEFINES   += "MAJOR_VER=$${MAJOR_VER}" "MINOR_VER=$${MINOR_VER}" "PATCH_VER=$${P
 
 LIBS += -L$$PWD/lib/qtcryptohash/bin/$${PLATFORM}/$${BUILD}/ -lQtCryptoHash$${ARCH_SUFFIX}
 DEFINES += QTCRYPTOHASH_STATIC
+
+*-g++* { # mingw and gcc
+    QMAKE_CXXFLAGS_WARN_ON += -Wpedantic
+}
 
 ######################## OS DEPENDENT OPTIONS ########################
 win32 {
@@ -92,10 +97,4 @@ win32 {
             QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
         }
     }
-}
-
-unix {
-    QMAKE_CXXFLAGS_CXX11 = -std=c++1y
-    release: QMAKE_CXXFLAGS += -s
-    release: QMAKE_LFLAGS = -s
 }
