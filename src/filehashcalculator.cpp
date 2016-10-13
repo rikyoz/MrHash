@@ -63,6 +63,7 @@ void FileHashCalculator::run() {
 
         QCryptoHash tiger( QCryptoHash::TIGER );
         QCryptoHash ripemd( QCryptoHash::RMD160 );
+        QCryptoHash whirlpool( QCryptoHash::WHIRLPOOL );
 
         quint64 current = 0;
         quint64 total = file.size();
@@ -93,6 +94,7 @@ void FileHashCalculator::run() {
 
             tiger.addData( data );
             ripemd.addData( data );
+            whirlpool.addData( data );
 
             current += data.size();
             emit progressUpdate( ( float )current / total );
@@ -131,5 +133,7 @@ void FileHashCalculator::run() {
             emit newHashString( 14, tiger.result() );
         if ( !isInterruptionRequested() )
             emit newHashString( 15, ripemd.result() );
+        if ( !isInterruptionRequested() )
+            emit newHashString( 16, whirlpool.result() );
     }
 }

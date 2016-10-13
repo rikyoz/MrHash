@@ -73,6 +73,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ),
     connect( actionOpen, SIGNAL( triggered() ), this, SLOT( on_browseButton_clicked() ) );
     connect( actionClose, SIGNAL( triggered() ), this, SLOT( on_closeButton_clicked() ) );
 
+    mHashEdits.push_front( whirlpooledit );
     mHashEdits.push_front( ripemdedit );
     mHashEdits.push_front( tigeredit );
     mHashEdits.push_front( sha3512edit );
@@ -340,10 +341,12 @@ void MainWindow::calculateHashes( QByteArray content, bool show_uppercase ) {
     sha3512edit->setText( hash_hex( QCryptographicHash::hash( content, QCryptographicHash::Sha3_512 ), show_uppercase ) );
     tigeredit->setText( hash_hex( QCryptoHash::hash( content, QCryptoHash::TIGER ), show_uppercase ) );
     ripemdedit->setText( hash_hex( QCryptoHash::hash( content, QCryptoHash::RMD160 ), show_uppercase ) );
+    whirlpooledit->setText( hash_hex( QCryptoHash::hash( content, QCryptoHash::WHIRLPOOL ), show_uppercase ) );
     base64edit->setText( content.toBase64( QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals ) );
 
     sha384edit->setCursorPosition( 0 );
     sha512edit->setCursorPosition( 0 );
     sha3384edit->setCursorPosition( 0 );
     sha3512edit->setCursorPosition( 0 );
+    whirlpooledit->setCursorPosition( 0 );
 }
