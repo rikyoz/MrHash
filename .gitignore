@@ -1,9 +1,0 @@
-build/
-pkg/
-bin/
-lib/boost/
-*.pro.user*
-*.cppcheck
-*.autosave
-lib/qtcryptohash/
-*.7z
