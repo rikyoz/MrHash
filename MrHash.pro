@@ -105,5 +105,6 @@ win32 {
         } else {
             QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
         }
+        QMAKE_CXXFLAGS += /std:c++14
     }
 }

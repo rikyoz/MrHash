@@ -3,11 +3,7 @@ skip_non_tags: true
 os: Visual Studio 2015
 shallow_clone: true
 
-branches:
-  only:
-  - master
-  - develop
-  
+branches: 
   except:
   - screenshots
 
@@ -15,13 +11,14 @@ configuration: Release
 
 environment:
   mrhash_version: 0.3.3
-  boost_dir: C:\Libraries\boost_1_69_0
+  #boost_dir: C:\Libraries\boost_1_69_0
   msvc_dir: C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
   
   matrix:
   #MSVC x86
   - name: win32
     arch: x86
+    vc_arch: x86
     target: mrhash.exe
     qt_version: 5.11.3
     qt_dir: C:\Qt\%qt_version%\msvc2015\bin
@@ -29,22 +26,27 @@ environment:
   #MSVC x64
   - name: win64
     arch: x64
+    vc_arch: amd64
     target: mrhash64.exe
     qt_version: 5.13.2
     qt_dir: C:\Qt\%qt_version%\msvc2015_64\bin
+    
+clone_script:
+    - cmd: git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+    - cmd: git checkout -qf %APPVEYOR_REPO_COMMIT%
+    - cmd: git submodule update --init --recursive
 
 init:
     - set PATH=%PATH%;%msvc_dir%;%qt_dir%
-    - vcvarsall.bat %arch%
+    - vcvarsall.bat %vc_arch%
     
 install:
-    - git submodule update --init --recursive
     - mkdir lib
     - cd lib
     - mkdir qtcryptohash
-    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.1/QtCryptoHash-v0.1.1-msvc2013-win32-static.7z -FileName qtcryptohash-static.7z 
+    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.2/QtCryptoHash-v0.1.2-msvc2015-win32-static.7z -FileName qtcryptohash-static.7z 
     - 7z x qtcryptohash-static.7z -oqtcryptohash/ -aoa
-    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.1/QtCryptoHash-v0.1.1-msvc2013-win64-static.7z -FileName qtcryptohash64-static.7z
+    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.2/QtCryptoHash-v0.1.2-msvc2015-win64-static.7z -FileName qtcryptohash64-static.7z
     - 7z x qtcryptohash64-static.7z -oqtcryptohash/ -aoa
     - cd ..
     
@@ -68,7 +70,7 @@ deploy:
     release: $(APPVEYOR_REPO_TAG_NAME)
     description: 'Binaries of Mr. Hash v%mrhash_version%'
     auth_token:
-      secure: 4V5xJQT+iVPUhK05TBLkNkLY8HTArZ+omH394hfXqQuxfrkaQqnR8132rDnB/HVm
+      secure: FXlhX+Nu9dabf4YLycMYx2cAZtJeEOqtRXQ3Qxky32fBQoyt+8xbSzyZFmv0e8ID
     artifact: /.*\.7z/
     draft: true
     prerelease: false
