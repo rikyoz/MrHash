@@ -3,11 +3,7 @@ skip_non_tags: true
 os: Visual Studio 2015
 shallow_clone: true
 
-branches:
-  only:
-  - master
-  - develop
-  
+branches: 
   except:
   - screenshots
 
@@ -22,6 +18,7 @@ environment:
   #MSVC x86
   - name: win32
     arch: x86
+    vc_arch: x86
     target: mrhash.exe
     qt_version: 5.11.3
     qt_dir: C:\Qt\%qt_version%\msvc2015\bin
@@ -29,6 +26,7 @@ environment:
   #MSVC x64
   - name: win64
     arch: x64
+    vc_arch: amd64
     target: mrhash64.exe
     qt_version: 5.13.2
     qt_dir: C:\Qt\%qt_version%\msvc2015_64\bin
@@ -39,7 +37,7 @@ clone_script:
 
 init:
     - set PATH=%PATH%;%msvc_dir%;%qt_dir%
-    - vcvarsall.bat %arch%
+    - vcvarsall.bat %vc_arch%
     
 install:
     - mkdir lib
