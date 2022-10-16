@@ -24,7 +24,16 @@ VPATH += ./src/          \
          ./ui/
 
 INCLUDEPATH += ./include/ \
-               ./lib/
+               ./lib/ \
+               ./third_party/boost-array/include/ \
+               ./third_party/boost-assert/include/ \
+               ./third_party/boost-config/include/ \
+               ./third_party/boost-core/include/ \
+               ./third_party/boost-crc/include/ \
+               ./third_party/boost-integer/include/ \
+               ./third_party/boost-static_assert/include/ \
+               ./third_party/boost-throw_exception/include/ \
+               ./third_party/boost-type_traits/include/
 
 SOURCES += \
            src/main.cpp               \

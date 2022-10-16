@@ -7,3 +7,4 @@ lib/boost/
 *.autosave
 lib/qtcryptohash/
 *.7z
+third_party/
