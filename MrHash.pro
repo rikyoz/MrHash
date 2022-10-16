@@ -24,7 +24,16 @@ VPATH += ./src/          \
          ./ui/
 
 INCLUDEPATH += ./include/ \
-               ./lib/
+               ./lib/ \
+               ./third_party/boost-array/include/ \
+               ./third_party/boost-assert/include/ \
+               ./third_party/boost-config/include/ \
+               ./third_party/boost-core/include/ \
+               ./third_party/boost-crc/include/ \
+               ./third_party/boost-integer/include/ \
+               ./third_party/boost-static_assert/include/ \
+               ./third_party/boost-throw_exception/include/ \
+               ./third_party/boost-type_traits/include/
 
 SOURCES += \
            src/main.cpp               \
@@ -76,7 +85,7 @@ UI_DIR      = ./$${BUILD}/.ui
 
 MAJOR_VER  = 0
 MINOR_VER  = 3
-PATCH_VER  = 2
+PATCH_VER  = 3
 VERSION    = $${MAJOR_VER}.$${MINOR_VER}.$${PATCH_VER}
 DEFINES   += "MAJOR_VER=$${MAJOR_VER}" "MINOR_VER=$${MINOR_VER}" "PATCH_VER=$${PATCH_VER}"
 
@@ -88,7 +97,7 @@ win32 {
     # CONTENT OF THE RC FILE #
     QMAKE_TARGET_PRODUCT = MrHash
     QMAKE_TARGET_COMPANY = rikyoz
-    QMAKE_TARGET_COPYRIGHT = Copyright (c) 2016 $${QMAKE_TARGET_COMPANY}
+    QMAKE_TARGET_COPYRIGHT = Copyright (c) 2022 $${QMAKE_TARGET_COMPANY}
     RC_ICONS = res/icon.ico
     !win32-g++ {
         contains(QT_ARCH, i386) {
