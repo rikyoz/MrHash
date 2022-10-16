@@ -36,6 +36,7 @@ clone_script:
     - cmd: git checkout -qf %APPVEYOR_REPO_COMMIT%
 
 init:
+    - set "PATH=%PATH:C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC=%"
     - set PATH=%PATH%;%msvc_dir%;%qt_dir%
     - vcvarsall.bat %vc_arch%
     
