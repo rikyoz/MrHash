@@ -28,6 +28,3 @@
 [submodule "third_party/boost-type_traits"]
 	path = third_party/boost-type_traits
 	url = https://github.com/boostorg/type_traits
-[submodule "third_party/QtCryptoHash"]
-	path = third_party/QtCryptoHash
-	url = https://github.com/rikyoz/QtCryptoHash.git
