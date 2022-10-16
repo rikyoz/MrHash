@@ -70,7 +70,7 @@ deploy:
     release: $(APPVEYOR_REPO_TAG_NAME)
     description: 'Binaries of Mr. Hash v%mrhash_version%'
     auth_token:
-      secure: 4V5xJQT+iVPUhK05TBLkNkLY8HTArZ+omH394hfXqQuxfrkaQqnR8132rDnB/HVm
+      secure: FXlhX+Nu9dabf4YLycMYx2cAZtJeEOqtRXQ3Qxky32fBQoyt+8xbSzyZFmv0e8ID
     artifact: /.*\.7z/
     draft: true
     prerelease: false
