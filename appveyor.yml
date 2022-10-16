@@ -15,7 +15,7 @@ configuration: Release
 
 environment:
   mrhash_version: 0.3.3
-  boost_dir: C:\Libraries\boost_1_69_0
+  #boost_dir: C:\Libraries\boost_1_69_0
   msvc_dir: C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
   
   matrix:
@@ -32,19 +32,22 @@ environment:
     target: mrhash64.exe
     qt_version: 5.13.2
     qt_dir: C:\Qt\%qt_version%\msvc2015_64\bin
+    
+clone_script:
+    - cmd: git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+    - cmd: git checkout -qf %APPVEYOR_REPO_COMMIT%
 
 init:
     - set PATH=%PATH%;%msvc_dir%;%qt_dir%
     - vcvarsall.bat %arch%
     
 install:
-    - git submodule update --init --recursive
     - mkdir lib
     - cd lib
     - mkdir qtcryptohash
-    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.0/QtCryptoHash-v0.1.2-msvc2015-win32-static.7z -FileName qtcryptohash-static.7z 
+    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.2/QtCryptoHash-v0.1.2-msvc2015-win32-static.7z -FileName qtcryptohash-static.7z 
     - 7z x qtcryptohash-static.7z -oqtcryptohash/ -aoa
-    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.0/QtCryptoHash-v0.1.2-msvc2015-win64-static.7z -FileName qtcryptohash64-static.7z
+    - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.2/QtCryptoHash-v0.1.2-msvc2015-win64-static.7z -FileName qtcryptohash64-static.7z
     - 7z x qtcryptohash64-static.7z -oqtcryptohash/ -aoa
     - cd ..
     
