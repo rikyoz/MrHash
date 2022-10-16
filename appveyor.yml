@@ -1,6 +1,6 @@
-version: 0.3.2-build{build}
+version: 0.3.3-build{build}
 skip_non_tags: true
-os: Windows Server 2012 R2
+os: Visual Studio 2015
 shallow_clone: true
 
 branches:
@@ -14,31 +14,32 @@ branches:
 configuration: Release
 
 environment:
-  mrhash_version: 0.3.2
-  qt_version: 5.5
-  boost_dir: C:\Libraries\boost_1_59_0
-  msvc_dir: C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC
+  mrhash_version: 0.3.3
+  boost_dir: C:\Libraries\boost_1_69_0
+  msvc_dir: C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
   
   matrix:
   #MSVC x86
   - name: win32
     arch: x86
     target: mrhash.exe
-    qt_dir: C:\Qt\%qt_version%\msvc2013\bin
+    qt_version: 5.11.3
+    qt_dir: C:\Qt\%qt_version%\msvc2015\bin
     
   #MSVC x64
   - name: win64
     arch: x64
     target: mrhash64.exe
-    qt_dir: C:\Qt\%qt_version%\msvc2013_64\bin
+    qt_version: 5.13.2
+    qt_dir: C:\Qt\%qt_version%\msvc2015_64\bin
 
 init:
     - set PATH=%PATH%;%msvc_dir%;%qt_dir%
     - vcvarsall.bat %arch%
     
 install:
+    - git submodule update --init --recursive
     - mkdir lib
-    - mklink /j lib\boost %boost_dir%\boost
     - cd lib
     - mkdir qtcryptohash
     - appveyor DownloadFile https://github.com/rikyoz/QtCryptoHash/releases/download/v0.1.1/QtCryptoHash-v0.1.1-msvc2013-win32-static.7z -FileName qtcryptohash-static.7z 
@@ -72,5 +73,5 @@ deploy:
     draft: true
     prerelease: false
     on:
-      branch: master
+      # branch: master
       appveyor_repo_tag: true

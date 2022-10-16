@@ -1,6 +1,7 @@
 #include "base64dialog.hpp"
 
 #include <QDesktopWidget>
+#include <QStyle>
 
 Base64Dialog::Base64Dialog( QString fileName, QWidget* parent ) : QDialog( parent ) {
     setupUi( this );
