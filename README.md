@@ -26,7 +26,7 @@
 <a href="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot1.png" target="_blank">
 <img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot1.thumb.png" />
 </a>
-<a href="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot1.png" target="_blank">
+<a href="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot2.png" target="_blank">
 <img src="https://raw.github.com/rikyoz/mrhash/screenshots/doc/img/v0.3.2/screenshot2.thumb.png" />
 </a>
 </p>
